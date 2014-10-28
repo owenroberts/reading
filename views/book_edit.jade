@@ -1,0 +1,24 @@
+extends layout
+
+block content
+	a(href="/")!= "Back to Book List"
+	div.book-single
+		form( method="post")
+			input(name="_id", type="hidden", value=book._id.toHexString())
+			div#form
+				each value, index in book
+					if index != '_id'
+						div(class=index)
+							input(type="text", name=index, id="edit"+index, value=value)
+			each value, index in books
+				if value._atts
+					div#atts-container
+						each i in value._atts
+							div.atts= i
+						span.cancel= "x"
+			div.plus.clickable(onclick='addAtts();')= "Add Attribute"
+			script(type="text/javascript" src="/javascripts/jquery-1.11.1.min.js")			
+			script(type='text/javascript' src="/javascripts/edit_book.js")
+				
+			div#editBookSubmit
+				input.clickable(type="submit", value="Save")

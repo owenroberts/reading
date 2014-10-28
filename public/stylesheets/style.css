@@ -1,0 +1,134 @@
+@import "reset.css";
+/*  globes   */
+body {
+  padding: 50px;
+  font: 14px Helvetica, Arial, sans-serif;
+}
+a {
+  color: #f3f;
+  text-decoration: none;
+}
+a:hover {
+  border-bottom: 2px solid #fdf;
+}
+.clickable {
+  padding: 6px;
+  font-size: 16px;
+  background: #fdf;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+}
+input:focus {
+  outline: #8181c7 auto 5px;
+}
+/*  index */
+#books {
+  width: 640px;
+}
+#books div,
+#books form {
+  margin: 8px 0;
+}
+#books .title input {
+  color: #8181c7;
+  font-size: 24px;
+  margin: 6px 0;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+#books .title input:hover {
+  border-bottom: 2px solid #fdf;
+}
+#books .title input:focus {
+  outline: none;
+}
+.book {
+  padding: 3px;
+  margin: 3px 0;
+}
+.menu a {
+  margin: 3px 6px 3px 0;
+}
+#delete {
+  width: 60px;
+}
+/*  single book page   */
+.book-single {
+  width: 640px;
+  background: transparent;
+}
+.book-single .title input {
+  color: #8181c7;
+  font-weight: 300;
+  font-size: 24px;
+  margin: 6px 0;
+  width: 100%;
+}
+.book-single input {
+  color: #000;
+  font-size: 14px;
+}
+.book-single input:focus {
+  outline: #8181c7 auto 5px;
+}
+.book-single .plus {
+  margin-right: 10px;
+}
+.book-single div {
+  margin: 8px 0;
+}
+.book-single #editBookSubmit {
+  display: inline-block;
+}
+.book-single .new-attribute {
+  background: #e0e0e0;
+  padding: 8px;
+}
+.book-single .new-attribute input {
+  margin-left: 4px;
+  padding: 6px;
+}
+.book-single .new-attribute input.label {
+  text-transform: capitalize;
+}
+.book-single #atts-container {
+  display: none;
+  margin-top: 16px;
+}
+.book-single #atts-container .atts {
+  background: #f3f;
+  display: inline-block;
+  padding: 3px;
+  color: #fff;
+  margin: 3px 3px 3px 0;
+  cursor: pointer;
+}
+.book-single #atts-container .cancel {
+  background: #e0e0e0;
+  color: #fff;
+  padding: 3px;
+  cursor: pointer;
+}
+.book-single #cancel-att {
+  float: right;
+}
+/* NEW BOOK */
+.newbook {
+  width: 640px;
+  background: transparent;
+  margin-top: 16px;
+}
+.newbook div {
+  margin: 8px 0;
+}
+.newbook .label {
+  width: 75px;
+  display: inline-block;
+  text-decoration: center;
+}
+.newbook .in {
+  background: #e0e0e0;
+  padding: 6px;
+  margin: 3px;
+}

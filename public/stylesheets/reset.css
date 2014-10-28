@@ -1,0 +1,20 @@
+/*  forms */
+input {
+	-webkit-appearance: none;
+	padding: 0;
+	background-color: transparent;
+	border: none;
+	border-image-source: initial;
+	border-image-slice: initial;
+	border-image-width: initial;
+	border-image-outset: initial;
+	border-image-repeat: initial;
+	-webkit-rtl-ordering: logical;
+	-webkit-user-select: text;
+	cursor: auto;
+	text-align:left;
+	display:inline-block;
+	
+}
+
+

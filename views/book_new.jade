@@ -1,0 +1,26 @@
+extends layout
+
+block content
+	h1= title
+	a(href="/")!= "Back to Book List"
+	div.newbook
+		form( method="post")
+			div 
+				div
+					span.label Title:
+					input.in(type="text", name="title", id="editBookTitle")
+				div
+					span.label Author:
+					input.in(type="text", name="name", id="editBookName")
+				div
+					span.label Genre:
+					input.in(type="text", name="genre", id="editBookGenre")
+				div
+					span.label Date Published:
+					input.in(onclick="this.select();" type="text", name="pubdate", value="YYYY")
+				div
+					span.label Date Read:
+					input.in(onclick="this.select();" type="text", name="readdate", value="MMYYYY")
+				
+				div#editBookSubmit
+					input.clickable(type="submit", value="Save")

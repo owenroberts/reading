@@ -1,0 +1,122 @@
+@import "reset.css"
+
+primary = #8181C7
+secondary = #f3f
+highlight = #fdf
+bkg = #E0E0E0
+
+/*  globes   */
+body
+  padding: 50px
+  font: 14px Helvetica, Arial, sans-serif
+a
+  color: secondary
+  text-decoration:none
+a:hover
+  border-bottom:2px solid highlight
+.clickable
+  padding: 6px
+  font-size:16px
+  background: highlight
+  display:inline-block
+  cursor:pointer
+  text-align:center
+input
+  &:focus
+      outline: primary auto 5px;
+  
+/*  index */
+#books
+  width:640px
+  div, form
+    margin: 8px 0
+  .title input
+    color: primary
+    font-size:24px
+    margin:6px 0
+    cursor:pointer
+    border-bottom:2px solid transparent
+    &:hover
+      border-bottom:2px solid highlight
+    &:focus
+      outline:none
+.book 
+	padding:3px
+	margin:3px 0
+
+.menu
+  a 
+    margin:3px 6px 3px 0
+#delete
+  width:60px
+
+/*  single book page   */
+.book-single
+  width:640px
+  background: transparent 
+  .title input
+    color: primary
+    font-weight: 300
+    font-size:24px
+    margin:6px 0
+    width:100%
+
+  input
+    color: black
+    font-size:14px
+    &:focus
+      outline: primary auto 5px;
+  .plus
+    margin-right:10px
+
+  div 
+    margin:8px 0
+  #editBookSubmit
+    display:inline-block
+  .new-attribute
+    background:bkg
+    padding:8px
+    input
+      margin-left: 4px
+      padding:6px
+      &.label
+        text-transform:capitalize
+  #atts-container
+    display:none
+    margin-top:16px
+    .atts 
+      background: secondary
+      display inline-block
+      padding:3px
+      color:white 
+      margin:3px 3px 3px 0
+      cursor:pointer
+    .cancel
+      background: bkg
+      color: white
+      padding:3px
+      cursor:pointer
+  #cancel-att
+    float:right
+      
+
+    
+
+/* NEW BOOK */
+.newbook 
+  width:640px
+  background:transparent
+  margin-top:16px
+  div
+    margin:8px 0
+  .label
+    width:75px
+    display:inline-block
+    text-decoration:center 
+  .in
+    background: bkg
+    padding:6px
+    margin:3px
+
+    
+

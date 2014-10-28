@@ -1,0 +1,20 @@
+extends layout
+
+block content
+	h1= title
+	.menu
+		a(href="/book/new")!= "Add New Book"
+	div#books
+		- each book in books
+			if (!book._atts)
+				div.book
+					div.title
+						form( method="get", action="book/:id/edit")
+							input(name="_id", type="hidden", value=book._id.toHexString())
+							input(id="edit", value=book.title, type="submit")
+					div.name= book.name
+					div.genre= book.genre
+					
+					form#delete( onsubmit="return confirm('Are you sure?');" method="post", action="/book/:id/delete")
+						input(name="_id", type="hidden", value=book._id.toHexString())
+						input.clickable(id="delete", value="Delete", type="submit")
