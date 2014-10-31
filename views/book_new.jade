@@ -7,20 +7,17 @@ block content
 		form( method="post")
 			div 
 				div
-					span.label Title:
-					input.in(type="text", name="title", id="editBookTitle")
+					input.in.select(type="text", name="title", value="Title")
 				div
-					span.label Author:
-					input.in(type="text", name="name", id="editBookName")
+					input.in.select(type="text", name="name", value="Author")
 				div
-					span.label Genre:
-					input.in(type="text", name="genre", id="editBookGenre")
+					input.in.select(type="text", name="genre", value="Genre")
 				div
-					span.label Date Published:
-					input.in(onclick="this.select();" type="text", name="pubdate", value="YYYY")
+					div.label Date Published:
+					input.in.select(type="text", name="pubdate", value="YYYY")
 				div
-					span.label Date Read:
-					input.in(onclick="this.select();" type="text", name="readdate", value="MMYYYY")
+					div.label Date Read:
+					input.in(type="text", name="readdate", value="MMYYYY")
 				
 				div#editBookSubmit
 					input.clickable(type="submit", value="Save")

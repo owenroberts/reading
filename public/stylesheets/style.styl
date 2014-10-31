@@ -9,6 +9,7 @@ bkg = #E0E0E0
 body
   padding: 50px
   font: 14px Helvetica, Arial, sans-serif
+  background: darken(bkg, 15%)
 a
   color: secondary
   text-decoration:none
@@ -58,17 +59,39 @@ input
     color: primary
     font-weight: 300
     font-size:24px
-    margin:6px 0
     width:100%
-
+    padding:3px
+  .created-at, .created-at *
+    font-size:9px
+    background: lighten(bkg, 80%)
+    padding:2px
   input
     color: black
     font-size:14px
+    min-width:400px
+    &.save 
+      min-width:40px
     &:focus
       outline: primary auto 5px;
+  textarea
+    font-size:14px
+    border:none
+    width:98%
+    background: lighten(primary, 90%) 
   .plus
     margin-right:10px
-
+  .infocolumn
+    display:inline-block
+    vertical-align: top
+    width:260px
+    padding:3px
+    input
+      min-width:140px
+  .quotes
+    background: lighten(primary, 80%)
+    padding:6px
+    .quote
+      margin:8px 0
   div 
     margin:8px 0
   #editBookSubmit
@@ -76,14 +99,18 @@ input
   .new-attribute
     background:bkg
     padding:8px
-    input
+    textarea
       margin-left: 4px
       padding:6px
-      &.label
-        text-transform:capitalize
+      width:400px
+    .label
+      text-transform:capitalize
+      margin-left: 4px;
+      padding: 6px;
   #atts-container
     display:none
     margin-top:16px
+    position:relative
     .atts 
       background: secondary
       display inline-block
@@ -96,8 +123,13 @@ input
       color: white
       padding:3px
       cursor:pointer
+  .new-attribute
+    position:relative
   #cancel-att
-    float:right
+    position:absolute 
+    top:10px
+    right:10px
+    
       
 
     
@@ -108,15 +140,16 @@ input
   background:transparent
   margin-top:16px
   div
-    margin:8px 0
+    margin:6px 0
   .label
     width:75px
-    display:inline-block
+    dislay:block
     text-decoration:center 
   .in
     background: bkg
     padding:6px
-    margin:3px
+    margin:3px 0
+    font-size:18px
 
     
 

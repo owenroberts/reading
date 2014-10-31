@@ -32,7 +32,6 @@ BookProvider.prototype.findAll = function(callback) {
 
 //save new book
 BookProvider.prototype.save = function(books, callback) {
-    console.log(books);
     this.getCollection(function(error, book_collection) {
       if( error ) callback(error)
       else {

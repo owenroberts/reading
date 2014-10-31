@@ -3,6 +3,7 @@
 body {
   padding: 50px;
   font: 14px Helvetica, Arial, sans-serif;
+  background: #bebebe;
 }
 a {
   color: #f3f;
@@ -62,18 +63,50 @@ input:focus {
   color: #8181c7;
   font-weight: 300;
   font-size: 24px;
-  margin: 6px 0;
   width: 100%;
+  padding: 3px;
+}
+.book-single .created-at,
+.book-single .created-at * {
+  font-size: 9px;
+  background: #f9f9f9;
+  padding: 2px;
 }
 .book-single input {
   color: #000;
   font-size: 14px;
+  min-width: 400px;
+}
+.book-single input.save {
+  min-width: 40px;
 }
 .book-single input:focus {
   outline: #8181c7 auto 5px;
 }
+.book-single textarea {
+  font-size: 14px;
+  border: none;
+  width: 98%;
+  background: #f2f2f9;
+}
 .book-single .plus {
   margin-right: 10px;
+}
+.book-single .infocolumn {
+  display: inline-block;
+  vertical-align: top;
+  width: 260px;
+  padding: 3px;
+}
+.book-single .infocolumn input {
+  min-width: 140px;
+}
+.book-single .quotes {
+  background: #e6e6f4;
+  padding: 6px;
+}
+.book-single .quotes .quote {
+  margin: 8px 0;
 }
 .book-single div {
   margin: 8px 0;
@@ -85,16 +118,20 @@ input:focus {
   background: #e0e0e0;
   padding: 8px;
 }
-.book-single .new-attribute input {
+.book-single .new-attribute textarea {
   margin-left: 4px;
   padding: 6px;
+  width: 400px;
 }
-.book-single .new-attribute input.label {
+.book-single .new-attribute .label {
   text-transform: capitalize;
+  margin-left: 4px;
+  padding: 6px;
 }
 .book-single #atts-container {
   display: none;
   margin-top: 16px;
+  position: relative;
 }
 .book-single #atts-container .atts {
   background: #f3f;
@@ -110,8 +147,13 @@ input:focus {
   padding: 3px;
   cursor: pointer;
 }
+.book-single .new-attribute {
+  position: relative;
+}
 .book-single #cancel-att {
-  float: right;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 /* NEW BOOK */
 .newbook {
@@ -120,15 +162,16 @@ input:focus {
   margin-top: 16px;
 }
 .newbook div {
-  margin: 8px 0;
+  margin: 6px 0;
 }
 .newbook .label {
   width: 75px;
-  display: inline-block;
+  dislay: block;
   text-decoration: center;
 }
 .newbook .in {
   background: #e0e0e0;
   padding: 6px;
-  margin: 3px;
+  margin: 3px 0;
+  font-size: 18px;
 }

@@ -6,10 +6,33 @@ block content
 		form( method="post")
 			input(name="_id", type="hidden", value=book._id.toHexString())
 			div#form
-				each value, index in book
-					if index != '_id'
-						div(class=index)
-							input(type="text", name=index, id="edit"+index, value=value)
+				div.title
+					input.select.edit(type="text", name="title", value=book.title)
+				div.created-at
+					span= "logged on" 
+					span= book.created_at.getMonth()+1+" "+book.created_at.getDate()+" "+book.created_at.getFullYear()
+				div.infocolumn
+					div.name
+						span= "by "
+						input.select.edit(type="text", name="name", value=book.name)
+					div.genre
+						input.select.edit(type="text", name="genre", value=book.genre)
+				div.infocolumn 
+					div.pubdate
+						span= "published "
+						input.select.edit(type="text", name="pubdate", value=book.pubdate)
+					div.readdate
+						span= "read "
+						input.select.edit(type="text", name="readdate", value=book.readdate)
+				div.quotes= "Quotes"
+					each value, index in book.quotes
+						div(class="quote") 
+							textarea.select.edit(type="text", name="quotes")=value
+				if book.other > 0
+					each value, index in book.other
+						if index != '_id'
+							div(class=index)
+								input(type="text", name=index, id="edit"+index, value=value)
 			each value, index in books
 				if value._atts
 					div#atts-container
@@ -17,8 +40,7 @@ block content
 							div.atts= i
 						span.cancel= "x"
 			div.plus.clickable(onclick='addAtts();')= "Add Attribute"
-			script(type="text/javascript" src="/javascripts/jquery-1.11.1.min.js")			
 			script(type='text/javascript' src="/javascripts/edit_book.js")
 				
 			div#editBookSubmit
-				input.clickable(type="submit", value="Save")
+				input.clickable(class="save", type="submit", value="Save")

@@ -52,7 +52,8 @@ app.post('/book/new', function(req, res){
         genre: req.param('genre'),
         pubdate: req.param('pubdate'),
         readdate: req.param('readdate'),
-        quotes: ['Add first quote here.']
+        quotes: ['Add first quote here.'],
+        notes: ['Add first note here.']
     }, function( error, docs) {
         res.redirect('/')
     });
@@ -63,7 +64,8 @@ app.get('/book/:id/edit', function(req, res) {
         bookProvider.findAll(function(error, books){
             res.render('book_edit', {
                 books:books,
-                book: book
+                book: book,
+                title: book.title
             });
         });
     });
@@ -71,14 +73,20 @@ app.get('/book/:id/edit', function(req, res) {
 
 app.post('/book/:id/edit', function(req, res) {
     var editedBook = {};
+    console.log(req.body);
     for (item in req.body) { 
         if (item != '_id' && item != 'newlabel' && item != 'newvalue') {
+            var newitem = false;
             if (item == 'newquote') {
                 editedBook["$push"] = {};
                 editedBook["$push"] = {'quotes': req.body[item]}
-            } else {
-                //editedBook["$set"] = {};
-                //editedBook["$set"][item] = req.body[item];
+            } else if (item[0] == "+"){
+                if (!newitem) editedBook["$set"] = {};
+                newitem = true;
+                if (item.substr(1) == "quotes" && !(req.body[item] instanceof Array))
+                    editedBook["$set"][item.substr(1)] = [req.body[item]];
+                else
+                    editedBook["$set"][item.substr(1)] = req.body[item];
             }
         }
     }
