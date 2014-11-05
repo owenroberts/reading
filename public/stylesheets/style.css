@@ -3,7 +3,7 @@
 body {
   padding: 50px;
   font: 14px Helvetica, Arial, sans-serif;
-  background: #bebebe;
+  background: url("/images/bkg-dot-sm.jpg");
 }
 a {
   color: #f3f;
@@ -58,6 +58,7 @@ input:focus {
 .book-single {
   width: 640px;
   background: transparent;
+  position: relative;
 }
 .book-single .title input {
   color: #8181c7;
@@ -66,16 +67,25 @@ input:focus {
   width: 100%;
   padding: 3px;
 }
+.book-single .type {
+  display: inline-block;
+  background: #8181c7;
+  padding: 6px;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 .book-single .created-at,
 .book-single .created-at * {
   font-size: 9px;
   background: #f9f9f9;
   padding: 2px;
+  color: #8181c7;
 }
 .book-single input {
-  color: #000;
   font-size: 14px;
-  min-width: 400px;
+  padding: 6px;
 }
 .book-single input.save {
   min-width: 40px;
@@ -97,9 +107,13 @@ input:focus {
   vertical-align: top;
   width: 260px;
   padding: 3px;
+  color: #8181c7;
+  font-size: 16px;
 }
 .book-single .infocolumn input {
   min-width: 140px;
+  color: #8181c7;
+  font-size: 16px;
 }
 .book-single .quotes {
   background: #e6e6f4;
@@ -107,6 +121,17 @@ input:focus {
 }
 .book-single .quotes .quote {
   margin: 8px 0;
+}
+.book-single .notes {
+  background: #ad85ad;
+  padding: 6px;
+}
+.book-single .link {
+  background: #e0e0e0;
+  padding: 6px;
+  font-size: 18px;
+  display: inline-block;
+  margin-right: 3px;
 }
 .book-single div {
   margin: 8px 0;
@@ -154,6 +179,11 @@ input:focus {
   position: absolute;
   top: 10px;
   right: 10px;
+}
+.book-single .hidecontents span {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
 }
 /* NEW BOOK */
 .newbook {

@@ -8,6 +8,7 @@ block content
 			div#form
 				div.title
 					input.select.edit(type="text", name="title", value=book.title)
+				div.type= book.type
 				div.created-at
 					span= "logged on" 
 					span= book.created_at.getMonth()+1+" "+book.created_at.getDate()+" "+book.created_at.getFullYear()
@@ -24,10 +25,21 @@ block content
 					div.readdate
 						span= "read "
 						input.select.edit(type="text", name="readdate", value=book.readdate)
-				div.quotes= "Quotes"
+				div.quotes.hidecontents= "Quotes"
+					span= "- Collapse"
 					each value, index in book.quotes
 						div(class="quote") 
 							textarea.select.edit(type="text", name="quotes")=value
+				div.notes.hidecontents= "Notes"
+					span= "- Collapse"
+					each value, index in book.notes
+						div(class="note") 
+							textarea.select.edit(type="text", name="notes")=value
+				if book.links
+					div.links
+						each value in book.links
+							div.link
+								a(href="#{value[1]}" target="blank")= value[0]
 				if book.other > 0
 					each value, index in book.other
 						if index != '_id'

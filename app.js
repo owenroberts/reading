@@ -48,6 +48,7 @@ app.get('/book/new', function(req, res) {
 app.post('/book/new', function(req, res){
     bookProvider.save({
         title: req.param('title'),
+        type: req.param('type'),
         name: req.param('name'),
         genre: req.param('genre'),
         pubdate: req.param('pubdate'),
@@ -80,13 +81,20 @@ app.post('/book/:id/edit', function(req, res) {
             if (item == 'newquote') {
                 editedBook["$push"] = {};
                 editedBook["$push"] = {'quotes': req.body[item]}
+            } else if (item == 'newnote') {
+                editedBook["$push"] = {};
+                editedBook["$push"] = {'notes': req.body[item]}
+            } else if (item == 'newlink') {
+                editedBook["$push"] = {};
+                editedBook["$push"] = {'links': req.body[item].split(',')}
             } else if (item[0] == "+"){
                 if (!newitem) editedBook["$set"] = {};
                 newitem = true;
-                if (item.substr(1) == "quotes" && !(req.body[item] instanceof Array))
-                    editedBook["$set"][item.substr(1)] = [req.body[item]];
+                var st = item.substr(1)
+                if ((st == "notes" || st == "quotes") && !(req.body[item] instanceof Array))
+                    editedBook["$set"][st] = [req.body[item]];
                 else
-                    editedBook["$set"][item.substr(1)] = req.body[item];
+                    editedBook["$set"][st] = req.body[item];
             }
         }
     }

@@ -9,7 +9,7 @@ bkg = #E0E0E0
 body
   padding: 50px
   font: 14px Helvetica, Arial, sans-serif
-  background: darken(bkg, 15%)
+  background: url('/images/bkg-dot-sm.jpg')
 a
   color: secondary
   text-decoration:none
@@ -54,21 +54,30 @@ input
 /*  single book page   */
 .book-single
   width:640px
-  background: transparent 
+  background: transparent
+  position: relative 
   .title input
     color: primary
     font-weight: 300
     font-size:24px
     width:100%
     padding:3px
+  .type
+    display:inline-block
+    background:primary
+    padding:6px
+    color:white
+    position: absolute
+    top:0
+    right:0
   .created-at, .created-at *
     font-size:9px
     background: lighten(bkg, 80%)
     padding:2px
+    color: primary
   input
-    color: black
     font-size:14px
-    min-width:400px
+    padding:6px
     &.save 
       min-width:40px
     &:focus
@@ -85,13 +94,26 @@ input
     vertical-align: top
     width:260px
     padding:3px
+    color: primary
+    font-size:16px 
     input
       min-width:140px
+      color: primary
+      font-size:16px
   .quotes
     background: lighten(primary, 80%)
     padding:6px
     .quote
       margin:8px 0
+  .notes
+    background: desaturate(secondary, 80%)
+    padding:6px
+  .link
+    background: bkg
+    padding:6px
+    font-size:18px 
+    display:inline-block
+    margin-right:3px
   div 
     margin:8px 0
   #editBookSubmit
@@ -129,6 +151,13 @@ input
     position:absolute 
     top:10px
     right:10px
+  .hidecontents
+    span
+      position:absolute
+      right:10px
+      cursor:pointer
+    *
+      /*display:none */
     
       
 
