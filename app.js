@@ -30,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', users);
 
+// homepage
 app.get('/', function(req, res){
   bookProvider.findAll(function(error, bks){
       res.render('index', {
@@ -39,12 +40,14 @@ app.get('/', function(req, res){
   });
 });
 
+// create a book
 app.get('/book/new', function(req, res) {
     res.render('book_new', {
         title: 'New Book'
     });
 });
 
+// saves created book
 app.post('/book/new', function(req, res){
     bookProvider.save({
         title: req.param('title'),
@@ -60,18 +63,22 @@ app.post('/book/new', function(req, res){
     });
 });
 
+// edit a book
 app.get('/book/:id/edit', function(req, res) {
-    bookProvider.findById(req.param('_id'), function(error, book) { 
+    console.log('edit');
+    bookProvider.findById(req.param('_id'), function(error, book, info) { 
         bookProvider.findAll(function(error, books){
             res.render('book_edit', {
                 books:books,
                 book: book,
+                info:info,
                 title: book.title
             });
         });
     });
 });
 
+// save book
 app.post('/book/:id/edit', function(req, res) {
     var editedBook = {};
     console.log(req.body);
@@ -87,6 +94,9 @@ app.post('/book/:id/edit', function(req, res) {
             } else if (item == 'newlink') {
                 editedBook["$push"] = {};
                 editedBook["$push"] = {'links': req.body[item].split(',')}
+            } else if (item == 'newtag') {
+                editedBook["$push"] = {};
+                editedBook["$push"] = {'tags': req.body[item]}
             } else if (item[0] == "+"){
                 if (!newitem) editedBook["$set"] = {};
                 newitem = true;
@@ -107,6 +117,31 @@ app.post('/book/:id/edit', function(req, res) {
         res.redirect(req.get('referer'));
     }
 });
+
+
+// get all tags
+app.get('/:tag', function(req, res) {
+    console.log("tag");
+    bookProvider.findTag(req.param('_tag'), function(error, books) { 
+        res.render('index', {
+            books:books,
+            title: req.query["_tag"]
+        });
+    });
+});
+
+//get references query 
+app.get('/addref/:refs', function(req, res) {
+    bookProvider.findRefs(req.query, function(error, books) { 
+        res.render('refs', {
+            books:books,
+            title: req.query["_ref"]
+        });
+    });
+});
+
+
+
 
 //delete a book
 app.post('/book/:id/delete', function(req, res) {

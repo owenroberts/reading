@@ -4,6 +4,7 @@ primary = #8181C7
 secondary = #f3f
 highlight = #fdf
 bkg = #E0E0E0
+wht = #fff
 
 /*  globes   */
 body
@@ -53,9 +54,11 @@ input
 
 /*  single book page   */
 .book-single
-  width:640px
-  background: transparent
-  position: relative 
+  .book
+    width:480px
+    background: transparent
+    position: relative 
+    float:left
   .title input
     color: primary
     font-weight: 300
@@ -92,10 +95,11 @@ input
   .infocolumn
     display:inline-block
     vertical-align: top
-    width:260px
+    width:220px
     padding:3px
     color: primary
     font-size:16px 
+    background: wht 
     input
       min-width:140px
       color: primary
@@ -111,9 +115,18 @@ input
   .link
     background: bkg
     padding:6px
-    font-size:18px 
+    font-size:14px 
     display:inline-block
     margin-right:3px
+  .tag
+    background: primary
+    input
+      color:wht
+      cursor:pointer
+    font-size:16px
+    padding:3px
+    display:inline-block
+    margin-right:3px 
   div 
     margin:8px 0
   #editBookSubmit
@@ -141,7 +154,7 @@ input
       margin:3px 3px 3px 0
       cursor:pointer
     .cancel
-      background: bkg
+      background: primary
       color: white
       padding:3px
       cursor:pointer
@@ -158,8 +171,10 @@ input
       cursor:pointer
     *
       /*display:none */
-    
-      
+  .refs
+    width:260px
+    float:right
+        
 
     
 

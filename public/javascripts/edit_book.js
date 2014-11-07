@@ -61,20 +61,7 @@ function addAttribute(type) {
 		.text("Cancel");
 	var newLabel, newInput;
 
-	if (type != "link") {
-		newLabel = $('<div>')
-			.addClass('label')
-			.text(type);
-
-		newInput = $('<textarea>')
-			.attr({	'type':'text',
-					'name': 'new'+type,
-					'value': 'Input new ' + type,
-					'id': 'newAtt'+count
-				});
-		newAttDiv.append(newLabel)
-			.append(newInput);
-	} else {
+	if (type == "link") {
 		newLabel = $('<input>')
 			.attr({	'type': 'text',
 					'name': 'newlabel',
@@ -102,7 +89,33 @@ function addAttribute(type) {
 		newInput.on('change', function() {
 			newInput.val(newLabel.val()+","+newInput.val());
 		});
-	}
+	} else if (type == "tag") {
+		newLabel = $('<div>')
+			.addClass('label')
+			.text(type);
+
+		newInput = $('<input>')
+			.attr({	'type':'text',
+					'name': 'new'+type,
+					'placeholder': 'Input new ' + type,
+					'id': 'newAtt'+count
+				});
+		newAttDiv.append(newLabel)
+			.append(newInput);
+	} else  {
+		newLabel = $('<div>')
+			.addClass('label')
+			.text(type);
+
+		newInput = $('<textarea>')
+			.attr({	'type':'text',
+					'name': 'new'+type,
+					'value': 'Input new ' + type,
+					'id': 'newAtt'+count
+				});
+		newAttDiv.append(newLabel)
+			.append(newInput);
+	} 
 
 	container.append(newAttDiv);
 	newAttDiv.append(cancel);
@@ -112,4 +125,10 @@ function addAttribute(type) {
 	});
 
 	count++;
+}
+
+function addReference() {
+	var search = $('<div')
+		.addClass('search');
+	
 }	

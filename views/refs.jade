@@ -2,8 +2,6 @@ extends layout
 
 block content
 	h1= title
-	.menu
-		a(href="/book/new")!= "Add New Book"
 	div#books
 		each book in books
 			if (!book.info)

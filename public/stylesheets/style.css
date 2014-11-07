@@ -55,10 +55,11 @@ input:focus {
   width: 60px;
 }
 /*  single book page   */
-.book-single {
-  width: 640px;
+.book-single .book {
+  width: 480px;
   background: transparent;
   position: relative;
+  float: left;
 }
 .book-single .title input {
   color: #8181c7;
@@ -105,10 +106,11 @@ input:focus {
 .book-single .infocolumn {
   display: inline-block;
   vertical-align: top;
-  width: 260px;
+  width: 220px;
   padding: 3px;
   color: #8181c7;
   font-size: 16px;
+  background: #fff;
 }
 .book-single .infocolumn input {
   min-width: 140px;
@@ -129,9 +131,20 @@ input:focus {
 .book-single .link {
   background: #e0e0e0;
   padding: 6px;
-  font-size: 18px;
+  font-size: 14px;
   display: inline-block;
   margin-right: 3px;
+}
+.book-single .tag {
+  background: #8181c7;
+  font-size: 16px;
+  padding: 3px;
+  display: inline-block;
+  margin-right: 3px;
+}
+.book-single .tag input {
+  color: #fff;
+  cursor: pointer;
 }
 .book-single div {
   margin: 8px 0;
@@ -167,7 +180,7 @@ input:focus {
   cursor: pointer;
 }
 .book-single #atts-container .cancel {
-  background: #e0e0e0;
+  background: #8181c7;
   color: #fff;
   padding: 3px;
   cursor: pointer;
@@ -184,6 +197,10 @@ input:focus {
   position: absolute;
   right: 10px;
   cursor: pointer;
+}
+.book-single .refs {
+  width: 260px;
+  float: right;
 }
 /* NEW BOOK */
 .newbook {

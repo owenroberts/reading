@@ -30,6 +30,33 @@ BookProvider.prototype.findAll = function(callback) {
     });
 };
 
+//find subset of books with tag 
+BookProvider.prototype.findTag = function(tag, callback) {
+  this.getCollection(function(error, book_collection) {
+    if(error) callback(error);
+    else {
+      book_collection.find({tags:tag}).toArray(function(error, results){
+        if (error) callback(error);
+        else callback(null, results);
+      });
+    }
+  });
+};
+
+//find subset of books with query 
+BookProvider.prototype.findRefs = function(query, callback) {
+  var name = query._field;
+  var value = query._ref;
+  var query = {};
+  query[name] = {"$regex":new RegExp(value, "i")};
+  this.getCollection(function(error, book_collection) {
+      book_collection.find(query).toArray(function(error, results){
+        if (error) callback(error);
+        else callback(null, results);
+      });
+  });
+};
+
 //save new book
 BookProvider.prototype.save = function(books, callback) {
     this.getCollection(function(error, book_collection) {
@@ -55,9 +82,13 @@ BookProvider.prototype.findById = function(id, callback) {
   this.getCollection(function(error, book_collection) {
     if (error) callback(error);
     else {
-      book_collection.findOne({_id:book_collection.db.bson_serializer.ObjectID.createFromHexString(id)}, function(error, result) {
-        if (error) callback(error);
-        else callback(null, result);
+      //var info = book_collection.find({info:{$exists:true}}).toArray();
+      //info = "test";
+      book_collection.findOne({info:{$exists:true}}, function(error, info) {
+          book_collection.findOne({_id:book_collection.db.bson_serializer.ObjectID.createFromHexString(id)}, function(error, result) {
+            if (error) callback(error);
+            else callback(null, result, info);
+        });
       });
     }
   });
