@@ -65,16 +65,24 @@ app.post('/book/new', function(req, res){
 
 // edit a book
 app.get('/book/:id/edit', function(req, res) {
-    console.log('edit');
     bookProvider.findById(req.param('_id'), function(error, book, info) { 
-        bookProvider.findAll(function(error, books){
+        console.log(book.refs);
+        if (book.refs != undefined) {
+            bookProvider.getRefs(book.refs, function(error, refs){
+                res.render('book_edit', {
+                    refs:refs,
+                    book: book,
+                    info:info,
+                    title: book.title
+                });
+            });
+        } else {
             res.render('book_edit', {
-                books:books,
                 book: book,
-                info:info,
+                info: info,
                 title: book.title
             });
-        });
+        }       
     });
 });
 
@@ -87,20 +95,23 @@ app.post('/book/:id/edit', function(req, res) {
             var newitem = false;
             if (item == 'newquote') {
                 editedBook["$push"] = {};
-                editedBook["$push"] = {'quotes': req.body[item]}
+                editedBook["$push"] = {'quotes': req.body[item]};
             } else if (item == 'newnote') {
                 editedBook["$push"] = {};
-                editedBook["$push"] = {'notes': req.body[item]}
+                editedBook["$push"] = {'notes': req.body[item]};
             } else if (item == 'newlink') {
                 editedBook["$push"] = {};
-                editedBook["$push"] = {'links': req.body[item].split(',')}
+                editedBook["$push"] = {'links': req.body[item].split(',')};
             } else if (item == 'newtag') {
-                editedBook["$push"] = {};
-                editedBook["$push"] = {'tags': req.body[item]}
+                editedBook["$addToSet"] = {};
+                editedBook["$addToSet"] = {'tags': req.body[item]};
+            } else if (item == '_refId') {
+                editedBook["$addToSet"] = {};
+                editedBook["$addToSet"] = {'refs': {refId:req.body["_refId"], refNote:req.body["_refNote"]}};
             } else if (item[0] == "+"){
                 if (!newitem) editedBook["$set"] = {};
                 newitem = true;
-                var st = item.substr(1)
+                var st = item.substr(1);
                 if ((st == "notes" || st == "quotes") && !(req.body[item] instanceof Array))
                     editedBook["$set"][st] = [req.body[item]];
                 else
@@ -111,7 +122,7 @@ app.post('/book/:id/edit', function(req, res) {
     console.log(editedBook);
     if (Object.getOwnPropertyNames(editedBook).length > 0) {
         bookProvider.update(req.param('_id'), editedBook, function(error, docs) {
-            res.redirect(req.get('referer'));
+            res.redirect('/book/:id/edit?_id='+req.body._id);
         });
     } else {
         res.redirect(req.get('referer'));
@@ -121,7 +132,6 @@ app.post('/book/:id/edit', function(req, res) {
 
 // get all tags
 app.get('/:tag', function(req, res) {
-    console.log("tag");
     bookProvider.findTag(req.param('_tag'), function(error, books) { 
         res.render('index', {
             books:books,
@@ -134,8 +144,9 @@ app.get('/:tag', function(req, res) {
 app.get('/addref/:refs', function(req, res) {
     bookProvider.findRefs(req.query, function(error, books) { 
         res.render('refs', {
+            bookId:req.query["_id"],
             books:books,
-            title: req.query["_ref"]
+            title: req.query["_field"] + ": " + req.query["_ref"]
         });
     });
 });

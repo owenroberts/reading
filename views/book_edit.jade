@@ -2,8 +2,9 @@ extends layout
 
 block content
 	div.book-single
-		div.book
+		div.backhome
 			a(href="/")!= "Back to Book List"
+		.book
 			form( method="post")
 				input(name="_id", type="hidden", value=book._id.toHexString())
 				div#form
@@ -27,14 +28,14 @@ block content
 							span= "read "
 							input.select.edit(type="text", name="readdate", value=book.readdate)
 					div.quotes.hidecontents= "Quotes"
-						span= "- Collapse"
+						span= "+"
 						each value, index in book.quotes
-							div(class="quote") 
+							div.quote.hiddencontents
 								textarea.select.edit(type="text", name="quotes")=value
 					div.notes.hidecontents= "Notes"
-						span= "- Collapse"
+						span= "+"
 						each value, index in book.notes
-							div(class="note") 
+							div.note.hiddencontents 
 								textarea.select.edit(type="text", name="notes")=value
 					if book.links
 						div.links
@@ -45,27 +46,51 @@ block content
 						each value in info.info._atts
 							div.atts= value
 						span.cancel= "x"
-				div.plus.clickable(onclick='addAtts();')= "Add Attribute"
+				div#addAtts.plus.clickable()= "Add Attribute"
 				
 				script(type='text/javascript' src="/javascripts/edit_book.js")
 					
 				div#editBookSubmit
 					input.clickable(class="save", type="submit", value="Save")
 					if book.tags
-			div.tags
-				each value in book.tags
-					div.tag
-						form( method="get", action="/:tag")
-							input(name="_tag", value=value, type="submit")
+			if book.tags
+				div.tags
+					each value in book.tags
+						div.tag
+							form( method="get", action="/:tag")
+								input(name="_tag", value=value, type="submit")
+
 		div.refs
 			div= "References"
 			div.ref
-			div.plus.clickable(onclick='addReference();')= "Add Reference"
+				if refs
+					each ref in refs
+						div.hidecontents
+							span="+"
+							form(method="get", action="/book/:id/edit")
+								input(name="_id", type="hidden", value=ref._id.toHexString())
+								input.title(type="submit", value=ref.title)
+							each reference in book.refs
+								if reference.refId == ref._id.toHexString()
+									div.hiddencontents
+										textarea.select.edit(type="text", name="refnote")=reference.refNote
+
+			div#addRef.plus.clickable()= "Add Reference"
 			div.addref
-				div.search= "Search"
+				div.search
 					form(method="get", action="/addref/:refs")
+						input(name="_id", type="hidden", value=book._id.toHexString())
+						span="Search: "
 						select(name="_field")
-							each value in info.info._fields
-								option(name="type", value=value)=value
-						input(name="_ref", placeholder="search term")
+							each field in info.info._fields
+								option= field
+						input(name="_ref", type="text", placeholder="query")
 				div.browse
+					for(method="get", action="/addref/:refs")
+						input(name="_id", type="hidden", value=book._id.toHexString())
+						span="Browse: "
+						select(name="_field")
+							each item, name in info.info
+								option= name
+							each field in info.info._fields
+								option= field

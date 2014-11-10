@@ -26,10 +26,14 @@ a:hover
 input
   &:focus
       outline: primary auto 5px;
+  &[type="submit"]
+    cursor:pointer
+    border-bottom:2px solid transparent
+    &:hover
+      border-bottom:2px solid highlight
   
 /*  index */
 #books
-  width:640px
   div, form
     margin: 8px 0
   .title input
@@ -53,6 +57,12 @@ input
   width:60px
 
 /*  single book page   */
+.backhome
+  float:right
+  a
+    border-bottom:2px solid transparent
+    &:hover
+      border-bottom:2px solid highlight
 .book-single
   .book
     width:480px
@@ -165,16 +175,43 @@ input
     top:10px
     right:10px
   .hidecontents
+    position: relative 
     span
       position:absolute
       right:10px
       cursor:pointer
-    *
-      /*display:none */
+    .hiddencontents
+      display:none 
   .refs
-    width:260px
+    width:360px
     float:right
-        
+    background: lighten(bkg, 50%)
+    padding:6px
+    .h1
+      color:primary
+      font-size:18px
+    .title 
+      color:primary
+      padding:0
+    .addref
+      display:none
+     
+/*  new reference page */
+
+.refbook
+  width: 160px;
+  height: 200px;
+  background: lighten(secondary, 60%)
+  padding: 6px;
+  border: 10px solid primary 
+  .title
+    color: primary
+    font-size:18px
+  .note
+    width:140px
+    height:90px
+    background:bkg 
+    margin:3px 0 
 
     
 

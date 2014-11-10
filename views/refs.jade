@@ -5,14 +5,12 @@ block content
 	div#books
 		each book in books
 			if (!book.info)
-				div.book
-					div.title
-						form( method="get", action="book/:id/edit")
-							input(name="_id", type="hidden", value=book._id.toHexString())
-							input(id="edit", value=book.title, type="submit")
-					div.name= book.name
-					div.genre= book.genre
-					
-					form#delete( onsubmit="return confirm('Are you sure?');" method="post", action="/book/:id/delete")
-						input(name="_id", type="hidden", value=book._id.toHexString())
-						input.clickable(id="delete", value="Delete", type="submit")
+				if (book._id.toHexString() !== bookId)
+					div.refbook
+						form( method="post", action="/book/:id/edit")
+							input(name="_id", type="hidden", value=bookId)
+							input(name="_refId", type="hidden", value=book._id.toHexString())
+							div.title= book.title
+							div.author= "by " + book.name
+							textarea.note(name="_refNote", placeholder="Note")
+							input.clickable(id="edit", value="Save", type="submit")

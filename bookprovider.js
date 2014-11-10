@@ -56,6 +56,21 @@ BookProvider.prototype.findRefs = function(query, callback) {
       });
   });
 };
+//find subset of books with query 
+BookProvider.prototype.getRefs = function(refs, callback) {
+  console.log(refs);
+  var query = {_id:{$in:[]}};
+  for (var i = 0; i < refs.length; i++) {
+    var objId = new ObjectID(refs[i].refId);
+    query._id["$in"].push(objId);
+  }
+  this.getCollection(function(error, book_collection) {
+      book_collection.find(query).toArray(function(error, results){
+        if (error) callback(error);
+        else callback(null, results);
+      });
+  });
+};
 
 //save new book
 BookProvider.prototype.save = function(books, callback) {

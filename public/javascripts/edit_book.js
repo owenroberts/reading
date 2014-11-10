@@ -1,3 +1,7 @@
+$( document ).ready(function() {
+function addRef() {
+	$('.addref').show();
+}
 var count = 0;
 $('input.edit').on('change', function() {
 	if (this.name[0] != "+") {
@@ -25,22 +29,26 @@ $('.book-single').on( 'change keyup keydown paste cut', 'textarea', function (){
     $(this).height(0).height(this.scrollHeight);
 }).find( 'textarea' ).change();
 
+
 /* hidden stuff */
 function hiddenToggle() {
+	console.log('unhide');
 	var state = $(this).text();
 	if (state[0] == "-") {
 		$(this).parent().find('div').css('display', 'none');
-		$(this).text('+ Expand');
+		$(this).text('+');	
 	} else {
 		$(this).parent().find('div').css('display', 'block');
-		$(this).text('- Collapse');
+		$(this).text('-');
+		var text = $(this).parent().find( 'textarea' );
+		text.height(50);
 	}
 }
 $('.hidecontents span').on('click', hiddenToggle);
 
-function addAtts() {
+$('#addAtts').on('click', function() {
 	$('#atts-container').css('display', 'block');
-}
+});
 $('.cancel').on('click', function() {
 	$('#atts-container').hide();
 });
@@ -126,9 +134,9 @@ function addAttribute(type) {
 
 	count++;
 }
-
-function addReference() {
-	var search = $('<div')
-		.addClass('search');
+$('#addRef').on('click', function(){
+	$('.addref').show();
+	$(this).hide();
+});
 	
-}	
+});
