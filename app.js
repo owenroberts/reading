@@ -66,7 +66,6 @@ app.post('/book/new', function(req, res){
 // edit a book
 app.get('/book/:id/edit', function(req, res) {
     bookProvider.findById(req.param('_id'), function(error, book, info) { 
-        console.log(book.refs);
         if (book.refs != undefined) {
             bookProvider.getRefs(book.refs, function(error, refs){
                 res.render('book_edit', {
@@ -141,12 +140,25 @@ app.get('/:tag', function(req, res) {
 });
 
 //get references query 
-app.get('/addref/:refs', function(req, res) {
-    bookProvider.findRefs(req.query, function(error, books) { 
-        res.render('refs', {
+app.get('/addref/search', function(req, res) {
+    bookProvider.searchRefs(req.query, function(error, books) { 
+        res.render('search_refs', {
             bookId:req.query["_id"],
             books:books,
             title: req.query["_field"] + ": " + req.query["_ref"]
+        });
+    });
+});
+
+//get references browse 
+app.get('/addref/browse', function(req, res) {
+    console.log(req.query);
+    bookProvider.browseRefs(req.query, function(error, books) { 
+        res.render('browse_refs', {
+            bookId:req.query["_id"],
+            browseField: req.query["_field"],
+            browseKey: req.query[req.query["_field"]],
+            books:books
         });
     });
 });

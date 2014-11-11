@@ -20,6 +20,16 @@ a:hover {
   cursor: pointer;
   text-align: center;
 }
+.clickable:hover {
+  border: none;
+}
+.underlined {
+  margin: 0 3px;
+  border-bottom: 1px solid #000;
+}
+.underlined:focus {
+  outline: none !important;
+}
 input:focus {
   outline: #8181c7 auto 5px;
 }
@@ -31,9 +41,8 @@ input[type="submit"]:hover {
   border-bottom: 2px solid #fdf;
 }
 /*  index */
-#books div,
-#books form {
-  margin: 8px 0;
+#books {
+  margin-top: 8px;
 }
 #books .title input {
   color: #8181c7;
@@ -48,15 +57,60 @@ input[type="submit"]:hover {
 #books .title input:focus {
   outline: none;
 }
-.book {
-  padding: 3px;
-  margin: 3px 0;
-}
 .menu a {
   margin: 3px 6px 3px 0;
 }
 #delete {
   width: 60px;
+}
+/*  new reference page */
+.book {
+  width: 160px;
+  height: 200px;
+  background: #ffadff;
+  padding: 6px;
+  border: 10px solid #8181c7;
+  float: left;
+  margin-right: 6px;
+  margin-bottom: 6px;
+}
+.book div {
+  margin: 3px 0;
+}
+.book .title {
+  color: #8181c7;
+  font-size: 18px;
+}
+.book .note {
+  width: 140px;
+  height: 90px;
+  background: #e0e0e0;
+  margin: 3px 0;
+}
+.browsedbook {
+  margin: 16px 0;
+}
+.browsedbook textarea {
+  vertical-align: middle;
+  margin: 4px;
+}
+.browsedbook .title {
+  color: #8181c7;
+  font-size: 18px;
+  padding: 6px;
+  display: inline;
+}
+.browsedbook .type {
+  background: #8181c7;
+  color: #fff;
+  font-size: 18px;
+  padding: 6px;
+  display: inline;
+}
+.browsedbook .browsekey {
+  background: #e0e0e0;
+  margin: 3px 0;
+  padding: 6px;
 }
 /*  single book page   */
 .backhome {
@@ -68,7 +122,7 @@ input[type="submit"]:hover {
 .backhome a:hover {
   border-bottom: 2px solid #fdf;
 }
-.book-single .book {
+.book-single .bk {
   width: 480px;
   background: transparent;
   position: relative;
@@ -234,23 +288,8 @@ input[type="submit"]:hover {
 .book-single .refs .addref {
   display: none;
 }
-/*  new reference page */
-.refbook {
-  width: 160px;
-  height: 200px;
-  background: #ffadff;
-  padding: 6px;
-  border: 10px solid #8181c7;
-}
-.refbook .title {
-  color: #8181c7;
-  font-size: 18px;
-}
-.refbook .note {
-  width: 140px;
-  height: 90px;
-  background: #e0e0e0;
-  margin: 3px 0;
+.book-single .refs select {
+  margin: 3px;
 }
 /* NEW BOOK */
 .newbook {

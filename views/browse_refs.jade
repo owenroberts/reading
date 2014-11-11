@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	h1="Browsing: " + browseKey
+	div#books
+		if books.length > 0
+			each book in books
+				if (!book.info)
+					if (book._id.toHexString() !== bookId)
+						div.browsedbook
+							if (browseField != "_types")
+								div.browsekey= book[browseKey]
+							form( method="post", action="/book/:id/edit")
+								input(name="_id", type="hidden", value=bookId)
+								input(name="_refId", type="hidden", value=book._id.toHexString())
+								div.title= book.title
+								if (browseField == "_types")
+									div.type= book.type
+								textarea.note(name="_refNote", placeholder="Note")
+								input.clickable(id="edit", value="Save", type="submit")
+		else
+			div= "Nothing matches this query."
+			form( method="get", action="/book/:id/edit")
+				input(name="_id", type="hidden", value=bookId)
+				input.clickable(type="submit", value="Back")

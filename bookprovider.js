@@ -43,22 +43,43 @@ BookProvider.prototype.findTag = function(tag, callback) {
   });
 };
 
-//find subset of books with query 
-BookProvider.prototype.findRefs = function(query, callback) {
+//search books and return subset based on a feild and query (_ref)
+BookProvider.prototype.searchRefs = function(query, callback) {
   var name = query._field;
   var value = query._ref;
-  var query = {};
-  query[name] = {"$regex":new RegExp(value, "i")};
+  var dbQuery = {};
+  dbQuery[name] = {$regex:value};
   this.getCollection(function(error, book_collection) {
-      book_collection.find(query).toArray(function(error, results){
+      book_collection.find(dbQuery).toArray(function(error, results){
         if (error) callback(error);
         else callback(null, results);
       });
   });
 };
-//find subset of books with query 
+
+//search books and return subset based on a feild and query (_ref)
+BookProvider.prototype.browseRefs = function(query, callback) {
+  var dbQuery = {};
+  var f = query._field;
+  var q = query[query._field];
+  if (f == "_fields") {
+      dbQuery[query[query._field]] = {$exists:true};
+  } else if (query._field == "_types") {
+    dbQuery = {type:q};
+  } else if (f == "_tags") {
+    dbQuery = {tags:{$in:[q]}};
+  }
+  console.log(dbQuery);
+  this.getCollection(function(error, book_collection) {
+      book_collection.find(dbQuery).toArray(function(error, results){
+        if (error) callback(error);
+        else callback(null, results);
+      });
+  });
+};
+
+// get references from single book to display query from id 
 BookProvider.prototype.getRefs = function(refs, callback) {
-  console.log(refs);
   var query = {_id:{$in:[]}};
   for (var i = 0; i < refs.length; i++) {
     var objId = new ObjectID(refs[i].refId);

@@ -23,6 +23,13 @@ a:hover
   display:inline-block
   cursor:pointer
   text-align:center
+  &:hover
+    border:none 
+.underlined
+  margin:0 3px
+  border-bottom:1px solid black
+  &:focus
+      outline:none !important
 input
   &:focus
       outline: primary auto 5px;
@@ -34,8 +41,7 @@ input
   
 /*  index */
 #books
-  div, form
-    margin: 8px 0
+  margin-top:8px
   .title input
     color: primary
     font-size:24px
@@ -46,15 +52,54 @@ input
       border-bottom:2px solid highlight
     &:focus
       outline:none
-.book 
-	padding:3px
-	margin:3px 0
 
 .menu
   a 
     margin:3px 6px 3px 0
 #delete
   width:60px
+  
+/*  new reference page */
+
+.book
+  width: 160px;
+  height: 200px;
+  background: lighten(secondary, 60%)
+  padding: 6px;
+  border: 10px solid primary 
+  float:left
+  margin-right:6px
+  margin-bottom:6px
+  div
+    margin:3px 0
+  .title
+    color: primary
+    font-size:18px
+  .note
+    width:140px
+    height:90px
+    background:bkg 
+    margin:3px 0 
+.browsedbook
+  margin:16px 0
+  textarea
+    vertical-align: middle;
+    margin: 4px;
+  .title
+    color: primary
+    font-size:18px
+    padding:6px
+    display:inline
+  .type
+    background: primary
+    color:white
+    font-size:18px
+    padding:6px
+    display:inline
+  .browsekey
+    background:bkg 
+    margin:3px 0 
+    padding:6px
 
 /*  single book page   */
 .backhome
@@ -64,7 +109,7 @@ input
     &:hover
       border-bottom:2px solid highlight
 .book-single
-  .book
+  .bk
     width:480px
     background: transparent
     position: relative 
@@ -195,23 +240,9 @@ input
       padding:0
     .addref
       display:none
+    select
+      margin:3px
      
-/*  new reference page */
-
-.refbook
-  width: 160px;
-  height: 200px;
-  background: lighten(secondary, 60%)
-  padding: 6px;
-  border: 10px solid primary 
-  .title
-    color: primary
-    font-size:18px
-  .note
-    width:140px
-    height:90px
-    background:bkg 
-    margin:3px 0 
 
     
 

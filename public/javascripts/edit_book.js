@@ -2,6 +2,14 @@ $( document ).ready(function() {
 function addRef() {
 	$('.addref').show();
 }
+
+$('select[name=_field]').on('change', function(){
+	$('select.choices').css('display', 'none').attr('disabled', true);
+	$('select[name='+$(this).val()+']').css('display', 'inline').attr('disabled', false);
+});
+$('select[name=_types]').css('display', 'inline').attr('disabled', false);
+
+
 var count = 0;
 $('input.edit').on('change', function() {
 	if (this.name[0] != "+") {
@@ -13,7 +21,6 @@ $('input.edit').on('change', function() {
 	}
 });
 $('textarea.edit').on('keydown', function() {
-	console.log(this);
 	if (this.name[0] != "+") {
 		if (this.name == "quotes") {
 			$('textarea[name="quotes"]').attr('name', '+quotes');

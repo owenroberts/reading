@@ -84,18 +84,17 @@ block content
 						select(name="_field")
 							each field in info.info._fields
 								option= field
-						input.select.underlined(name="_ref", type="text", placeholder="query")
+						input.underlined(name="_ref", type="text", placeholder="query")
 						input.clickable(type="submit")
 				div.browse
-					form(method="get", action="/addref/browse")
+					for(method="get", action="/addref/:refs")
 						input(name="_id", type="hidden", value=book._id.toHexString())
-						span="Browse by: "
+						span="Browse: "
 						select(name="_field")
 							each item, name in info.info
-								if name != "_atts"
-									option= name
+								option= name
 						each item, name in info.info 
-							select.choices(style="display:none", disabled, name=name)
+							select.choices(style="display:none", name=name)
 								each item in info.info[name]
 									option= item
 						input.clickable(type="submit")
