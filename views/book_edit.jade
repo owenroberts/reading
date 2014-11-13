@@ -70,11 +70,9 @@ block content
 							form(method="get", action="/book/:id/edit")
 								input(name="_id", type="hidden", value=ref._id.toHexString())
 								input.title(type="submit", value=ref.title)
-							each reference in book.refs
-								if reference.refId == ref._id.toHexString()
-									div.hiddencontents
-										textarea.select.edit(type="text", name="refnote")=reference.refNote
-
+							if ref.referencedBy
+								div.hiddencontents
+										textarea.select.edit(type="text", name="refnote")=ref.referencedBy[book._id.toHexString()]
 			div#addRef.plus.clickable()= "Add Reference"
 			div.addref
 				div.search
@@ -99,3 +97,4 @@ block content
 								each item in info.info[name]
 									option= item
 						input.clickable(type="submit")
+		

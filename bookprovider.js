@@ -130,6 +130,30 @@ BookProvider.prototype.findById = function(id, callback) {
   });
 };
 
+// add a tag
+BookProvider.prototype.addTag = function(query, set) {
+  this.getCollection(function(error, book_collection) {
+    if (error) callback(error);
+    else book_collection.update(query, set);
+  });
+};
+
+// referenced by add note 
+BookProvider.prototype.addReferencedBy = function(refId, bookId, note) {
+  console.log(bookId);
+  var query = {_id:new ObjectID(refId)};
+  var set = { referencedBy: {}};
+  set["referencedBy"][bookId] = note;
+  console.log("query " + query);
+  console.log("set " + set);
+  this.getCollection(function(error, book_collection){
+    if (error) callback(error);
+    else {
+      book_collection.update(query, {$set:set});
+    }
+  });
+};
+
 // update a book
 BookProvider.prototype.update = function(bookId, books, callback) {
   this.getCollection(function(error, book_collection) {

@@ -55,9 +55,12 @@ $('.hidecontents span').on('click', hiddenToggle);
 
 $('#addAtts').on('click', function() {
 	$('#atts-container').css('display', 'block');
+	$(this).hide();
 });
 $('.cancel').on('click', function() {
+	console.log("what")
 	$('#atts-container').hide();
+	$('#addAtts').show();
 });
 
 $('.atts').on('click', function(elem){
@@ -137,6 +140,7 @@ function addAttribute(type) {
 
 	cancel.on('click', function() {
 		$('.new-attribute').remove();
+		$('#addAtts').show();
 	});
 
 	count++;

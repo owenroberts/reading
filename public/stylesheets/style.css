@@ -26,6 +26,7 @@ a:hover {
 .underlined {
   margin: 0 3px;
   border-bottom: 1px solid #000;
+  padding: 0 !important;
 }
 .underlined:focus {
   outline: none !important;
@@ -106,6 +107,7 @@ input[type="submit"]:hover {
   font-size: 18px;
   padding: 6px;
   display: inline;
+  margin-right: 3px;
 }
 .browsedbook .browsekey {
   background: #e0e0e0;
@@ -121,6 +123,9 @@ input[type="submit"]:hover {
 }
 .backhome a:hover {
   border-bottom: 2px solid #fdf;
+}
+.book-single {
+  max-width: 960px;
 }
 .book-single .bk {
   width: 480px;
@@ -273,6 +278,7 @@ input[type="submit"]:hover {
 }
 .book-single .refs {
   width: 360px;
+  clear: right;
   float: right;
   background: #f0f0f0;
   padding: 6px;

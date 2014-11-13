@@ -104,9 +104,11 @@ app.post('/book/:id/edit', function(req, res) {
             } else if (item == 'newtag') {
                 editedBook["$addToSet"] = {};
                 editedBook["$addToSet"] = {'tags': req.body[item]};
+                bookProvider.addTag({info:{$exists:true}}, {$addToSet:{"info._tags":req.body[item]}});
             } else if (item == '_refId') {
                 editedBook["$addToSet"] = {};
                 editedBook["$addToSet"] = {'refs': {refId:req.body["_refId"], refNote:req.body["_refNote"]}};
+                bookProvider.addReferencedBy(req.body["_refId"], req.body["_id"], req.body["_refNote"]);
             } else if (item[0] == "+"){
                 if (!newitem) editedBook["$set"] = {};
                 newitem = true;

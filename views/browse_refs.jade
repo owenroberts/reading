@@ -2,13 +2,15 @@ extends layout
 
 block content
 	h1="Browsing: " + browseKey
+	- var foo = false
 	div#books
 		if books.length > 0
 			each book in books
 				if (!book.info)
 					if (book._id.toHexString() !== bookId)
+						- foo = true
 						div.browsedbook
-							if (browseField != "_types")
+							if (browseField == "_fields")
 								div.browsekey= book[browseKey]
 							form( method="post", action="/book/:id/edit")
 								input(name="_id", type="hidden", value=bookId)
@@ -16,9 +18,12 @@ block content
 								div.title= book.title
 								if (browseField == "_types")
 									div.type= book.type
+								if (browseField == "_tags")
+									each tag in book.tags
+										div.type= tag
 								textarea.note(name="_refNote", placeholder="Note")
 								input.clickable(id="edit", value="Save", type="submit")
-		else
+		if foo == false
 			div= "Nothing matches this query."
 			form( method="get", action="/book/:id/edit")
 				input(name="_id", type="hidden", value=bookId)
