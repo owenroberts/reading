@@ -30,6 +30,19 @@ BookProvider.prototype.findAll = function(callback) {
     });
 };
 
+//find recently edited books
+BookProvider.prototype.findRecentEdits = function(callback) {
+    this.getCollection(function(error, book_collection) {
+      if( error ) callback(error)
+      else {
+        book_collection.find().toArray(function(error, results) {
+          if( error ) callback(error)
+          else callback(null, results)
+        });
+      }
+    });
+};
+
 //find subset of books with tag 
 BookProvider.prototype.findTag = function(tag, callback) {
   this.getCollection(function(error, book_collection) {
@@ -153,7 +166,6 @@ BookProvider.prototype.addTag = function(query, set) {
 
 // referenced by add note 
 BookProvider.prototype.addReferencedBy = function(refId, title, bookId, note) {
-  console.log(bookId);
   var query = {_id:new ObjectID(refId)};
   var set = { referencedBy: {}};
   set["referencedBy"][bookId] = note;
@@ -162,6 +174,22 @@ BookProvider.prototype.addReferencedBy = function(refId, title, bookId, note) {
     if (error) callback(error);
     else {
       book_collection.update(query, {$addToSet:set});
+    }
+  });
+};
+// referenced by add note 
+BookProvider.prototype.editReferencedBy = function(refId, title, bookId, note) {
+  console.log(refId);
+  var query = {_id:new ObjectID(refId)};
+  var set = { referencedBy: {}};
+  set["referencedBy"][bookId] = note;
+  set["referencedBy"]["title"] = title;
+  console.log("q " + JSON.stringify(query));
+  console.log("s " + JSON.stringify(set));
+  this.getCollection(function(error, book_collection){
+    if (error) callback(error);
+    else {
+      book_collection.update(query, {$set:set});
     }
   });
 };

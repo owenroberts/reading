@@ -1,11 +1,12 @@
 $( document ).ready(function() {
 
 var pageload = true;
-$('[name="refnote"]').on('change', function() {
+$('[name="_refNote"]').on('change keyup keydown paste cut', function() {
 	if (pageload) {
 		pageload = false;
 	} else {
-		console.log("edit this mutha fooker");
+		console.log($('#refedit'));
+		$('#refedit').attr({type:"submit"});
 	}
 });
 

@@ -113,7 +113,10 @@ app.post('/book/:id/edit', function(req, res) {
                 editedBook["$addToSet"] = {};
                 editedBook["$addToSet"] = {'refs': {refId:req.body["_refId"], refNote:req.body["_refNote"]}};
                 bookProvider.addReferencedBy(req.body["_refId"], req.body["_title"], req.body["_id"], req.body["_refNote"]);
-            } else if (item[0] == "+"){
+            } else if (item == '_editRef') {
+                bookProvider.editReferencedBy(req.body["_editRef"], req.body["_title"], req.body["_id"], req.body["_refNote"]);
+            } 
+            else if (item[0] == "+"){
                 if (!newitem) editedBook["$set"] = {};
                 newitem = true;
                 var st = item.substr(1);
@@ -126,6 +129,13 @@ app.post('/book/:id/edit', function(req, res) {
     }
     console.log(editedBook);
     if (Object.getOwnPropertyNames(editedBook).length > 0) {
+        if (editedBook["$set"] != undefined) {
+            editedBook["$set"]["last_edit"] = new Date();
+        } else {
+            editedBook["$set"] = {};
+            editedBook["$set"]["last_edit"] = new Date();
+        }
+        console.log(editedBook);
         bookProvider.update(req.param('_id'), editedBook, function(error, docs) {
             res.redirect('/book/:id/edit?_id='+req.body._id);
         });
