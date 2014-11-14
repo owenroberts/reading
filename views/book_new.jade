@@ -2,14 +2,16 @@ extends layout
 
 block content
 	h1= title
-	a(href="/")!= "Back to Book List"
+	a.clickable(href="/")!= "Back to Book List"
 	div.newbook
 		form( method="post")
 			div 
 				div
 					input.in.select(type="text", name="title", placeholder="Title")
-				div 
-					input.in.select(type="text", name="type", placeholder="Type")
+				div= "Type: "
+					select(name="type")
+						each type in info.info._types
+							option= type
 				div
 					input.in.select(type="text", name="name", placeholder="Author")
 				div

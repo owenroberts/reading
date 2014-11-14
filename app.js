@@ -42,13 +42,17 @@ app.get('/', function(req, res){
 
 // create a book
 app.get('/book/new', function(req, res) {
-    res.render('book_new', {
-        title: 'New Book'
+    bookProvider.getInfo(function(error, info) {
+        res.render('book_new', {
+            info:info,
+            title: 'New Book'
+        });
     });
 });
 
 // saves created book
 app.post('/book/new', function(req, res){
+    console.log(req.query);
     bookProvider.save({
         title: req.param('title'),
         type: req.param('type'),
@@ -108,7 +112,7 @@ app.post('/book/:id/edit', function(req, res) {
             } else if (item == '_refId') {
                 editedBook["$addToSet"] = {};
                 editedBook["$addToSet"] = {'refs': {refId:req.body["_refId"], refNote:req.body["_refNote"]}};
-                bookProvider.addReferencedBy(req.body["_refId"], req.body["_id"], req.body["_refNote"]);
+                bookProvider.addReferencedBy(req.body["_refId"], req.body["_title"], req.body["_id"], req.body["_refNote"]);
             } else if (item[0] == "+"){
                 if (!newitem) editedBook["$set"] = {};
                 newitem = true;
@@ -146,6 +150,7 @@ app.get('/addref/search', function(req, res) {
     bookProvider.searchRefs(req.query, function(error, books) { 
         res.render('search_refs', {
             bookId:req.query["_id"],
+            bookTitle:req.query["_bookTitle"],
             books:books,
             title: req.query["_field"] + ": " + req.query["_ref"]
         });
@@ -154,11 +159,11 @@ app.get('/addref/search', function(req, res) {
 
 //get references browse 
 app.get('/addref/browse', function(req, res) {
-    console.log(req.query);
     bookProvider.browseRefs(req.query, function(error, books) { 
         res.render('browse_refs', {
             bookId:req.query["_id"],
             browseField: req.query["_field"],
+            bookTitle:req.query["_bookTitle"],
             browseKey: req.query[req.query["_field"]],
             books:books
         });

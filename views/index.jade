@@ -11,7 +11,7 @@ block content
 					div.title
 						form( method="get", action="book/:id/edit")
 							input(name="_id", type="hidden", value=book._id.toHexString())
-							input(id="edit", value=book.title, type="submit")
+							button(type="submit")=book.title
 					div.name="by "+ book.name
 					div.genre= book.genre
 					

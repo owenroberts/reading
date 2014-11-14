@@ -1,4 +1,14 @@
 $( document ).ready(function() {
+
+var pageload = true;
+$('[name="refnote"]').on('change', function() {
+	if (pageload) {
+		pageload = false;
+	} else {
+		console.log("edit this mutha fooker");
+	}
+});
+
 function addRef() {
 	$('.addref').show();
 }
@@ -39,7 +49,6 @@ $('.book-single').on( 'change keyup keydown paste cut', 'textarea', function (){
 
 /* hidden stuff */
 function hiddenToggle() {
-	console.log('unhide');
 	var state = $(this).text();
 	if (state[0] == "-") {
 		$(this).parent().find('div').css('display', 'none');

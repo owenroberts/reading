@@ -45,17 +45,21 @@ input[type="submit"]:hover {
 #books {
   margin-top: 8px;
 }
-#books .title input {
+#books .title button {
   color: #8181c7;
   font-size: 24px;
   margin: 6px 0;
   cursor: pointer;
+  background: transparent;
+  border: none;
+  text-align: left;
+  padding: 0;
   border-bottom: 2px solid transparent;
 }
-#books .title input:hover {
+#books .title button:hover {
   border-bottom: 2px solid #fdf;
 }
-#books .title input:focus {
+#books .title button:focus {
   outline: none;
 }
 .menu a {

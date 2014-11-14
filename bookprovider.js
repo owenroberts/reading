@@ -48,7 +48,7 @@ BookProvider.prototype.searchRefs = function(query, callback) {
   var name = query._field;
   var value = query._ref;
   var dbQuery = {};
-  dbQuery[name] = {$regex:value};
+  dbQuery[name] = {$regex:value, $options:"-i"};
   this.getCollection(function(error, book_collection) {
       book_collection.find(dbQuery).toArray(function(error, results){
         if (error) callback(error);
@@ -130,6 +130,19 @@ BookProvider.prototype.findById = function(id, callback) {
   });
 };
 
+// get info 
+BookProvider.prototype.getInfo = function(callback) {
+  this.getCollection(function(error, book_collection) {
+    if (error) callback(error);
+    else {
+      book_collection.findOne({info:{$exists:true}}, function(error, info) {
+          if (error) callback(error);
+          else callback(null, info);
+      });
+    }
+  });
+};
+
 // add a tag
 BookProvider.prototype.addTag = function(query, set) {
   this.getCollection(function(error, book_collection) {
@@ -139,17 +152,16 @@ BookProvider.prototype.addTag = function(query, set) {
 };
 
 // referenced by add note 
-BookProvider.prototype.addReferencedBy = function(refId, bookId, note) {
+BookProvider.prototype.addReferencedBy = function(refId, title, bookId, note) {
   console.log(bookId);
   var query = {_id:new ObjectID(refId)};
   var set = { referencedBy: {}};
   set["referencedBy"][bookId] = note;
-  console.log("query " + query);
-  console.log("set " + set);
+  set["referencedBy"]["title"] = title;
   this.getCollection(function(error, book_collection){
     if (error) callback(error);
     else {
-      book_collection.update(query, {$set:set});
+      book_collection.update(query, {$addToSet:set});
     }
   });
 };
