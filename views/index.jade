@@ -1,11 +1,30 @@
 extends layout
 
 block content
-	h1= title
-	.menu
-		a.clickable(href="/book/new")!= "Add New Book"
+
 	div#books
-		each book in books
+		div.search
+			form(method="get", action="/search")
+				input.select.underlined(name="_query", type="text", placeholder=title)
+				select(name="_field")
+							each field in info.info._fields
+								option= field
+				input.clickable(type="submit", value="Search")
+		div.browse
+			form(method="get", action="/browse")
+				input.clickable(type="submit", value="Browse")
+				select(name="_field")
+					each item, name in info.info
+						if name != "_atts"
+							option= name
+				each item, name in info.info 
+					select.choices(style="display:none", disabled, name=name)
+						each item in info.info[name]
+							option= item
+		div.menu
+			a.new.clickable(href="/book/new")!= "Add New Book"
+		h3= "Recently Edited"
+		each book in recentlyEdited
 			if (!book.info)
 				div.book
 					div.title
@@ -18,3 +37,19 @@ block content
 					form#delete( onsubmit="return confirm('Are you sure?');" method="post", action="/book/:id/delete")
 						input(name="_id", type="hidden", value=book._id.toHexString())
 						input.clickable(id="delete", value="Delete", type="submit")
+		div.cf
+		h3= "Recently Looged"
+		each book in recentlyLogged
+			if (!book.info)
+				div.book
+					div.title
+						form( method="get", action="book/:id/edit")
+							input(name="_id", type="hidden", value=book._id.toHexString())
+							button(type="submit")=book.title
+					div.name="by "+ book.name
+					div.genre= book.genre
+					
+					form#delete( onsubmit="return confirm('Are you sure?');" method="post", action="/book/:id/delete")
+						input(name="_id", type="hidden", value=book._id.toHexString())
+						input.clickable(id="delete", value="Delete", type="submit")
+	script(type="text/javascript", src="/javascripts/options.js")

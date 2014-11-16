@@ -109,11 +109,13 @@ block content
 			div.ref
 				if book.referencedBy
 					each refby, index in book.referencedBy
+						div=refby
+						div=index
 						form(method="get", action="/book/:id/edit")
 							each value, key in refby
 								if key == "title"
 									input.title(type="submit", value=refby.title)
 								else 
-									input(name="_id", type="hidden", value=key)
-								
-		
+									div="no"
+								//- else 
+								//- 	input(name="_id", type="hidden", value=key)	

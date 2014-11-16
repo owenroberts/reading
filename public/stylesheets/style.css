@@ -41,6 +41,10 @@ input[type="submit"] {
 input[type="submit"]:hover {
   border-bottom: 2px solid #fdf;
 }
+.cf {
+  clear: both;
+  height: 10px;
+}
 /*  index */
 #books {
   margin-top: 8px;
@@ -61,6 +65,15 @@ input[type="submit"]:hover {
 }
 #books .title button:focus {
   outline: none;
+}
+#books input[name="_query"] {
+  font-size: 24px;
+}
+#books select {
+  margin: 0 12px;
+}
+#books div {
+  margin-top: 12px;
 }
 .menu a {
   margin: 3px 6px 3px 0;

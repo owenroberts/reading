@@ -31,14 +31,53 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
 
 // homepage
-app.get('/', function(req, res){
+/*app.get('/', function(req, res){
   bookProvider.findAll(function(error, bks){
       res.render('index', {
             title: 'Reded',
             books:bks
         });
   });
+});*/
+app.get('/', function(req, res) {
+    bookProvider.findRecentEdits(function(error, edits) {
+        bookProvider.findRecentLogs(function(error, logs) {
+            bookProvider.getInfo(function(error, info) {
+                res.render('index', {
+                    title:"Reded",
+                    info:info,
+                    recentlyEdited:edits,
+                    recentlyLogged:logs
+                });
+            });
+        });
+    });
 });
+
+//get references browse 
+app.get('/browse', function(req, res) {
+    bookProvider.browse(req.query, function(error, books) { 
+        res.render('search', {
+            books:books,
+            title: "Browse " + req.query["_field"] + ", " + req.query[req.query["_field"]]
+        });
+    });
+});
+
+
+// search all of the books
+app.get('/search', function(req, res) {
+    console.log('search');
+    bookProvider.search(req.query, function(error, books) {
+        res.render('search', {
+            bookId:req.query["_id"],
+            books:books,
+            title: req.query["_field"] + ": " + req.query["_query"]
+        });
+    });
+});
+
+
 
 // create a book
 app.get('/book/new', function(req, res) {
@@ -148,7 +187,7 @@ app.post('/book/:id/edit', function(req, res) {
 // get all tags
 app.get('/:tag', function(req, res) {
     bookProvider.findTag(req.param('_tag'), function(error, books) { 
-        res.render('index', {
+        res.render('search', {
             books:books,
             title: req.query["_tag"]
         });
@@ -166,6 +205,8 @@ app.get('/addref/search', function(req, res) {
         });
     });
 });
+
+
 
 //get references browse 
 app.get('/addref/browse', function(req, res) {

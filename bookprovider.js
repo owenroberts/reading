@@ -20,11 +20,11 @@ BookProvider.prototype.getCollection= function(callback) {
 //find all books
 BookProvider.prototype.findAll = function(callback) {
     this.getCollection(function(error, book_collection) {
-      if( error ) callback(error)
+      if( error ) callback(error);
       else {
         book_collection.find().toArray(function(error, results) {
-          if( error ) callback(error)
-          else callback(null, results)
+          if( error ) callback(error);
+          else callback(null, results);
         });
       }
     });
@@ -33,11 +33,23 @@ BookProvider.prototype.findAll = function(callback) {
 //find recently edited books
 BookProvider.prototype.findRecentEdits = function(callback) {
     this.getCollection(function(error, book_collection) {
-      if( error ) callback(error)
+      if( error ) callback(error);
       else {
-        book_collection.find().toArray(function(error, results) {
-          if( error ) callback(error)
-          else callback(null, results)
+        book_collection.find().sort({last_edit:-1}).limit(8).toArray(function(error, results) {
+          if( error ) callback(error);
+          else callback(null, results);
+        });
+      }
+    });
+};
+//find recently edited books
+BookProvider.prototype.findRecentLogs = function(callback) {
+    this.getCollection(function(error, book_collection) {
+      if( error ) callback(error);
+      else {
+        book_collection.find().sort({created_at:-1}).limit(8).toArray(function(error, results) {
+          if( error ) callback(error);
+          else callback(null, results);
         });
       }
     });
@@ -71,7 +83,55 @@ BookProvider.prototype.searchRefs = function(query, callback) {
 };
 
 //search books and return subset based on a feild and query (_ref)
+BookProvider.prototype.searchRefs = function(query, callback) {
+  var name = query._field;
+  var value = query._ref;
+  var dbQuery = {};
+  dbQuery[name] = {$regex:value, $options:"-i"};
+  this.getCollection(function(error, book_collection) {
+      book_collection.find(dbQuery).toArray(function(error, results){
+        if (error) callback(error);
+        else callback(null, results);
+      });
+  });
+};
+
+//search all books
+BookProvider.prototype.search = function(query, callback) {
+  var name = query._field;
+  var value = query._query;
+  var dbQuery = {};
+  dbQuery[name] = {$regex:value, $options:"-i"};
+  this.getCollection(function(error, book_collection) {
+      book_collection.find(dbQuery).toArray(function(error, results){
+        if (error) callback(error);
+        else callback(null, results);
+      });
+  });
+};
+
+//search books and return subset based on a feild and query (_ref)
 BookProvider.prototype.browseRefs = function(query, callback) {
+  var dbQuery = {};
+  var f = query._field;
+  var q = query[query._field];
+  if (f == "_fields") {
+      dbQuery[query[query._field]] = {$exists:true};
+  } else if (query._field == "_types") {
+    dbQuery = {type:q};
+  } else if (f == "_tags") {
+    dbQuery = {tags:{$in:[q]}};
+  }
+  console.log(dbQuery);
+  this.getCollection(function(error, book_collection) {
+      book_collection.find(dbQuery).toArray(function(error, results){
+        if (error) callback(error);
+        else callback(null, results);
+      });
+  });
+};
+//search books and return subset based on a feild and query (_ref)
+BookProvider.prototype.browse = function(query, callback) {
   var dbQuery = {};
   var f = query._field;
   var q = query[query._field];
@@ -131,8 +191,6 @@ BookProvider.prototype.findById = function(id, callback) {
   this.getCollection(function(error, book_collection) {
     if (error) callback(error);
     else {
-      //var info = book_collection.find({info:{$exists:true}}).toArray();
-      //info = "test";
       book_collection.findOne({info:{$exists:true}}, function(error, info) {
           book_collection.findOne({_id:book_collection.db.bson_serializer.ObjectID.createFromHexString(id)}, function(error, result) {
             if (error) callback(error);
