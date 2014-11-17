@@ -223,11 +223,10 @@ BookProvider.prototype.addTag = function(query, set) {
 };
 
 // referenced by add note 
-BookProvider.prototype.addReferencedBy = function(refId, title, bookId, note) {
+BookProvider.prototype.addReferencedBy = function(refId, id, title, note) {
   var query = {_id:new ObjectID(refId)};
   var set = { referencedBy: {}};
-  set["referencedBy"][bookId] = note;
-  set["referencedBy"]["title"] = title;
+  set["referencedBy"] = {id:id, note:note, title:title};
   this.getCollection(function(error, book_collection){
     if (error) callback(error);
     else {
@@ -235,15 +234,23 @@ BookProvider.prototype.addReferencedBy = function(refId, title, bookId, note) {
     }
   });
 };
-// referenced by add note 
-BookProvider.prototype.editReferencedBy = function(refId, title, bookId, note) {
-  console.log(refId);
-  var query = {_id:new ObjectID(refId)};
-  var set = { referencedBy: {}};
-  set["referencedBy"][bookId] = note;
-  set["referencedBy"]["title"] = title;
-  console.log("q " + JSON.stringify(query));
-  console.log("s " + JSON.stringify(set));
+// edit referenced by 
+BookProvider.prototype.editReferencedBy = function(refId, id, title, note) {
+  var query = {_id:new ObjectID(refId), referencedBy:{$elemMatch:{id:id}}};
+  var set = {};
+  set["referencedBy.$.note"] = note;
+  this.getCollection(function(error, book_collection){
+    if (error) callback(error);
+    else {
+      book_collection.update(query, {$set:set});
+    }
+  });
+};
+// edit reference
+BookProvider.prototype.editRef = function(refId, id, title, note) {
+  var query = {_id:new ObjectID(refId), refs:{$elemMatch:{id:id}}};
+  var set = {};
+  set["refs.$.note"] = note;
   this.getCollection(function(error, book_collection){
     if (error) callback(error);
     else {

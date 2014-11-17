@@ -63,21 +63,20 @@ block content
 		div.refs
 			div= "References"
 			div.ref
-				if refs
-					each ref, index in refs
+				if book.refs
+					each ref, index in book.refs
 						div.hidecontents
 							span="+"
 							form(method="get", action="/book/:id/edit")
-								input(name="_id", type="hidden", value=ref._id.toHexString())
+								input(name="_id", type="hidden", value=ref.id)
 								input.title(type="submit", value=ref.title)
-							if ref.referencedBy
-								div.hiddencontents
-									form(method="post", action="/book/:id/edit")
-										input(name="_editRef", type="hidden", value=ref._id.toHexString())
-										input(name="_title", type="hidden", value=ref.title)
-										input(name="_id", type="hidden" value=book._id.toHexString())
-										textarea.select(name="_refNote", type="text")=ref.referencedBy[book._id.toHexString()]
-										input#refedit.clickable(type="hidden", value="Save")= "Save"
+							div.hiddencontents
+								form(method="post", action="/book/:id/edit")
+									input(name="_editRef", type="hidden", value=ref.id)
+									input(name="_title", type="hidden", value=ref.title)
+									input(name="_id", type="hidden" value=book._id.toHexString())
+									textarea.select(name="_refNote", type="text")=ref.note
+									input#refedit.clickable(type="hidden", value="Save")= "Save"
 			div#addRef.plus.clickable()= "Add Reference"
 			div.addref
 				div.search
@@ -109,13 +108,6 @@ block content
 			div.ref
 				if book.referencedBy
 					each refby, index in book.referencedBy
-						div=refby
-						div=index
 						form(method="get", action="/book/:id/edit")
-							each value, key in refby
-								if key == "title"
-									input.title(type="submit", value=refby.title)
-								else 
-									div="no"
-								//- else 
-								//- 	input(name="_id", type="hidden", value=key)	
+							input.title(type="submit", value=refby.title)
+							input(name="_id", type="hidden", value=refby.id)

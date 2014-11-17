@@ -109,7 +109,7 @@ app.post('/book/new', function(req, res){
 // edit a book
 app.get('/book/:id/edit', function(req, res) {
     bookProvider.findById(req.param('_id'), function(error, book, info) { 
-        if (book.refs != undefined) {
+/*        if (book.refs != undefined) {
             bookProvider.getRefs(book.refs, function(error, refs){
                 res.render('book_edit', {
                     refs:refs,
@@ -118,13 +118,13 @@ app.get('/book/:id/edit', function(req, res) {
                     title: book.title
                 });
             });
-        } else {
+        } else {*/
             res.render('book_edit', {
                 book: book,
                 info: info,
                 title: book.title
             });
-        }       
+        //}       
     });
 });
 
@@ -150,10 +150,11 @@ app.post('/book/:id/edit', function(req, res) {
                 bookProvider.addTag({info:{$exists:true}}, {$addToSet:{"info._tags":req.body[item]}});
             } else if (item == '_refId') {
                 editedBook["$addToSet"] = {};
-                editedBook["$addToSet"] = {'refs': {refId:req.body["_refId"], refNote:req.body["_refNote"]}};
-                bookProvider.addReferencedBy(req.body["_refId"], req.body["_title"], req.body["_id"], req.body["_refNote"]);
+                editedBook["$addToSet"] = {'refs': {id:req.body["_refId"], note:req.body["_refNote"], title:req.body["_refTitle"]}};
+                bookProvider.addReferencedBy(req.body["_refId"], req.body["_id"], req.body["_title"],  req.body["_refNote"]);
             } else if (item == '_editRef') {
-                bookProvider.editReferencedBy(req.body["_editRef"], req.body["_title"], req.body["_id"], req.body["_refNote"]);
+                bookProvider.editRef(req.body["_id"], req.body["_editRef"], req.body["_title"],  req.body["_refNote"]);
+                bookProvider.editReferencedBy(req.body["_editRef"], req.body["_id"], req.body["_title"],  req.body["_refNote"]);
             } 
             else if (item[0] == "+"){
                 if (!newitem) editedBook["$set"] = {};

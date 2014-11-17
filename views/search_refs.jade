@@ -2,7 +2,7 @@ extends layout
 
 block content
 	h1= "Add refernece to " + bookTitle
-	h1= title
+	h1= "Searching by " + title
 	div#books
 		if books.length > 0
 			each book in books
@@ -13,6 +13,7 @@ block content
 								input(name="_id", type="hidden", value=bookId)
 								input(name="_refId", type="hidden", value=book._id.toHexString())
 								input(name="_title", type="hidden", value=bookTitle)
+								input(name="_refTitle", type="hidden", value=book.title)
 								div.title= book.title
 								div.author= "by " + book.name
 								textarea.note(name="_refNote", placeholder="Note")

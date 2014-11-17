@@ -12,7 +12,6 @@ block content
 				input.clickable(type="submit", value="Search")
 		div.browse
 			form(method="get", action="/browse")
-				input.clickable(type="submit", value="Browse")
 				select(name="_field")
 					each item, name in info.info
 						if name != "_atts"
@@ -21,6 +20,7 @@ block content
 					select.choices(style="display:none", disabled, name=name)
 						each item in info.info[name]
 							option= item
+				input.clickable(type="submit", value="Browse")
 		div.menu
 			a.new.clickable(href="/book/new")!= "Add New Book"
 		h3= "Recently Edited"

@@ -17,6 +17,7 @@ block content
 								input(name="_id", type="hidden", value=bookId)
 								input(name="_refId", type="hidden", value=book._id.toHexString())
 								input(name="_title", type="hidden", value=bookTitle)
+								input(name="_refTitle", type="hidden", value=book.title)
 								div.title= book.title
 								if (browseField == "_types")
 									div.type= book.type
