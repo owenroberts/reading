@@ -9,11 +9,11 @@ block content
 				div 
 					div
 						input.in.select(type="text", name="title", placeholder="Title")
-					div= "Type: "
-						select(name="type")
+					div.type= "Type: "
+						select.selecttype(name="type")
 							each type in info.info._types
 								option= type
-					div.clickable.addtype= "Add/Edit Type"
+					div.clickable.addtype= "Add Type"
 					div
 						input.in.select(type="text", name="name", placeholder="Author")
 					div

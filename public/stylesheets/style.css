@@ -340,3 +340,6 @@ input[type="submit"]:hover {
   margin: 3px 0;
   font-size: 18px;
 }
+.newbook .newtype {
+  font-size: 18px;
+}

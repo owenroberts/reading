@@ -201,6 +201,15 @@ BookProvider.prototype.save = function(books, callback) {
     });
 };
 
+BookProvider.prototype.addType = function(type, callback) {
+  this.getCollection(function(error, book_collection) {
+    if (error) callback(error);
+    else {
+      book_collection.update({info:{$exists:true}}, {$addToSet:{"info._types":type}});
+    }
+  })
+}
+
 // find a book by id
 BookProvider.prototype.findById = function(id, callback) {
   this.getCollection(function(error, book_collection) {

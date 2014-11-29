@@ -90,6 +90,9 @@ app.get('/book/new', function(req, res) {
 
 // saves created book
 app.post('/book/new', function(req, res){
+    if (req.body.newtype != undefined) {
+        bookProvider.addType(req.body.type);
+    }
     bookProvider.save({
         title: req.param('title'),
         type: req.param('type'),
