@@ -67,7 +67,6 @@ app.get('/browse', function(req, res) {
 
 // search all of the books
 app.get('/search', function(req, res) {
-    console.log('search');
     bookProvider.search(req.query, function(error, books) {
         res.render('search', {
             bookId:req.query["_id"],
@@ -91,7 +90,6 @@ app.get('/book/new', function(req, res) {
 
 // saves created book
 app.post('/book/new', function(req, res){
-    console.log(req.query);
     bookProvider.save({
         title: req.param('title'),
         type: req.param('type'),
@@ -109,22 +107,11 @@ app.post('/book/new', function(req, res){
 // edit a book
 app.get('/book/:id/edit', function(req, res) {
     bookProvider.findById(req.param('_id'), function(error, book, info) { 
-/*        if (book.refs != undefined) {
-            bookProvider.getRefs(book.refs, function(error, refs){
-                res.render('book_edit', {
-                    refs:refs,
-                    book: book,
-                    info:info,
-                    title: book.title
-                });
-            });
-        } else {*/
-            res.render('book_edit', {
-                book: book,
-                info: info,
-                title: book.title
-            });
-        //}       
+        res.render('book_edit', {
+            book: book,
+            info: info,
+            title: book.title
+        });
     });
 });
 

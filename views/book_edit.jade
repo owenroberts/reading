@@ -76,12 +76,15 @@ block content
 									input(name="_title", type="hidden", value=ref.title)
 									input(name="_id", type="hidden" value=book._id.toHexString())
 									textarea.select(name="_refNote", type="text")=ref.note
-									input#refedit.clickable(type="hidden", value="Save")= "Save"
+									input.refedit.clickable(type="hidden", value="Save")= "Save"
 			div#addRef.plus.clickable()= "Add Reference"
 			div.addref
 				div.search
 					form(method="get", action="/addref/search")
 						input(name="_id", type="hidden", value=book._id.toHexString())
+						if book.refs
+							each ref in book.refs
+								input(name="_refs", type="hidden", value=ref.id)
 						input(name="_bookTitle", type="hidden", value=book.title)
 						span="Search: "
 						select(name="_field")
@@ -92,6 +95,9 @@ block content
 				div.browse
 					form(method="get", action="/addref/browse")
 						input(name="_id", type="hidden", value=book._id.toHexString())
+						if book.refs
+							each ref in book.refs
+								input(name="_refs", type="hidden", value=ref.id)
 						input(name="_bookTitle", type="hidden", value=book.title)
 						span="Browse by: "
 						select(name="_field")

@@ -68,34 +68,6 @@ BookProvider.prototype.findTag = function(tag, callback) {
   });
 };
 
-//search books and return subset based on a feild and query (_ref)
-BookProvider.prototype.searchRefs = function(query, callback) {
-  var name = query._field;
-  var value = query._ref;
-  var dbQuery = {};
-  dbQuery[name] = {$regex:value, $options:"-i"};
-  this.getCollection(function(error, book_collection) {
-      book_collection.find(dbQuery).toArray(function(error, results){
-        if (error) callback(error);
-        else callback(null, results);
-      });
-  });
-};
-
-//search books and return subset based on a feild and query (_ref)
-BookProvider.prototype.searchRefs = function(query, callback) {
-  var name = query._field;
-  var value = query._ref;
-  var dbQuery = {};
-  dbQuery[name] = {$regex:value, $options:"-i"};
-  this.getCollection(function(error, book_collection) {
-      book_collection.find(dbQuery).toArray(function(error, results){
-        if (error) callback(error);
-        else callback(null, results);
-      });
-  });
-};
-
 //search all books
 BookProvider.prototype.search = function(query, callback) {
   var name = query._field;
@@ -111,6 +83,36 @@ BookProvider.prototype.search = function(query, callback) {
 };
 
 //search books and return subset based on a feild and query (_ref)
+BookProvider.prototype.searchRefs = function(query, callback) {
+  var name = query._field;
+  var value = query._ref;
+  var dbQuery = {};
+  if (query._refs != undefined) {
+    var exclude = query._refs;
+    if (exclude.constructor == Array) {
+      for (var i = 0; i < exclude.length; i++) {
+        var obj = new ObjectID(exclude[i]);
+        exclude[i] = obj;
+      }
+      dbQuery = {_id:{$nin:exclude}};
+    } else {
+      exclude = new ObjectID(exclude);
+      dbQuery = {_id:{$ne:exclude}};
+    }
+  }
+  dbQuery[name] = {$regex:value, $options:"-i"};
+  console.log(JSON.stringify(dbQuery));
+  this.getCollection(function(error, book_collection) {
+      book_collection.find(dbQuery).toArray(function(error, results){
+        if (error) callback(error);
+        else callback(null, results);
+      });
+  });
+};
+
+
+
+//search books and return subset based on a feild and query (_ref)
 BookProvider.prototype.browseRefs = function(query, callback) {
   var dbQuery = {};
   var f = query._field;
@@ -121,6 +123,19 @@ BookProvider.prototype.browseRefs = function(query, callback) {
     dbQuery = {type:q};
   } else if (f == "_tags") {
     dbQuery = {tags:{$in:[q]}};
+  }
+  if (query._refs != undefined) {
+    var exclude = query._refs;
+    if (exclude.constructor == Array) {
+      for (var i = 0; i < exclude.length; i++) {
+        var obj = new ObjectID(exclude[i]);
+        exclude[i] = obj;
+      }
+      dbQuery = {_id:{$nin:exclude}};
+    } else {
+      exclude = new ObjectID(exclude);
+      dbQuery = {_id:{$ne:exclude}};
+    }
   }
   console.log(dbQuery);
   this.getCollection(function(error, book_collection) {

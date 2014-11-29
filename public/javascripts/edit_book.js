@@ -5,8 +5,8 @@ $('[name="_refNote"]').on('change keyup keydown paste cut', function() {
 	if (pageload) {
 		pageload = false;
 	} else {
-		console.log($('#refedit'));
-		$('#refedit').attr({type:"submit"});
+		console.log($(this).find('#refedit'));
+		$(this).find('#refedit').attr({type:"submit"});
 	}
 });
 

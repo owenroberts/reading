@@ -82,6 +82,9 @@ input[type="submit"]:hover {
   width: 60px;
 }
 /*  new reference page */
+.nothing {
+  margin: 12px 0;
+}
 .book {
   width: 160px;
   height: 200px;
@@ -319,6 +322,9 @@ input[type="submit"]:hover {
   width: 640px;
   background: transparent;
   margin-top: 16px;
+}
+.newbook #book {
+  float: left;
 }
 .newbook div {
   margin: 6px 0;
