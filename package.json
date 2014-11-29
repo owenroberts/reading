@@ -1,9 +1,17 @@
 {
-  "name": "reded",
-  "version": "0.0.0",
+  "name": "Reading",
+  "version": "0.1.0",
+  "description":"A cataloging app for reading or other media.",
+  "main":"app.js",
+  "author": "Owen Roberts",
+  "license": "MIT",
+
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
+  },
+  "engines": {
+    "node":"0.10.23"
   },
   "dependencies": {
     "express": "~4.9.0",
@@ -14,6 +22,6 @@
     "debug": "~2.0.0",
     "jade": "~1.6.0",
     "stylus": "0.42.3",
-		"mongodb": ">= 0.9.6-7"
+    "mongodb": ">= 0.9.6-7"
   }
 }
