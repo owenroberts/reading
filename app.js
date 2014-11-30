@@ -1,8 +1,3 @@
-var mongo = require('mongodb');
-var mongoUri = process.env.MONGOLAB_URI || 
-  process.env.MONGOHQ_URL || 
-  'mongodb://localhost/mydb';
-
 var express = require('express'),
 		path = require('path'), 
 		http = require('http'), 
@@ -250,7 +245,7 @@ app.post('/book/:id/delete', function(req, res) {
         });
 });
 
-var bookProvider = new BookProvider(mongoUri);
+var bookProvider = new BookProvider();
 
 
 

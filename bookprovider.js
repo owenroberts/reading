@@ -1,3 +1,8 @@
+var mongoUri = process.env.MONGOLAB_URI || 
+  process.env.MONGOHQ_URL || 
+  'mongodb://localhost/mydb'; 
+var port = process.env.PORT || 3000;
+
 var Db = require('mongodb').Db;
 var Connection = require('mongodb').Connection;
 var Server = require('mongodb').Server;
@@ -5,7 +10,7 @@ var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
 BookProvider = function(host) {
-  this.db= new Db('books', new Server(host, {safe: false}, {auto_reconnect: true}, {}));
+  this.db= new Db('books', new Server(mongoUri, port, {safe: false}, {auto_reconnect: true}, {}));
   this.db.open(function(){});
 };
 
