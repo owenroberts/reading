@@ -4,8 +4,8 @@ var Server = require('mongodb').Server;
 var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
-BookProvider = function(host, port) {
-  this.db= new Db('books', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
+BookProvider = function(host) {
+  this.db= new Db('books', new Server(host, {safe: false}, {auto_reconnect: true}, {}));
   this.db.open(function(){});
 };
 
