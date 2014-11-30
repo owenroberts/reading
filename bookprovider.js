@@ -5,13 +5,21 @@ var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
 BookProvider = function(host, port) {
-  this.db= new Db('node-mongo-book', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
+  this.db= new Db('books', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
   this.db.open(function(){});
+};
+
+//initialize info values
+BookProvider.prototype.init = function(info, callback) {
+  this.getCollection(function(error, book_collection) {
+    if ( error ) callback(error);
+    else book_collection.insert({info:info});
+  });
 };
 
 
 BookProvider.prototype.getCollection= function(callback) {
-  this.db.collection('books', function(error, book_collection) {
+  this.db.collection('bks', function(error, book_collection) {
     if( error ) callback(error);
     else callback(null, book_collection);
   });
@@ -207,8 +215,8 @@ BookProvider.prototype.addType = function(type, callback) {
     else {
       book_collection.update({info:{$exists:true}}, {$addToSet:{"info._types":type}});
     }
-  })
-}
+  });
+};
 
 // find a book by id
 BookProvider.prototype.findById = function(id, callback) {

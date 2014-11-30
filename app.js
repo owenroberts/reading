@@ -30,21 +30,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', users);
 
-// homepage
-/*app.get('/', function(req, res){
-  bookProvider.findAll(function(error, bks){
-      res.render('index', {
-            title: 'Reded',
-            books:bks
-        });
-  });
-});*/
+
 app.get('/', function(req, res) {
     bookProvider.findRecentEdits(function(error, edits) {
         bookProvider.findRecentLogs(function(error, logs) {
             bookProvider.getInfo(function(error, info) {
                 res.render('index', {
-                    title:"Reded",
+                    title:"Reading",
                     info:info,
                     recentlyEdited:edits,
                     recentlyLogged:logs
@@ -52,6 +44,37 @@ app.get('/', function(req, res) {
             });
         });
     });
+});
+app.post('/init', function(req, res) {
+    bookProvider.init({
+    "_atts" : [
+      "quote",
+      "note",
+      "link",
+      "tag"
+    ],
+    "_types" : [
+      "book",
+      "article",
+      "film/movie",
+      "art",
+      "comix",
+      "game"
+    ],
+    "_fields" : [
+      "title",
+      "name",
+      "type",
+      "genre",
+      "pubdate",
+      "readdate",
+      "quotes",
+      "notes",
+      "links",
+      "tags",
+      "refs"
+    ]});
+    res.redirect('/');
 });
 
 //get references browse 
@@ -223,6 +246,7 @@ app.post('/book/:id/delete', function(req, res) {
 });
 
 var bookProvider = new BookProvider('localhost', 27017);
+
 
 
 
