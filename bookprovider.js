@@ -1,6 +1,4 @@
-var mongoUri = process.env.MONGOLAB_URI || 
-  process.env.MONGOHQ_URL || 
-  'mongodb://localhost/mydb'; 
+var mongoUri = "mongodb://heroku_app32082356:bh2774ioqk67r8u6gmhtb70ueb@ds053390.mongolab.com:53390/heroku_app32082356"; 
 var port = process.env.PORT || 3000;
 
 var Db = require('mongodb').Db;
@@ -10,7 +8,7 @@ var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
 BookProvider = function(host) {
-  this.db= new Db('books', new Server(process.env.MONGOLAB_URL, port, {safe: false}, {auto_reconnect: true}, {}));
+  this.db= new Db('books', new Server(mongoUri, {safe: false}, {auto_reconnect: true}, {}));
   this.db.open(function(){});
 };
 
