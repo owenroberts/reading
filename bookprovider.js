@@ -1,5 +1,4 @@
-var mongoUri = process.env.MONGOLAB_URI || 
-  process.env.MONGOHQ_URL || 
+var mongoUri = process.env.MONGOLAB_URI ||  
   'mongodb://localhost/mydb'; 
 var port = process.env.PORT || 3000;
 
@@ -9,7 +8,7 @@ var Server = require('mongodb').Server;
 var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
-BookProvider = function(host) {
+BookProvider = function() {
   this.db= new Db('books', new Server(mongoUri, port, {safe: false}, {auto_reconnect: true}, {}));
   this.db.open(function(){});
 };
