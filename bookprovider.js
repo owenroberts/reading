@@ -1,3 +1,5 @@
+var connect = require('connect');
+var mongo = require('mongodb');
 var mongoUri = process.env.MONGOLAB_URI || 
   process.env.MONGOHQ_URL || 
   'mongodb://localhost/mydb'; 
