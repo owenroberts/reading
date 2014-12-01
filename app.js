@@ -45,35 +45,39 @@ app.get('/', function(req, res) {
         });
     });
 });
+
 app.post('/init', function(req, res) {
-    bookProvider.init({
-    "_atts" : [
-      "quote",
-      "note",
-      "link",
-      "tag"
-    ],
-    "_types" : [
-      "book",
-      "article",
-      "film/movie",
-      "art",
-      "comix",
-      "game"
-    ],
-    "_fields" : [
-      "title",
-      "name",
-      "type",
-      "genre",
-      "pubdate",
-      "readdate",
-      "quotes",
-      "notes",
-      "links",
-      "tags",
-      "refs"
-    ]});
+    bookProvider.init(
+        {
+            "_atts" : [
+              "quote",
+              "note",
+              "link",
+              "tag"
+            ],
+            "_types" : [
+              "book",
+              "article",
+              "film/movie",
+              "art",
+              "comix",
+              "game"
+            ],
+            "_fields" : [
+              "title",
+              "name",
+              "type",
+              "genre",
+              "pubdate",
+              "readdate",
+              "quotes",
+              "notes",
+              "links",
+              "tags",
+              "refs"
+            ]
+        }
+    );
     res.redirect('/');
 });
 

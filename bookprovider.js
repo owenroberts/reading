@@ -7,8 +7,8 @@ var ObjectID = require('mongodb').ObjectID;
 
 BookProvider = function(uri, port) {
   mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (err, db) {
+    console.log(db);
     this.db = db;
-    //this.db.open(function(){});
   });
   //this.db= new Db('books', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
   //this.db.open(function(){});
