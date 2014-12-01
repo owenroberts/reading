@@ -246,7 +246,10 @@ app.post('/book/:id/delete', function(req, res) {
 });
 
 var port = process.env.PORT || 3000;
-var bookProvider = new BookProvider('localhost', 27017);
+var mongoUri = process.env.MONGOLAB_URI || 
+  process.env.MONGOHQ_URL || 
+  'localhost'; 
+var bookProvider = new BookProvider(mongoUri, 27017);
 
 
 

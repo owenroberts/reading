@@ -1,27 +1,17 @@
-var connect = require('connect');
-var mongo = require('mongodb');
-var mongoUri = process.env.MONGOLAB_URI || 
-  process.env.MONGOHQ_URL || 
-  'mongodb://localhost/mydb'; 
-var database = null;
-
+var mongodb = require('mongodb');
 var Db = require('mongodb').Db;
 var Connection = require('mongodb').Connection;
 var Server = require('mongodb').Server;
 var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
-mongo.connect(mongoUri, {}, function(error, db) {
-  console.log("connected to " + db);
-  database = db;
-  database.addListener("error", function(error){
-    console.log("Error connecting to MongoLab");
+BookProvider = function(uri, port) {
+  mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (err, db) {
+    this.db = db;
+    this.db.open(function(){});
   });
-});
-
-BookProvider = function(host, port) {
-  this.db= new Db(database, new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
-  this.db.open(function(){});
+  //this.db= new Db('books', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
+  //this.db.open(function(){});
 };
 
 //initialize info values
