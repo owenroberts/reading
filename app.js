@@ -245,6 +245,7 @@ app.post('/book/:id/delete', function(req, res) {
         });
 });
 
+var port = process.env.PORT || 3000;
 var bookProvider = new BookProvider('localhost', 27017);
 
 
