@@ -1,3 +1,8 @@
+var mongoUri = process.env.MONGOLAB_URI || 
+  process.env.MONGOHQ_URL || 
+  'mongodb://localhost/mydb'; 
+var port = process.env.PORT || 3000;
+
 var Db = require('mongodb').Db;
 var Connection = require('mongodb').Connection;
 var Server = require('mongodb').Server;
