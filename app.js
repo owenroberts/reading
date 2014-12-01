@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var users = require('./routes/users');
+
 var app = express();
 
 // view engine setup
@@ -244,7 +245,7 @@ app.post('/book/:id/delete', function(req, res) {
         });
 });
 
-var bookProvider = new BookProvider();
+var bookProvider = new BookProvider('localhost', 27017);
 
 
 
@@ -282,5 +283,5 @@ app.use(function(err, req, res, next) {
 
 
 
-app.listen(3000);
+app.listen(port);
 module.exports = app;
