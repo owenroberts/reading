@@ -9,7 +9,7 @@ var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
 BookProvider = function(host, port) {
-  this.db= new Db('books', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
+  this.db= new Db('heroku_app32082356', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
   this.db.open(function(){});
 };
 
