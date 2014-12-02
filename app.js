@@ -77,7 +77,7 @@ app.post('/init', function(req, res) {
               "refs"
             ]},
         function(error) {
-            console.log(error);
+            console.log("Init error: " + error);
             res.redirect('/');
         }
     ); 
