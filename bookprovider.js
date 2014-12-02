@@ -1,14 +1,15 @@
-var mongodb = require('mongodb');
-var Db = require('mongodb').Db;
-var Connection = require('mongodb').Connection;
-var Server = require('mongodb').Server;
-var BSON = require('mongodb').BSON;
-var ObjectID = require('mongodb').ObjectID;
+var mongodb = require('mongodb'), 
+    MongoClient = require('mongodb').MongoClient, 
+    Db = require('mongodb').Db, 
+    Connection = require('mongodb').Connection, 
+    Server = require('mongodb').Server, 
+    BSON = require('mongodb').BSON, 
+    ObjectID = require('mongodb').ObjectID;
 
 BookProvider = function(uri) {
-  this.db = mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
+  mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
     if( error ) callback(error);
-    //else mongodb = database;
+    else mongodb = database;
     //db.open(function(){});
   });
   //this.db= new Db('books', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
