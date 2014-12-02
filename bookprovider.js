@@ -7,16 +7,10 @@ var mongodb = require('mongodb'),
     ObjectID = require('mongodb').ObjectID;
 
 BookProvider = function(uri) {
-  var db = null;
-  mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
-    if (error) console.log("Error connecting to MongoLab");
-    else {
-      console.log("mongo db: " + database);
-      db = database;
-    }
-  });
-  //this.db= new Db('books', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
-  //this.db.open(function(){});
+  //mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
+  //});
+  this.db= new Db('books', new Server(uri, {safe: false}, {auto_reconnect: true}, {}));
+  this.db.open(function(){});
 };
 
 //initialize info values
