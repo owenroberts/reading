@@ -9,7 +9,7 @@ var mongodb = require('mongodb'),
 BookProvider = function(uri) {
   //mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
   //});
-  this.db= new Db('books', new Server(uri, {safe: false}, {auto_reconnect: true}, {}));
+  this.db= new Db(uri, {safe: false}, {auto_reconnect: true}, {}));
   this.db.open(function(){});
 };
 
@@ -18,14 +18,13 @@ BookProvider.prototype.init = function(info, callback) {
   this.getCollection(function(error, book_collection) {
     if ( error ) callback(error);
     else {
-      console.log("info !!: " + info);
       book_collection.insert({info:info});
     }
   });
 };
 
 
-BookProvider.prototype.getCollection= function(callback) {
+BookProvider.prototype.getCollection = function(callback) {
   this.db.collection('bks', function(error, book_collection) {
     if( error ) callback(error);
     else callback(null, book_collection);
