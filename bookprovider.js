@@ -6,24 +6,36 @@ var mongodb = require('mongodb'),
     BSON = require('mongodb').BSON, 
     ObjectID = require('mongodb').ObjectID;
 
+var db; 
+/* establish the database connection */ 
+mongodb.MongoClient.connect(mongoUri, {server:{auto_reconnect:true}}, function (error,database){ 
+  if (error) console.log(error);  
+  else { 
+    console.log('connected to database :: ' ); 
+    db = database; 
+    accounts = db.collection('accounts'); 
+  }   
+}); 
+
 BookProvider = function(uri) {
-  mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
-    console.log("mongo db: " + JSON.stringify(database));
-  });
-  //this.db= new Db('books', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
-  //this.db.open(function(){});
+  //mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
+  //});
+  this.db= new Db('books', new Server(uri, {safe: false}, {auto_reconnect: true}, {}));
+  this.db.open(function(){});
 };
 
 //initialize info values
 BookProvider.prototype.init = function(info, callback) {
   this.getCollection(function(error, book_collection) {
     if ( error ) callback(error);
-    else book_collection.insert({info:info});
+    else {
+      book_collection.insert({info:info});
+    }
   });
 };
 
 
-BookProvider.prototype.getCollection= function(callback) {
+BookProvider.prototype.getCollection = function(callback) {
   this.db.collection('bks', function(error, book_collection) {
     if( error ) callback(error);
     else callback(null, book_collection);

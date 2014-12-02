@@ -75,10 +75,12 @@ app.post('/init', function(req, res) {
               "links",
               "tags",
               "refs"
-            ]
+            ]},
+        function(error) {
+            console.log("Init error: " + error);
+            res.redirect('/');
         }
-    );
-    res.redirect('/');
+    ); 
 });
 
 //get references browse 
