@@ -6,6 +6,7 @@ var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
 BookProvider = function(uri) {
+  console.log("SHIT !!!!!!!!!!");
   this.db = mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, {});
    // if( error ) callback(error);
     //else mongodb = database;
