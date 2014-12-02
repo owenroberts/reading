@@ -9,7 +9,7 @@ BookProvider = function(uri, port) {
   var db;
   mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (err, database) {
     db = database;
-    db.open(function(){});
+    //db.open(function(){});
   });
   //this.db= new Db('books', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
   //this.db.open(function(){});
