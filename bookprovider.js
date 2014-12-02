@@ -6,21 +6,10 @@ var mongodb = require('mongodb'),
     BSON = require('mongodb').BSON, 
     ObjectID = require('mongodb').ObjectID;
 
-var db; 
-/* establish the database connection */ 
-mongodb.MongoClient.connect(mongoUri, {server:{auto_reconnect:true}}, function (error,database){ 
-  if (error) console.log(error);  
-  else { 
-    console.log('connected to database :: ' ); 
-    db = database; 
-    accounts = db.collection('accounts'); 
-  }   
-}); 
-
 BookProvider = function(uri) {
   //mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
-  //});
-  this.db= new Db('books', new Server(uri, {safe: false}, {auto_reconnect: true}, {}));
+  //});adf
+  this.db = new DB('books', new Server(uri, {safe: false}, {auto_reconnect: true}, {}));
   this.db.open(function(){});
 };
 
