@@ -11,7 +11,7 @@ BookProvider = function(uri) {
    // if( error ) callback(error);
     //else mongodb = database;
     //db.open(function(){});
-  });
+//  });
   //this.db= new Db('books', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
   //this.db.open(function(){});
 };
