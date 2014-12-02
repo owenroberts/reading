@@ -9,7 +9,9 @@ var mongodb = require('mongodb'),
 BookProvider = function(uri) {
   mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
     if( error ) callback(error);
-    else mongodb = database;
+    else {
+      database.collection.insert({test:"test"});
+    }
     //db.open(function(){});
   });
   //this.db= new Db('books', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
