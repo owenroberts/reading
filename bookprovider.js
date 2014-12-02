@@ -17,7 +17,10 @@ BookProvider = function(uri) {
 BookProvider.prototype.init = function(info, callback) {
   this.getCollection(function(error, book_collection) {
     if ( error ) callback(error);
-    else book_collection.insert({info:info});
+    else {
+      console.log("info !!: " + info);
+      book_collection.insert({info:info});
+    }
   });
 };
 
