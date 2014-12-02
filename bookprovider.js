@@ -5,13 +5,12 @@ var Server = require('mongodb').Server;
 var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
-BookProvider = function(uri, port) {
-  var db;
+BookProvider = function(uri) {
+  this.db;
   console.log("uri: " + uri);
-  console.log("port: " + port);
   mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
     if( error ) callback(error);
-    else db = database;
+    else this.db = database;
     //db.open(function(){});
   });
   //this.db= new Db('books', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
