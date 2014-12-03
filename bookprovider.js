@@ -8,6 +8,7 @@ var mongodb = require('mongodb'),
 
 BookProvider = function(uri) {
   mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
+    console.log(this);
     this.db = database;
     //this.db.open(function(){});
   });
