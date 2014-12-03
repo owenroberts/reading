@@ -10,6 +10,10 @@ BookProvider = function(uri) {
   this.db = null;
   mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
     this.db = database;
+    this.db.collection('bks', function(error, book_collection) {
+    if( error ) callback(error);
+    else book_collection.insert({"test2":"test2"});
+  });
     //this.db.open(function(){});
   });
   //this.db = new Db('books', new Server(uri, {safe: false}, {auto_reconnect: true}, {}));
