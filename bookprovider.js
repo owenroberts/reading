@@ -6,22 +6,14 @@ var mongodb = require('mongodb'),
     BSON = require('mongodb').BSON, 
     ObjectID = require('mongodb').ObjectID;
 
-var db;
-var coll;
+//var db;
+//var coll;
 
 BookProvider = function(uri) {
+  var that = this;
   mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
     if (error) console.log(error);
-    db = database;
-    coll = db.collection('bks');
-    db.collection('bks', function(error, book_collection) {
-      if( error ) console.log(error);
-      else {
-        book_collection.insert({"test2":"test2"}, function(error, intserted){
-          if (error) console.log(error);
-        });
-      }
-    });
+    that.db = database;
     //this.db.open(function(){});
   });
   //this.db = new Db('books', new Server(uri, {safe: false}, {auto_reconnect: true}, {}));
@@ -30,14 +22,12 @@ BookProvider = function(uri) {
 
 //initialize info values
 BookProvider.prototype.init = function(info, callback) {
-  //this.getCollection(function(error, book_collection) {
- //   if ( error ) callback(error);
-    //else {
-      coll.insert({info:info}, function(error, inserted){
-        if (error) console.log(error);
-      });
-  //  }
- // });
+  this.getCollection(function(error, book_collection) {
+    if ( error ) callback(error);
+    else {
+      book_collection.insert({info:info});
+    }
+  });
 };
 
 
@@ -63,27 +53,27 @@ BookProvider.prototype.findAll = function(callback) {
 
 //find recently edited books
 BookProvider.prototype.findRecentEdits = function(callback) {
-   // this.getCollection(function(error, book_collection) {
-   //   if( error ) callback(error);
-   //   else {
-        coll.find().sort({last_edit:-1}).limit(8).toArray(function(error, results) {
+    this.getCollection(function(error, book_collection) {
+      if( error ) callback(error);
+      else {
+        book_collection.find().sort({last_edit:-1}).limit(8).toArray(function(error, results) {
           if( error ) callback(error);
           else callback(null, results);
         });
-    //  }
-   // });
+      }
+    });
 };
 //find recently edited books
 BookProvider.prototype.findRecentLogs = function(callback) {
-    //this.getCollection(function(error, book_collection) {
-      //if( error ) callback(error);
-      //else {
-        coll.find().sort({created_at:-1}).limit(8).toArray(function(error, results) {
+    this.getCollection(function(error, book_collection) {
+      if( error ) callback(error);
+      else {
+        book_collection.find().sort({created_at:-1}).limit(8).toArray(function(error, results) {
           if( error ) callback(error);
           else callback(null, results);
         });
-      //}
-    //});
+      }
+    });
 };
 
 //find subset of books with tag 
@@ -258,15 +248,15 @@ BookProvider.prototype.findById = function(id, callback) {
 
 // get info 
 BookProvider.prototype.getInfo = function(callback) {
-  //this.getCollection(function(error, book_collection) {
-   // if (error) callback(error);
-    //else {
-      coll.findOne({info:{$exists:true}}, function(error, info) {
+  this.getCollection(function(error, book_collection) {
+    if (error) callback(error);
+    else {
+      book_collection.findOne({info:{$exists:true}}, function(error, info) {
           if (error) callback(error);
           else callback(null, info);
       });
-    //}
-  //});
+    }
+  });
 };
 
 // add a tag
