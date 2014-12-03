@@ -33,7 +33,9 @@ BookProvider.prototype.init = function(info, callback) {
   //this.getCollection(function(error, book_collection) {
  //   if ( error ) callback(error);
     //else {
-      coll.insert({info:info});
+      coll.insert({info:info}, function(error, inserted){
+        if (error) console.log(error);
+      });
   //  }
  // });
 };
