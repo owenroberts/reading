@@ -22,10 +22,13 @@ BookProvider = function(uri) {
 
 //initialize info values
 BookProvider.prototype.init = function(info, callback) {
+  console.log('initiating');
   this.getCollection(function(error, book_collection) {
     if ( error ) callback(error);
     else {
-      book_collection.insert({info:info});
+      book_collection.insert({info:info}, function(error){
+        if (error) callback(error);
+      });
     }
   });
 };
