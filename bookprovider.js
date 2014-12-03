@@ -256,15 +256,15 @@ BookProvider.prototype.findById = function(id, callback) {
 
 // get info 
 BookProvider.prototype.getInfo = function(callback) {
-  this.getCollection(function(error, book_collection) {
-    if (error) callback(error);
-    else {
-      book_collection.findOne({info:{$exists:true}}, function(error, info) {
+  //this.getCollection(function(error, book_collection) {
+   // if (error) callback(error);
+    //else {
+      coll.findOne({info:{$exists:true}}, function(error, info) {
           if (error) callback(error);
           else callback(null, info);
       });
-    }
-  });
+    //}
+  //});
 };
 
 // add a tag
