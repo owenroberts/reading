@@ -9,10 +9,14 @@ var mongodb = require('mongodb'),
 BookProvider = function(uri) {
   this.db = null;
   mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
+    console.log('connecting to mongo');
     this.db = database;
     this.db.collection('bks', function(error, book_collection) {
       if( error ) console.log(error);
-      else book_collection.insert({"test2":"test2"});
+      else {
+        console.log("connected");
+        book_collection.insert({"test2":"test2"});
+      }
     });
     //this.db.open(function(){});
   });
