@@ -73,15 +73,15 @@ BookProvider.prototype.findRecentEdits = function(callback) {
 };
 //find recently edited books
 BookProvider.prototype.findRecentLogs = function(callback) {
-    this.getCollection(function(error, book_collection) {
-      if( error ) callback(error);
-      else {
-        book_collection.find().sort({created_at:-1}).limit(8).toArray(function(error, results) {
+    //this.getCollection(function(error, book_collection) {
+      //if( error ) callback(error);
+      //else {
+        coll.find().sort({created_at:-1}).limit(8).toArray(function(error, results) {
           if( error ) callback(error);
           else callback(null, results);
         });
-      }
-    });
+      //}
+    //});
 };
 
 //find subset of books with tag 
