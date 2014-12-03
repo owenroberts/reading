@@ -6,16 +6,17 @@ var mongodb = require('mongodb'),
     BSON = require('mongodb').BSON, 
     ObjectID = require('mongodb').ObjectID;
 
+var db;
+var coll;
+
 BookProvider = function(uri) {
-  this.db = null;
   mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
     if (error) console.log(error);
-    console.log('connecting to mongo');
-    this.db = database;
-    this.db.collection('bks', function(error, book_collection) {
+    db = database;
+    coll = db.collection('bks');
+    db.collection('bks', function(error, book_collection) {
       if( error ) console.log(error);
       else {
-        console.log("connected");
         book_collection.insert({"test2":"test2"}, function(error, intserted){
           if (error) console.log(error);
         });
@@ -29,12 +30,12 @@ BookProvider = function(uri) {
 
 //initialize info values
 BookProvider.prototype.init = function(info, callback) {
-  this.getCollection(function(error, book_collection) {
-    if ( error ) callback(error);
-    else {
-      book_collection.insert({info:info});
-    }
-  });
+  //this.getCollection(function(error, book_collection) {
+ //   if ( error ) callback(error);
+    //else {
+      coll.insert({info:info});
+  //  }
+ // });
 };
 
 
@@ -60,15 +61,15 @@ BookProvider.prototype.findAll = function(callback) {
 
 //find recently edited books
 BookProvider.prototype.findRecentEdits = function(callback) {
-    this.getCollection(function(error, book_collection) {
-      if( error ) callback(error);
-      else {
-        book_collection.find().sort({last_edit:-1}).limit(8).toArray(function(error, results) {
+   // this.getCollection(function(error, book_collection) {
+   //   if( error ) callback(error);
+   //   else {
+        coll.find().sort({last_edit:-1}).limit(8).toArray(function(error, results) {
           if( error ) callback(error);
           else callback(null, results);
         });
-      }
-    });
+    //  }
+   // });
 };
 //find recently edited books
 BookProvider.prototype.findRecentLogs = function(callback) {
