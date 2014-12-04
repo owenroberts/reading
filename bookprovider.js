@@ -285,7 +285,7 @@ BookProvider.prototype.getInfo = function(callback) {
 // add a tag
 BookProvider.prototype.addTag = function(query, set) {
   this.getCollection(function(error, book_collection) {
-    if (error) callback(error);
+    if (error) console.log("add tag: " + error);
     else book_collection.update(query, set);
   });
 };
