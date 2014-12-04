@@ -149,14 +149,15 @@ app.post('/book/new', function(req, res){
 // edit a book
 app.get('/book/:id/edit', function(req, res) {
     bookProvider.findById(req.param('_id'), function(error, book, info) { 
+        console.log("error wtf " + error)
         if (error) {
             console.log('no book there ' + error);
             res.redirect('/');
         } else {
             res.render('book_edit', {
-            book: book,
-            info: info,
-            title: book.title
+                book: book,
+                info: info,
+                title: book.title
             });
         }
     });
