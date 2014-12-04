@@ -323,7 +323,7 @@ BookProvider.prototype.editRef = function(refId, id, title, note) {
   var set = {};
   set["refs.$.note"] = note;
   this.getCollection(function(error, book_collection){
-    if (error) callback(error);
+    if (error) console.log("editRef: " + error);
     else {
       book_collection.update(query, {$set:set});
     }
