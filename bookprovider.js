@@ -313,7 +313,9 @@ BookProvider.prototype.editReferencedBy = function(refId, id, title, note) {
   this.getCollection(function(error, book_collection){
     if (error) console.log("edit ref by: " + error);
     else {
-      book_collection.update(query, {$set:set});
+      book_collection.update(query, {$set:set}, function(error) {
+        console.log("edit ref by: " + error);
+      });
     }
   });
 };
@@ -325,7 +327,9 @@ BookProvider.prototype.editRef = function(refId, id, title, note) {
   this.getCollection(function(error, book_collection){
     if (error) console.log("editRef: " + error);
     else {
-      book_collection.update(query, {$set:set});
+      book_collection.update(query, {$set:set}, function(error){
+        console.log("edit ref: " + error);
+      });
     }
   });
 };
