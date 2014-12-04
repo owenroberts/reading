@@ -11,3 +11,4 @@ To do:
 - Ability to create new attributes.
 - User authentication.
 - Mobile styles.
+- Delete references and references need to get deleted when books are deleted.

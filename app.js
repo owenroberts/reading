@@ -142,17 +142,22 @@ app.post('/book/new', function(req, res){
         quotes: ['Add first quote here.'],
         notes: ['Add first note here.']
     }, function( error, docs) {
-        res.redirect('/')
+        res.redirect('/');
     });
 });
 
 // edit a book
 app.get('/book/:id/edit', function(req, res) {
     bookProvider.findById(req.param('_id'), function(error, book, info) { 
-        res.render('book_edit', {
+        if (error) {
+            console.log('no book there ' + error);
+            res.redirect('/');
+        } else {
+            res.render('book_edit', {
             book: book,
             info: info,
             title: book.title
+            }
         });
     });
 });
