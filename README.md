@@ -9,5 +9,5 @@ Will share instructions for cloning/installation for use on Heroku server when I
 To do:
 - Instructions for installing for use and development.
 - Ability to create new attributes.
-- User authentification.
+- User authentication.
 - Mobile styles.

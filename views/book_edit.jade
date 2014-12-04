@@ -9,7 +9,7 @@ block content
 				input(name="_id", type="hidden", value=book._id.toHexString())
 				div#form
 					div.title
-						input.select.edit(type="text", name="title", value=book.title)
+						input.select.edit(type="text", name="title", placeholder="title", value=book.title)
 					div.type= book.type
 					div.created-at
 						span= "logged on" 
@@ -17,16 +17,16 @@ block content
 					div.infocolumn
 						div.name
 							span= "by "
-							input.select.edit(type="text", name="name", value=book.name)
+							input.select.edit(type="text", name="name", placeholder="author" value=book.name)
 						div.genre
-							input.select.edit(type="text", name="genre", value=book.genre)
+							input.select.edit(type="text", name="genre", placeholder="genre", value=book.genre)
 					div.infocolumn 
 						div.pubdate
 							span= "published "
-							input.select.edit(type="text", name="pubdate", value=book.pubdate)
+							input.select.edit(type="text", name="pubdate", placeholder="date published", value=book.pubdate)
 						div.readdate
 							span= "read "
-							input.select.edit(type="text", name="readdate", value=book.readdate)
+							input.select.edit(type="text", name="readdate", placeholder="date read", value=book.readdate)
 					div.quotes.hidecontents= "Quotes"
 						span= "+"
 						each value, index in book.quotes
