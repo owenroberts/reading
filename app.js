@@ -151,9 +151,7 @@ app.get('/book/:id/edit', function(req, res) {
     bookProvider.findById(req.param('_id'), function(error, book, info) { 
         if (book == null) {
             console.log("book is null");
-            res.render('book_edit', {
-                title: "Cannot find title"
-            });
+            res.redirect('/404');
         } else {
             res.render('book_edit', {
                 book: book,
@@ -163,6 +161,10 @@ app.get('/book/:id/edit', function(req, res) {
         }
 
     });
+});
+
+app.get('/404', function(req, res) {
+    res.render('404');
 });
 
 // save book
