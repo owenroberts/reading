@@ -9,14 +9,15 @@ var mongodb = require('mongodb'),
 
 BookProvider = function(uri) {
   
-  
+ 
   var that = this;
   mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
     if (error) console.log(error);
     that.db = database;
   });
- 
-  /* TO DEVELOP LOCALLY 
+  
+  /*
+   TO DEVELOP LOCALLY 
       uncomment the following two lines
       comment out the beginning of this function
   */
