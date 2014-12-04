@@ -4,7 +4,7 @@ block content
 	div.book-single
 		div.backhome.clickable
 			a(href="/")!= "Back to Book List"
-		a.new.clickable(href="/book/new")!= "Add New Book"
+		a.backhome.clickable(href="/book/new")!= "Add New Book"
 		.bk
 			form( method="post")
 				input(name="_id", type="hidden", value=book._id.toHexString())
