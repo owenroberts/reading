@@ -298,7 +298,10 @@ BookProvider.prototype.addReferencedBy = function(refId, id, title, note) {
   this.getCollection(function(error, book_collection){
     if (error) console.log(error);
     else {
-      book_collection.update(query, {$addToSet:set}, );
+      book_collection.update(query, {$addToSet:set}, function(error){
+        if (error) callback(error);
+        else callback(null);
+      });
     }
   });
 };
@@ -310,10 +313,7 @@ BookProvider.prototype.editReferencedBy = function(refId, id, title, note) {
   this.getCollection(function(error, book_collection){
     if (error) callback(error);
     else {
-      book_collection.update(query, {$set:set}, function(error){
-        if (error) callback(error);
-        else callback(null);
-      });
+      book_collection.update(query, {$set:set});
     }
   });
 };
