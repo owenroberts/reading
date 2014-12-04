@@ -54,6 +54,6 @@ block content
 							input.clickable(id="delete", value="Delete", type="submit")
 	else
 		h1= title
-		form(method="post", action="/init")
+		form(method="get", action="/init")
 			input.clickable(type="submit", value="Initialize info")
 	script(type="text/javascript", src="/javascripts/options.js")

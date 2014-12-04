@@ -46,6 +46,17 @@ app.get('/', function(req, res) {
     });
 });
 
+app.get('/init', function(req, res) {
+    res.render('init');
+});
+
+//delete a book
+app.post('/book/:id/delete', function(req, res) {
+        bookProvider.delete(req.param('_id'), function(error, docs) {
+                res.redirect('/')
+        });
+});
+
 app.post('/init', function(req, res) {
     bookProvider.init(
         {
@@ -75,12 +86,11 @@ app.post('/init', function(req, res) {
               "links",
               "tags",
               "refs"
-            ]},
-        function(error) {
-            console.log("Init error: " + error);
+            ]
+        },
+        function(error, docs) {
             res.redirect('/');
-        }
-    ); 
+        }); 
 });
 
 //get references browse 

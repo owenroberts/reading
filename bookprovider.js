@@ -6,28 +6,42 @@ var mongodb = require('mongodb'),
     BSON = require('mongodb').BSON, 
     ObjectID = require('mongodb').ObjectID;
 
-//var db;
-//var coll;
 
 BookProvider = function(uri) {
   var that = this;
   mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
     if (error) console.log(error);
     that.db = database;
-    //this.db.open(function(){});
   });
-  //this.db = new Db('books', new Server(uri, {safe: false}, {auto_reconnect: true}, {}));
-  //this.db.open(function(){});
+  /*
+  this.db = new Db('books', new Server(uri, {safe: false}, {auto_reconnect: true}, {}));
+  this.db.open(function(){});
+  */
 };
 
 //initialize info values
 BookProvider.prototype.init = function(info, callback) {
-  console.log('initiating');
   this.getCollection(function(error, book_collection) {
     if ( error ) callback(error);
     else {
       book_collection.insert({info:info}, function(error){
         if (error) callback(error);
+        else callback(null);
+      });
+    }
+  });
+};
+
+//delete book
+BookProvider.prototype.delete = function(bookId, callback) {
+  this.getCollection(function(error, book_collection) {
+    if(error) callback(error);
+    else {
+      book_collection.remove(
+      {_id: book_collection.db.bson_serializer.ObjectID.createFromHexString(bookId)},
+      function(error, book){
+        if(error) callback(error);
+        else callback(null, book)
       });
     }
   });
@@ -323,20 +337,7 @@ BookProvider.prototype.update = function(bookId, books, callback) {
   });
 };
 
-//delete book
-BookProvider.prototype.delete = function(bookId, callback) {
-        this.getCollection(function(error, book_collection) {
-                if(error) callback(error);
-                else {
-                        book_collection.remove(
-                                {_id: book_collection.db.bson_serializer.ObjectID.createFromHexString(bookId)},
-                                function(error, book){
-                                        if(error) callback(error);
-                                        else callback(null, book)
-                                });
-                        }
-        });
-};
+
 
 
 
