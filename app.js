@@ -180,7 +180,10 @@ app.post('/book/:id/edit', function(req, res) {
             } else if (item == '_refId') {
                 editedBook["$addToSet"] = {};
                 editedBook["$addToSet"] = {'refs': {id:req.body["_refId"], note:req.body["_refNote"], title:req.body["_refTitle"]}};
-                bookProvider.addReferencedBy(req.body["_refId"], req.body["_id"], req.body["_title"],  req.body["_refNote"]);
+                bookProvider.addReferencedBy(req.body["_refId"], req.body["_id"], req.body["_title"],  req.body["_refNote"], 
+                    function(error) {
+                        console.log(error);
+                    });
             } else if (item == '_editRef') {
                 bookProvider.editRef(req.body["_id"], req.body["_editRef"], req.body["_title"],  req.body["_refNote"]);
                 bookProvider.editReferencedBy(req.body["_editRef"], req.body["_id"], req.body["_title"],  req.body["_refNote"]);
