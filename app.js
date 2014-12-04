@@ -142,17 +142,18 @@ app.post('/book/new', function(req, res){
         quotes: ['Add first quote here.'],
         notes: ['Add first note here.']
     }, function( error, docs) {
-        res.redirect('/');
+        res.redirect('/')
     });
 });
 
 // edit a book
 app.get('/book/:id/edit', function(req, res) {
     bookProvider.findById(req.param('_id'), function(error, book, info) { 
-        console.log("error wtf " + error)
-        if (error) {
-            console.log('no book there ' + error);
-            res.redirect('/');
+        if (book == null) {
+            console.log("book is null");
+            res.render('book_edit', {
+                title: "Cannot find title"
+            });
         } else {
             res.render('book_edit', {
                 book: book,
@@ -160,6 +161,7 @@ app.get('/book/:id/edit', function(req, res) {
                 title: book.title
             });
         }
+
     });
 });
 
