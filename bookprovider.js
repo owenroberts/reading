@@ -311,7 +311,7 @@ BookProvider.prototype.editReferencedBy = function(refId, id, title, note) {
   var set = {};
   set["referencedBy.$.note"] = note;
   this.getCollection(function(error, book_collection){
-    if (error) callback(error);
+    if (error) console.log("edit ref by: " + error);
     else {
       book_collection.update(query, {$set:set});
     }
