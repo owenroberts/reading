@@ -299,8 +299,7 @@ BookProvider.prototype.addReferencedBy = function(refId, id, title, note) {
     if (error) console.log(error);
     else {
       book_collection.update(query, {$addToSet:set}, function(error){
-        if (error) callback(error);
-        else callback(null);
+        if (error) console.log("addReferencedBy: " + error);
       });
     }
   });
