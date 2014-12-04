@@ -157,8 +157,8 @@ app.get('/book/:id/edit', function(req, res) {
             book: book,
             info: info,
             title: book.title
-            }
-        });
+            });
+        }
     });
 });
 

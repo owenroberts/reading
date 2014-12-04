@@ -12,3 +12,4 @@ To do:
 - User authentication.
 - Mobile styles.
 - Delete references and references need to get deleted when books are deleted.
+- Also "book doesn't exist page" if for some reason database gets modified outside program.
