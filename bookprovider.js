@@ -296,7 +296,7 @@ BookProvider.prototype.addReferencedBy = function(refId, id, title, note) {
   var set = { referencedBy: {}};
   set["referencedBy"] = {id:id, note:note, title:title};
   this.getCollection(function(error, book_collection){
-    if (error) console.log(error);
+    if (error) callback(error);
     else {
       book_collection.update(query, {$addToSet:set});
     }
