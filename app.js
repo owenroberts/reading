@@ -28,9 +28,6 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/users', users);
-
-
 app.get('/', function(req, res) {
     bookProvider.findRecentEdits(function(error, edits) {
         bookProvider.findRecentLogs(function(error, logs) {
@@ -49,6 +46,9 @@ app.get('/', function(req, res) {
 app.get('/init', function(req, res) {
     res.render('init');
 });
+
+
+
 
 //delete a book
 app.post('/book/:id/delete', function(req, res) {

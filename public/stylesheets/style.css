@@ -81,6 +81,13 @@ input[type="submit"]:hover {
 #delete {
   width: 60px;
 }
+.login {
+  background: #8181c7;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+}
 /*  new reference page */
 .nothing {
   margin: 12px 0;
