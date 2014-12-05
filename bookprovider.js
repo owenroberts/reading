@@ -9,21 +9,21 @@ var mongodb = require('mongodb'),
 
 BookProvider = function(uri) {
   
-  /*
+  
   var that = this;
   mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
     if (error) console.log(error);
     that.db = database;
   });
   
- 
+  /*
    TO DEVELOP LOCALLY 
       uncomment the following two lines
       comment out the beginning of this function
   */
 
-  this.db = new Db('books', new Server('localhost', 27017, {safe: false}, {auto_reconnect: true}, {}));
-  this.db.open(function(){});
+  //this.db = new Db('books', new Server('localhost', 27017, {safe: false}, {auto_reconnect: true}, {}));
+  //this.db.open(function(){});
 };
 
 //initialize info values
