@@ -5,6 +5,11 @@ A cataloging app for reading.
 
 I created this app because I wanted a closed system to easily view things that I have read, notes, and relationships between books (and art, movies, comics, games, articles, etc).  I looked at other cataloging apps but they either provided too little or too much functionality, so I just built this, having pretty good html/css/javascript chops, zero mongo exprience and zero node experience.  It was sort of a pain, but ultimately fun, and it basically works!  I'm pretty sure I'm doing a lot of silly things on the backend, so if you happen to want to use this and are a more experienced developer than I am, please let me know how I could have programmed this more efficiently, and I might update it.  
 
+What it does:
+- You can create a book document (or movie, or thought, or whatever) with the title, genre, author, date published, date you read it, quotes, notes, links and tags.
+- Browse your books by any field, or search in any field.
+- You can add references to that book to other books and things in your database.  For example, if you're taking notes on the book Capital by Piketty, you can create a reference to the book Kapital by Karl Marx (assuming you have created that book already) with a note.  So you will see all the books that your book references, and when looking at a book that is referenced by other books, you will see those as well.
+
 Anyway, after building it, I thought other people might be interested to use it as well.  I think it will be a powerful way of looking at things that I actually have read or experienced and piecing together out of those things without having to pour through loosely organized notes, spreadsheets, whatever.  I don't have any real interest in building a site where people can just sign up and use the app, but I figured there might be a few people technical enough to just install it on a heroku server and use it, or even develop it further.
 
 If so, here are some basic instructions to get it running.
