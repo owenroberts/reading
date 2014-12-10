@@ -85,9 +85,6 @@ Also, f you want to develop locally, you will need to open bookprovider.js and f
 
 Those instructions coming soon.
 
-#You will to need to install [Node](http://nodejs.org/).
-
-
 To do:
 - Instructions for ~~installing for use~~ and development.
 - Ability to create new attributes.
