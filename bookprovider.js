@@ -87,7 +87,7 @@ BookProvider.prototype.findRecentEdits = function(callback) {
       }
     });
 };
-//find recently edited books
+//find recently logged books
 BookProvider.prototype.findRecentLogs = function(callback) {
     this.getCollection(function(error, book_collection) {
       if( error ) callback(error);
@@ -250,7 +250,10 @@ BookProvider.prototype.addType = function(type, callback) {
   this.getCollection(function(error, book_collection) {
     if (error) callback(error);
     else {
-      book_collection.update({info:{$exists:true}}, {$addToSet:{"info._types":type}});
+      book_collection.update({info:{$exists:true}}, {$addToSet:{"info._types":type}}, 
+        function (error) {
+          console.log(error);
+        });
     }
   });
 };
