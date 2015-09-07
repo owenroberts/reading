@@ -19,6 +19,7 @@ a:hover {
   display: inline-block;
   cursor: pointer;
   text-align: center;
+  border-radius: 4px;
 }
 .clickable:hover {
   border: none;
@@ -49,22 +50,37 @@ input[type="submit"]:hover {
 #books {
   margin-top: 8px;
 }
+#books .search,
+#books .browse,
+#books .menu {
+  display: inline;
+}
+#books .search form,
+#books .browse form {
+  display: inline;
+  margin-right: 1em;
+}
 #books .title button {
   color: #8181c7;
-  font-size: 24px;
+  font-size: 20px;
   margin: 6px 0;
   cursor: pointer;
   background: transparent;
   border: none;
   text-align: left;
-  padding: 0;
-  border-bottom: 2px solid transparent;
+  padding: 2px;
 }
 #books .title button:hover {
-  border-bottom: 2px solid #fdf;
+  text-decoration: underline;
 }
 #books .title button:focus {
   outline: none;
+}
+#books .name {
+  color: #000;
+}
+#books .genre {
+  color: #8181c7;
 }
 #books input[name="_query"] {
   font-size: 24px;
@@ -72,35 +88,30 @@ input[type="submit"]:hover {
 #books select {
   margin-right: 12px;
 }
-#books div {
-  margin-top: 12px;
-}
 .menu a {
   margin: 3px 6px 3px 0;
 }
 #delete {
   width: 60px;
-}
-.login {
-  background: #8181c7;
   position: absolute;
-  top: 0;
-  right: 0;
-  padding: 10px;
+  top: 6px;
+  right: 6px;
 }
 /*  new reference page */
 .nothing {
   margin: 12px 0;
 }
 .book {
-  width: 160px;
-  height: 200px;
-  background: #ffadff;
+/*background: lighten(secondary, 60%)*/
   padding: 6px;
-  border: 10px solid #8181c7;
-  float: left;
+  border: 1px solid #8181c7;
+  border-radius: 6px;
   margin-right: 6px;
   margin-bottom: 6px;
+  position: relative;
+}
+.book:hover {
+  background: rgba(255,173,255,0.5);
 }
 .book div {
   margin: 3px 0;
@@ -108,6 +119,8 @@ input[type="submit"]:hover {
 .book .title {
   color: #8181c7;
   font-size: 18px;
+  margin: 0;
+  width: 80%;
 }
 .book .note {
   width: 140px;
@@ -349,4 +362,29 @@ input[type="submit"]:hover {
 }
 .newbook .newtype {
   font-size: 18px;
+}
+/* iphone 5 styles*/
+@media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
+  body {
+    padding: 0;
+  }
+  .search input {
+    display: block;
+    margin: 8px;
+  }
+  .book {
+    margin: 0;
+    float: none;
+    height: auto;
+    width: 266px;
+  }
+  .book #delete {
+    display: none;
+  }
+  .book-single .bk {
+    width: 300px;
+  }
+  .book-single .refs {
+    width: 300px;
+  }
 }
