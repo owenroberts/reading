@@ -76,6 +76,11 @@ input
     margin-right:12px
   div
     /*margin-top:12px*/
+  .refd
+    width:200px
+    float:left
+    input[value="Save"]
+      display:block
 
 .menu
   a 
@@ -120,23 +125,15 @@ input
   .title
     color: primary
     font-size:18px
-    padding:6px
-    display:inline
-  .type
-    background: primary
-    color:white
-    font-size:18px
-    padding:6px
-    display:inline
-    margin-right:3px
   .browsekey
     background:bkg 
     margin:3px 0 
     padding:6px
+  input[value="Save"]
+      display:block
 
 /*  single book page   */
 .backhome
-  float:right
   a
     border-bottom:2px solid transparent
     &:hover
@@ -144,32 +141,35 @@ input
 .book-single
   max-width:960px
   .bk
-    width:480px
+    width:300px
     background: transparent
     position: relative 
-    float:left
+    float: left
   .title input
     color: primary
     font-weight: 300
     font-size:24px
-    width:100%
+    width:290px
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding:3px
   .type
     display:inline-block
     background:primary
     padding:6px
     color:white
-    position: absolute
-    top:0
-    right:0
   .created-at, .created-at *
-    font-size:9px
-    background: lighten(bkg, 80%)
+    background: bkg
     padding:2px
     color: primary
   input
     font-size:14px
-    padding:6px
+  input[type="text"]
+    border: 1px solid primary
+    border-radius: 3px
+    margin: 6px 0
+    padding: 3px 3px
     &.save 
       min-width:40px
     &:focus
@@ -178,37 +178,39 @@ input
     font-size:14px
     border:none
     width:98%
-    background: lighten(primary, 90%) 
+    background: lighten(primary, 85%) 
   .plus
     margin-right:10px
   .infocolumn
-    display:inline-block
     vertical-align: top
-    width:234px
-    padding:3px
-    color: primary
     font-size:16px 
-    background: wht 
     input
       min-width:140px
       color: primary
       font-size:16px
+  .notes-column
+    margin-left: 320px
+    padding-top: 10px
+    
   .quotes
-    background: lighten(primary, 80%)
+    border: 1px solid primary
+    border-radius: 6px
     padding:6px
     .quote
       margin:8px 0
   .notes
-    background: desaturate(secondary, 80%)
+    border: 1px solid secondary
+    border-radius: 6px
     padding:6px
   .link
-    background: bkg
-    padding:6px
-    font-size:14px 
+    padding: 2px
+    font-size:18px
     display:inline-block
     margin-right:3px
+    border-radius: 3px
   .tag
     background: primary
+    border-radius: 3px
     input
       color:wht
       cursor:pointer
@@ -219,7 +221,7 @@ input
   div 
     margin:8px 0
   #editBookSubmit
-    display:inline-block
+    /*display:inline-block*/
   .new-attribute
     background:bkg
     padding:8px
@@ -262,10 +264,8 @@ input
     .hiddencontents
       display:none 
   .refs
-    width:360px
-    clear:right
-    float:right
-    background: lighten(bkg, 50%)
+    border: 1px solid bkg
+    border-radius: 6px
     padding:6px
     .h1
       color:primary
@@ -277,6 +277,11 @@ input
       display:none
     select
       margin:3px
+    .by input[type="submit"]
+      width:100%
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
      
 
     
@@ -302,6 +307,13 @@ input
   .newtype
     font-size:18px
     
+/* smaller than 800px styles */
+@media only screen and (max-width : 800px)
+  .book-single .notes-column
+    clear:left
+    margin-left: 0
+
+    
 /* iphone 5 styles*/    
 @media only screen and (min-device-width : 320px) and (max-device-width : 568px)
   body
@@ -322,6 +334,8 @@ input
       width:300px
     .refs
       width:300px
+  .notes-column
+    margin-left: 0
 
 
     
