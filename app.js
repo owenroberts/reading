@@ -180,7 +180,6 @@ app.get('/404', function(req, res) {
 // save book
 app.post('/book/:id/edit', function(req, res) {
     var editedBook = {};
-    console.log(req.body);
     for (item in req.body) { 
         if (item != '_id' && item != 'newlabel' && item != 'newvalue') {
             var newitem = false;
@@ -216,7 +215,6 @@ app.post('/book/:id/edit', function(req, res) {
             }
         }
     }
-    console.log(editedBook);
     if (Object.getOwnPropertyNames(editedBook).length > 0) {
         if (editedBook["$set"] != undefined) {
             editedBook["$set"]["last_edit"] = new Date();
@@ -224,6 +222,7 @@ app.post('/book/:id/edit', function(req, res) {
             editedBook["$set"] = {};
             editedBook["$set"]["last_edit"] = new Date();
         }
+        console.log('wtf');
         console.log(editedBook);
         bookProvider.update(req.param('_id'), editedBook, function(error, docs) {
             res.redirect('/book/:id/edit?_id='+req.body._id);

@@ -20,11 +20,10 @@ BookProvider = function(uri) {
    TO DEVELOP LOCALLY 
       uncomment the following two lines
       comment out the beginning of this function
-  
- */
+  */
+
   this.db = new Db('books', new Server('localhost', 27017, {safe: false}, {auto_reconnect: true}, {}));
   this.db.open(function(){});
- 
 };
 
 //initialize info values
@@ -46,7 +45,7 @@ BookProvider.prototype.delete = function(bookId, callback) {
     if(error) callback(error);
     else {
       book_collection.remove(
-      {_id: book_collection.db.bson_serializer.ObjectID.createFromHexString(bookId)},
+      {_id:ObjectID.createFromHexString(bookId)},
       function(error, book){
         if(error) callback(error);
         else callback(null, book)
@@ -81,7 +80,7 @@ BookProvider.prototype.findRecentEdits = function(callback) {
     this.getCollection(function(error, book_collection) {
       if( error ) callback(error);
       else {
-        book_collection.find().sort({last_edit:-1}).limit(4).toArray(function(error, results) {
+        book_collection.find().sort({last_edit:-1}).limit(8).toArray(function(error, results) {
           if( error ) callback(error);
           else callback(null, results);
         });
@@ -93,7 +92,7 @@ BookProvider.prototype.findRecentLogs = function(callback) {
     this.getCollection(function(error, book_collection) {
       if( error ) callback(error);
       else {
-        book_collection.find().sort({created_at:-1}).limit(4).toArray(function(error, results) {
+        book_collection.find().sort({created_at:-1}).limit(8).toArray(function(error, results) {
           if( error ) callback(error);
           else callback(null, results);
         });
@@ -260,20 +259,11 @@ BookProvider.prototype.addType = function(type, callback) {
 };
 
 // find a book by id
-/*
-  modified this line:
-    book_collection.findOne({_id:book_collection.db.bson_serializer.ObjectID.createFromHexString(id)},
-  to: 
-    book_collection.findOne({_id:ObjectID.createFromHexString(id)},
-
-  not sure why by the bson_serializer threw an error
-*/
 BookProvider.prototype.findById = function(id, callback) {
   this.getCollection(function(error, book_collection) {
     if (error) callback(error);
     else {
       book_collection.findOne({info:{$exists:true}}, function(error, info) {
-          console.log(id);
           book_collection.findOne({_id:ObjectID.createFromHexString(id)}, function(error, result) {
             if (error) callback(error);
             else callback(null, result, info);
@@ -353,7 +343,7 @@ BookProvider.prototype.update = function(bookId, books, callback) {
     if (error) callback(error);
     else {
        book_collection.update( 
-          {_id:book_collection.db.bson_serializer.ObjectID.createFromHexString(bookId)},
+          {_id:ObjectID.createFromHexString(bookId)},
           books,
           function(error, books) {
             if (error) callback(error);
