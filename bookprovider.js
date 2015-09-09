@@ -3,6 +3,7 @@ var mongodb = require('mongodb'),
     Db = require('mongodb').Db, 
     Connection = require('mongodb').Connection, 
     Server = require('mongodb').Server, 
+    BSON = require('mongodb').BSON, 
     ObjectID = require('mongodb').ObjectID;
 
 
