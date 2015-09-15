@@ -5,17 +5,16 @@ block content
 		a(href="/")!= "Back to Book List"
 	div.book-single
 		.bk
-
 			form( method="post")
 				input(name="_id", type="hidden", value=book._id.toHexString())
 				div#form
-					div.title
-						input.select.edit(type="text", name="title", placeholder="title", value=book.title)
-					div.created-at
-						span= "logged on" 
-						span= book.created_at.getMonth()+1+" "+book.created_at.getDate()+" "+book.created_at.getFullYear()
-					div.type= book.type
 					div.infocolumn
+						div.title
+							input.select.edit(type="text", name="title", placeholder="title", value=book.title)
+						div.created-at
+							span= "logged on" 
+							span= book.created_at.getMonth()+1+" "+book.created_at.getDate()+" "+book.created_at.getFullYear()
+						div.type= book.type		
 						div.name
 							span= "by "
 							input.select.edit(type="text", name="name", placeholder="author" value=book.name)
@@ -28,40 +27,44 @@ block content
 						div.readdate
 							span= "read "
 							input.select.edit(type="text", name="readdate", placeholder="date read", value=book.readdate)
-					if book.tags
-						div.tags="Tags: "
-							each value in book.tags
-								div.tag
-									form( method="get", action="/:tag")
-										input(name="_tag", value=value, type="submit")
-					if book.links
-						div.links="Links: "
-							each value in book.links
-								div.link
-									a(href="#{value[1]}" target="blank")= value[0]
+						if book.tags
+							div.tags="Tags: "
+								each value in book.tags
+									div.tag
+										form( method="get", action="/:tag")
+											input(name="_tag", value=value, type="submit")
+						if book.links
+							div.links="Links: "
+								each value in book.links
+									div.link
+										a(href="#{value[1]}" target="blank")= value[0]
+						
+						
+					div.notes-column
+						div.notes= "Notes"
+							//span= "+"
+							each value, index in book.notes
+								div.note
+									textarea.select.edit(type="text", name="notes")=value
+						div.quotes= "Quotes"
+							//span= "+"
+							each value, index in book.quotes
+								div.quote
+									textarea.select.edit(type="text", name="quotes")=value
+					div#addAtts.clickable()= "Add Attribute"
 					div#atts-container
 						each value in info.info._atts
 							div.atts= value
-						span.cancel= "x"
-				div#addAtts.plus.clickable()= "Add Attribute"
+							span.cancel= "x"
+					div#editBookSubmit
+						input.clickable(class="save", type="submit", value="Save")
+						if book.tags
 				
-				script(type='text/javascript' src="/javascripts/edit_book.js")
+					script(type='text/javascript' src="/javascripts/edit_book.js")
 					
-				div#editBookSubmit
-					input.clickable(class="save", type="submit", value="Save")
-					if book.tags
+				
 			
-		div.notes-column
-			div.notes= "Notes"
-				//span= "+"
-				each value, index in book.notes
-					div.note
-						textarea.select.edit(type="text", name="notes")=value
-			div.quotes= "Quotes"
-				//span= "+"
-				each value, index in book.quotes
-					div.quote
-						textarea.select.edit(type="text", name="quotes")=value
+		
 
 			div.refs
 				div= "References"

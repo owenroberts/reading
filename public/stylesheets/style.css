@@ -165,10 +165,8 @@ input[type="submit"]:hover {
   max-width: 960px;
 }
 .book-single .bk {
-  width: 300px;
   background: transparent;
   position: relative;
-  float: left;
 }
 .book-single .title input {
   color: #8181c7;
@@ -219,9 +217,10 @@ input[type="submit"]:hover {
 .book-single .infocolumn {
   vertical-align: top;
   font-size: 16px;
+  width: 300px;
+  float: left;
 }
 .book-single .infocolumn input {
-  min-width: 140px;
   color: #8181c7;
   font-size: 16px;
 }
@@ -264,14 +263,19 @@ input[type="submit"]:hover {
 .book-single div {
   margin: 8px 0;
 }
+.book-single #editBookSubmit {
+  float: right;
+  clear: right;
+}
+.book-single #editBookSubmit input {
+  font-size: 23px;
+}
+.book-single #addAtts {
+  float: right;
+}
 .book-single .new-attribute {
   background: #e0e0e0;
   padding: 8px;
-}
-.book-single .new-attribute textarea {
-  margin-left: 4px;
-  padding: 6px;
-  width: 400px;
 }
 .book-single .new-attribute .label {
   text-transform: capitalize;
@@ -280,6 +284,7 @@ input[type="submit"]:hover {
 }
 .book-single #atts-container {
   display: none;
+  float: right;
   margin-top: 16px;
   position: relative;
 }
@@ -288,7 +293,7 @@ input[type="submit"]:hover {
   display: inline-block;
   padding: 3px;
   color: #fff;
-  margin: 3px 3px 3px 0;
+  margin: 3px 0 3px 3px;
   cursor: pointer;
 }
 .book-single #atts-container .cancel {
@@ -299,6 +304,7 @@ input[type="submit"]:hover {
 }
 .book-single .new-attribute {
   position: relative;
+  margin-left: 320px;
 }
 .book-single #cancel-att {
   position: absolute;
@@ -317,6 +323,9 @@ input[type="submit"]:hover {
   display: none;
 }
 .book-single .refs {
+  float: right;
+  clear: right;
+  width: 400px;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
   padding: 6px;

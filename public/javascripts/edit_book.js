@@ -145,7 +145,8 @@ function addAttribute(type) {
 			.append(newInput);
 	} 
 
-	container.append(newAttDiv);
+	//container.append(newAttDiv);
+	newAttDiv.insertBefore('#editBookSubmit');
 	newAttDiv.append(cancel);
 
 	cancel.on('click', function() {
