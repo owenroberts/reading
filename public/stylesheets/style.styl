@@ -141,10 +141,8 @@ input
 .book-single
   max-width:960px
   .bk
-    width:300px
     background: transparent
     position: relative 
-    float: left
   .title input
     color: primary
     font-weight: 300
@@ -184,8 +182,9 @@ input
   .infocolumn
     vertical-align: top
     font-size:16px 
+    width:300px
+    float:left
     input
-      min-width:140px
       color: primary
       font-size:16px
   .notes-column
@@ -221,20 +220,22 @@ input
   div 
     margin:8px 0
   #editBookSubmit
-    /*display:inline-block*/
+    float:right
+    clear:right
+    input 
+      font-size:23px
+  #addAtts
+    float:right
   .new-attribute
     background:bkg
     padding:8px
-    textarea
-      margin-left: 4px
-      padding:6px
-      width:400px
     .label
       text-transform:capitalize
       margin-left: 4px;
       padding: 6px;
   #atts-container
     display:none
+    float:right
     margin-top:16px
     position:relative
     .atts 
@@ -242,7 +243,7 @@ input
       display inline-block
       padding:3px
       color:white 
-      margin:3px 3px 3px 0
+      margin:3px 0 3px 3px
       cursor:pointer
     .cancel
       background: primary
@@ -251,6 +252,7 @@ input
       cursor:pointer
   .new-attribute
     position:relative
+    margin-left:320px
   #cancel-att
     position:absolute 
     top:10px
@@ -264,6 +266,9 @@ input
     .hiddencontents
       display:none 
   .refs
+    float:right
+    clear:right
+    width:400px
     border: 1px solid bkg
     border-radius: 6px
     padding:6px

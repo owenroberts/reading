@@ -222,7 +222,6 @@ app.post('/book/:id/edit', function(req, res) {
             editedBook["$set"] = {};
             editedBook["$set"]["last_edit"] = new Date();
         }
-        console.log('wtf');
         console.log(editedBook);
         bookProvider.update(req.param('_id'), editedBook, function(error, docs) {
             res.redirect('/book/:id/edit?_id='+req.body._id);
