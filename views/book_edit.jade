@@ -45,12 +45,12 @@ block content
 							//span= "+"
 							each value, index in book.notes
 								div.note
-									textarea.select.edit(type="text", name="notes")=value
+									textarea.edit(type="text", name="notes")=value
 						div.quotes= "Quotes"
 							//span= "+"
 							each value, index in book.quotes
 								div.quote
-									textarea.select.edit(type="text", name="quotes")=value
+									textarea.edit(type="text", name="quotes")=value
 					div#addAtts.clickable()= "Add Attribute"
 					div#atts-container
 						each value in info.info._atts
