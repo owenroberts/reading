@@ -1,12 +1,12 @@
-var express = require('express'),
-		path = require('path'), 
-		http = require('http'), 
-		path = require('path'),
-		BookProvider = require('./bookprovider').BookProvider;
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var express = require('express')
+	,	path = require('path')
+	,	http = require('http')
+	,	path = require('path')
+	,	BookProvider = require('./bookprovider').BookProvider
+    ,   favicon = require('serve-favicon')
+    ,   logger = require('morgan')
+    ,   cookieParser = require('cookie-parser')
+    ,   bodyParser = require('body-parser');
 
 var users = require('./routes/users');
 
@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Authentication module.
 var auth = require('http-auth');
 var basic = auth.basic({
-    realm: "Simon Area.",
+    realm: "Fart monster: ",
     file: "htpasswd" 
 });
 
@@ -56,8 +56,6 @@ app.get('/', function(req, res) {
 app.get('/init', function(req, res) {
     res.render('init');
 });
-
-
 
 
 //delete a book
@@ -270,8 +268,6 @@ app.get('/addref/browse', function(req, res) {
 });
 
 
-
-
 //delete a book
 app.post('/book/:id/delete', function(req, res) {
         bookProvider.delete(req.param('_id'), function(error, docs) {
@@ -282,11 +278,8 @@ app.post('/book/:id/delete', function(req, res) {
 var port = process.env.PORT || 3000;
 var mongoUri = process.env.MONGOLAB_URI || 
   process.env.MONGOHQ_URL || 
-  'localhost'; 
+  'localhost';
 var bookProvider = new BookProvider(mongoUri);
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

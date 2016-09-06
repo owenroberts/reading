@@ -1,14 +1,17 @@
 extends layout
 
 block content
-	h1= "Add refernece to " + bookTitle
-	h1= "Searching by " + title
+	form( method="get", action="/book/:id/edit")
+		input(name="_id", type="hidden", value=bookId)
+		input.clickable(type="submit", value="Back")
+	h2= "Add reference to " + bookTitle
+	h2= "Searching by " + title
 	div#books
 		if books.length > 0
 			each book in books
 				if (!book.info)
 					if (book._id.toHexString() !== bookId)
-						div.book.refd
+						div.refd
 							form( method="post", action="/book/:id/edit")
 								input(name="_id", type="hidden", value=bookId)
 								input(name="_refId", type="hidden", value=book._id.toHexString())
@@ -20,6 +23,3 @@ block content
 								input.clickable(id="edit", value="Save", type="submit")
 		else
 			div.nothing= "Nothing matches this query."
-			form( method="get", action="/book/:id/edit")
-				input(name="_id", type="hidden", value=bookId)
-				input.clickable(type="submit", value="Back")

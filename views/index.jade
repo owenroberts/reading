@@ -2,9 +2,10 @@ extends layout
 
 block content
 	if info != undefined
-		div#books
+		div#index
 			div.search
 				form(method="get", action="/search")
+					
 					input.select.underlined(name="_query", type="text", placeholder=title)
 					select(name="_field")
 								each field in info.info._fields
@@ -21,8 +22,8 @@ block content
 							each item in info.info[name]
 								option= item
 					input.clickable(type="submit", value="Browse")
-			div.menu
-				a.new.clickable(href="/book/new")!= "Add New Book"
+			div.add
+				a.clickable(href="/book/new")!= "Add New Book"
 			h3= "Recently Edited"
 			each book in recentlyEdited
 				if (!book.info)
@@ -34,10 +35,6 @@ block content
 						div.name="by "+ book.name
 						div.genre= book.genre
 						
-						form#delete( onsubmit="return confirm('Are you sure?');" method="post", action="/book/:id/delete")
-							input(name="_id", type="hidden", value=book._id.toHexString())
-							input.clickable(id="delete", value="Delete", type="submit")
-			div.cf
 			h3= "Recently Looged"
 			each book in recentlyLogged
 				if (!book.info)
@@ -48,10 +45,6 @@ block content
 								button(type="submit")=book.title
 						div.name="by "+ book.name
 						div.genre= book.genre
-						
-						form#delete( onsubmit="return confirm('Are you sure?');" method="post", action="/book/:id/delete")
-							input(name="_id", type="hidden", value=book._id.toHexString())
-							input.clickable(id="delete", value="Delete", type="submit")
 	else
 		h1= title
 		form(method="get", action="/init")

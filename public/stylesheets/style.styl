@@ -8,16 +8,21 @@ wht = #fff
 
 /*  globes   */
 body
-  padding: 50px
-  font: 14px Helvetica, Arial, sans-serif
+  font: 12px/14px Verdana, Helvetica, Arial, sans-serif
   background: url('/images/bkg-dot-sm.jpg')
+#wrap
+  max-width:800px
+  margin:0 auto
+  margin-top:4em
+h2, h3
+  font-weight:normal
 a
   color: secondary
   text-decoration:none
 a:hover
   border-bottom:2px solid highlight
 .clickable
-  padding: 6px
+  padding: 3px 6px 
   font-size:16px
   background: highlight
   display:inline-block
@@ -40,113 +45,89 @@ input
     border-bottom:2px solid transparent
     &:hover
       border-bottom:2px solid highlight
-.cf 
-  clear:both
-  height:10px
-
-  
-/*  index */
-#books
-  margin-top:8px
-  .search, .browse, .menu
-    display: inline
-  .search form, .browse form
-    display: inline
-    margin-right: 1em
+button
+  font-family:Verdana
+  border:none
+  cursor:pointer
+  background:none
+  padding:0
+  border-bottom:2px solid transparent
+  &:hover
+    border-bottom:2px solid primary
+  &:focus
+    outline:none
+textarea
+  resize:none
+  border:none
+  background: lighten(primary, 85%)
+  font-size:14px
+textarea:focus
+  outline:none
+.backhome
+  a
+    border-bottom:2px solid transparent
+    &:hover
+      border-bottom:2px solid highlight
+.book
+  width:160px
+  display:inline-block
+  background:bkg
+  margin-right:1em
+  padding:0.25em
+  box-shadow: -2px 2px 0 primary
+  vertical-align:top
   .title button
     color: primary
     font-size:20px
-    margin:6px 0
-    cursor:pointer
-    background: transparent
-    border:none
-    text-align:left
-    padding:2px
-    &:hover
-      text-decoration: underline
-    &:focus
-      outline:none
+  div
+    margin:.5em 0
+.refd
+  float:left
+  background:bkg
+  box-shadow: -2px 2px 0 primary
+  padding:1em
+  margin-right:1em
+  input
+  textarea
+  div
+    font-size:14px
+    margin: 0.5em 0
+  input[value="Save"]
+    display:block
+  
+/*  index */
+#index
+  .book, h3
+    margin-top:1em
+  .search
+  .browse
+    display:inline-block
+    margin-bottom:1em
+    margin-right:1em
+  .search input
+  .search select
+  .browse input
+  .browse select
+    margin: 0.5em 0
+    display:block
+  .search form, .browse form
+    /*display: inline*/
+    margin-right: 1em
   .name 
     color: black
   .genre
     color: primary
   input[name="_query"]
     font-size:24px
-  select
-    margin-right:12px
-  div
-    /*margin-top:12px*/
-  .refd
-    width:200px
-    float:left
-    input[value="Save"]
-      display:block
+    width:160px
 
-.menu
-  a 
-    margin:3px 6px 3px 0
-#delete
-  width:60px
-  position: absolute
-  top: 6px
-  right: 6px
-
-  
-/*  new reference page */
-.nothing 
-  margin: 12px 0
-.book
-  /*background: lighten(secondary, 60%)*/
-  padding: 6px;
-  border: 1px solid primary
-  border-radius: 6px
-  margin-right:6px
-  margin-bottom:6px
-  position:relative
-  &:hover
-    background: rgba(lighten(secondary, 60%), 0.5)
-  div
-    margin:3px 0
-  .title
-    color: primary
-    font-size:18px
-    margin: 0
-    width:80%
-  .note
-    width:140px
-    height:90px
-    background:bkg 
-    margin:3px 0 
-.browsedbook
-  margin:16px 0
-  textarea
-    vertical-align: middle;
-    margin: 4px;
-  .title
-    color: primary
-    font-size:18px
-  .browsekey
-    background:bkg 
-    margin:3px 0 
-    padding:6px
-  input[value="Save"]
-      display:block
-
-/*  single book page   */
-.backhome
-  a
-    border-bottom:2px solid transparent
-    &:hover
-      border-bottom:2px solid highlight
+/*  single book page   */    
 .book-single
-  max-width:960px
   .bk
     background: transparent
     position: relative 
   .title input
-    color: primary
-    font-weight: 300
-    font-size:24px
+    font-size:36px
     width:290px
     white-space: nowrap;
     overflow: hidden;
@@ -154,124 +135,109 @@ input
     padding:3px
   .type
     display:inline-block
-    background:primary
-    padding:6px
+    background:highlight
+    padding:3px 6px
     color:white
-  .created-at, .created-at *
-    background: bkg
-    padding:2px
-    color: primary
-  input
-    font-size:14px
+  .created-at
+    margin-left:1em
+    display:inline-block
+    color: gray
+  .name
+  .pubdate
+  .genre
+  .readdate
+    font-size:12px
+    color:gray
+    display:inline-block
+    input
+      font-size:14px
+      width:100px
   input[type="text"]
-    border: 1px solid primary
-    border-radius: 3px
-    margin: 6px 0
-    padding: 3px 3px
     &.save 
       min-width:40px
     &:focus
-      outline: primary auto 5px;
-  textarea
-    font-size:14px
-    border:none
-    width:98%
-    background: lighten(primary, 85%) 
+      outline: none;
+      border-bottom:1px solid primary;
+
+    
   .plus
     margin-right:10px
-  .infocolumn
-    vertical-align: top
-    font-size:16px 
-    width:300px
-    float:left
-    input
-      color: primary
-      font-size:16px
-  .notes-column
-    margin-left: 320px
-    padding-top: 10px
     
-  .quotes
-    border: 1px solid primary
-    border-radius: 6px
-    padding:6px
-    .quote
-      margin:8px 0
+  .notes-column
+    padding-top: 10px
   .notes
-    border: 1px solid secondary
-    border-radius: 6px
-    padding:6px
+  .quotes
+    .note
+    .quote
+      background:bkg
+      margin:1em 0
+      width:30%
+      margin-right:1em
+      display:inline-block
+      vertical-align:top
+      box-shadow: -2px 2px 0 primary
+      padding:0.25em
+      padding-right:3em
+      textarea
+        width:100%
+  .hidecontents
+    position: relative
+    height:20px
+    overflow:hidden
+    span
+      position:absolute
+      right:10px
+      cursor:pointer
+      
+              
   .link
+  .tag
     padding: 2px
-    font-size:18px
     display:inline-block
     margin-right:3px
-    border-radius: 3px
-  .tag
-    background: primary
-    border-radius: 3px
+    a
     input
-      color:wht
+      color:secondary
       cursor:pointer
-    font-size:16px
-    padding:3px
-    display:inline-block
-    margin-right:3px 
+      font-size:18px
   div 
-    margin:8px 0
-  #editBookSubmit
-    float:right
-    clear:right
-    input 
-      font-size:23px
-  #addAtts
-    float:right
+    margin:0.25em 0
+
   .new-attribute
     background:bkg
     padding:8px
     .label
       text-transform:capitalize
-      margin-left: 4px;
-      padding: 6px;
+      padding: 6px 0;
   #atts-container
     display:none
-    float:right
     margin-top:16px
     position:relative
     .atts 
-      background: secondary
+      background: highlight
       display inline-block
-      padding:3px
-      color:white 
       margin:3px 0 3px 3px
+      padding:0.25em
       cursor:pointer
     .cancel
-      background: primary
+      background: secondary
+      border-radius: 0.25em
+      margin:.5em
       color: white
-      padding:3px
+      padding:0.25em
       cursor:pointer
   .new-attribute
     position:relative
-    margin-left:320px
   #cancel-att
     position:absolute 
     top:10px
     right:10px
-  .hidecontents
-    position: relative 
-    span
-      position:absolute
-      right:10px
-      cursor:pointer
-    .hiddencontents
-      display:none 
   .refs
-    float:right
-    clear:right
-    width:400px
-    border: 1px solid bkg
-    border-radius: 6px
-    padding:6px
+    margin:2em 0
+    input.title
+      font-size:14px
+    .book
+      margin-right:1em
     .h1
       color:primary
       font-size:18px
@@ -288,6 +254,21 @@ input
       overflow: hidden
       text-overflow: ellipsis
      
+/*  new reference page */
+.nothing 
+  margin: 12px 0
+  div
+    margin:3px 0
+  .title
+    color: primary
+    font-size:18px
+    margin: 0
+    width:80%
+  .note
+    width:140px
+    height:90px
+    background:bkg 
+    margin:3px 0 
 
     
 
