@@ -152,11 +152,8 @@ textarea:focus {
 }
 .book-single .title input {
   font-size: 36px;
-  width: 290px;
-  white-space: nowrap;
-  overflow: hidden;
+  width: 100%;
   text-overflow: ellipsis;
-  padding: 3px;
 }
 .book-single .type {
   display: inline-block;
