@@ -51,6 +51,7 @@ input[type="submit"]:hover {
   border-bottom: 2px solid #fdf;
 }
 button {
+  text-align: left;
   font-family: Verdana;
   border: none;
   cursor: pointer;
