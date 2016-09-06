@@ -2,30 +2,35 @@ extends layout
 
 block content
 	div.backhome.clickable
-		a(href="/")!= "Back to Book List"
+		a(href="/")= "Back"
 	div.book-single
 		.bk
-			form( method="post")
+			form(id="form" method="post")
 				input(name="_id", type="hidden", value=book._id.toHexString())
-				div#form
+				div#form-body
 					div.infocolumn
 						div.title
 							input.select.edit(type="text", name="title", placeholder="title", value=book.title)
+						div.type= book.type	
 						div.created-at
-							span= "logged on" 
+							span= " logged on " 
 							span= book.created_at.getMonth()+1+" "+book.created_at.getDate()+" "+book.created_at.getFullYear()
-						div.type= book.type		
+						br
 						div.name
 							span= "by "
+							br
 							input.select.edit(type="text", name="name", placeholder="author" value=book.name)
 						div.genre
 							span= "genre "
+							br
 							input.select.edit(type="text", name="genre", placeholder="genre", value=book.genre)
 						div.pubdate
 							span= "published "
+							br
 							input.select.edit(type="text", name="pubdate", placeholder="date published", value=book.pubdate)
 						div.readdate
 							span= "read "
+							br
 							input.select.edit(type="text", name="readdate", placeholder="date read", value=book.readdate)
 						if book.tags
 							div.tags="Tags: "
@@ -41,37 +46,37 @@ block content
 						
 						
 					div.notes-column
-						div.notes= "Notes"
-							//span= "+"
+						div.notes
+							h2= "Notes"
 							each value, index in book.notes
-								div.note
-									textarea.edit(type="text", name="notes")=value
-						div.quotes= "Quotes"
-							//span= "+"
+								div.note.hidecontents
+									span= "+"
+									div.hiddencontents
+										textarea.edit(type="text", name="notes")=value
+						div.quotes
+							h2= "Quotes"
 							each value, index in book.quotes
-								div.quote
-									textarea.edit(type="text", name="quotes")=value
-					div#addAtts.clickable()= "Add Attribute"
+								div.quote.hidecontents
+									span= "+"
+									div.hiddencontents
+										textarea.edit(type="text", name="quotes")=value
+					div#addAtts.clickable()= "Add Att"
 					div#atts-container
 						each value in info.info._atts
 							div.atts= value
-							span.cancel= "x"
+						span.cancel= "x"
 					div#editBookSubmit
 						input.clickable(class="save", type="submit", value="Save")
-						if book.tags
 				
 					script(type='text/javascript' src="/javascripts/edit_book.js")
 					
-				
-			
-		
 
 			div.refs
-				div= "References"
+				h2= "References"
 				div.ref
 					if book.refs
 						each ref, index in book.refs
-							div.hidecontents
+							div.hidecontents.book
 								span="+"
 								form(method="get", action="/book/:id/edit")
 									input(name="_id", type="hidden", value=ref.id)
@@ -83,6 +88,7 @@ block content
 										input(name="_id", type="hidden" value=book._id.toHexString())
 										textarea.select(name="_refNote", type="text")=ref.note
 										input.refedit.clickable(type="hidden", value="Save")= "Save"
+
 				div#addRef.plus.clickable()= "Add Reference"
 				div.addref
 					div.search
@@ -116,7 +122,7 @@ block content
 										option= item
 							input.clickable(type="submit")
 			div.refs.by
-				div= "Referenced by "
+				h2= "Referenced by "
 				div.ref
 					if book.referencedBy
 						each refby, index in book.referencedBy

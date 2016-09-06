@@ -1,11 +1,16 @@
 $( document ).ready(function() {
 
+
+var bookform = document.querySelector('#form');
+document.onkeypress = function(ev) {
+	if (ev.which == 13 && ev.altKey) bookform.submit();
+};
+
 var pageload = true;
 $('[name="_refNote"]').on('change keyup keydown paste cut', function() {
 	if (pageload) {
 		pageload = false;
 	} else {
-		console.log($(this).find('.refedit'));
 		$(this).parent().find('.refedit').attr({type:"submit"});
 	}
 });
@@ -47,18 +52,19 @@ $('.book-single').on( 'change keyup keydown paste cut', 'textarea', function (){
     $(this).height(0).height(this.scrollHeight);
 }).find( 'textarea' ).change();
 
-
 /* hidden stuff */
 function hiddenToggle() {
 	var state = $(this).text();
 	if (state[0] == "-") {
-		$(this).parent().find('div').css('display', 'none');
+		var d = $(this).parent();
+		d.height(20);
 		$(this).text('+');	
 	} else {
-		$(this).parent().find('div').css('display', 'block');
+		var d = $(this).parent();
+		d.height(d[0].scrollHeight);
 		$(this).text('-');
-		var text = $(this).parent().find( 'textarea' );
-		text.height(50);
+		/*var text = $(this).parent().find( 'textarea' );
+		text.height(text[0].scrollHeight);*/
 	}
 }
 $('.hidecontents span').on('click', hiddenToggle);
@@ -93,10 +99,8 @@ function addAttribute(type) {
 		newLabel = $('<input>')
 			.attr({	'type': 'text',
 					'name': 'newlabel',
-					'class': 'label',
 					'placeholder': 'Name',
 					'id': 'newLabel'+count,
-					'class': 'label',
 				});
 
 		newInput = $('<input>')

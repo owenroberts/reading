@@ -8,23 +8,17 @@ var mongodb = require('mongodb'),
 
 
 BookProvider = function(uri) {
-  
-  
-  var that = this;
-  mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
-    if (error) console.log(error);
-    that.db = database;
-  });
-  
-  /*
-   TO DEVELOP LOCALLY 
-      uncomment the following two lines
-      comment out the beginning of this function
-  
 
-  this.db = new Db('books', new Server('localhost', 27017, {safe: false}, {auto_reconnect: true}, {}));
-  this.db.open(function(){});
-  */
+  if (uri == "localhost") {
+    this.db = new Db('synopaths', new Server('localhost', 27017, {safe:false}, {auto_reconnect:true}, {}));
+    this.db.open(function(){});
+  } else {
+    var that = this;
+      mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
+        if (error) console.log(error);
+        that.db = database;
+      });
+  }
   
 };
 
@@ -40,22 +34,6 @@ BookProvider.prototype.init = function(info, callback) {
     }
   });
 };
-
-//delete book
-BookProvider.prototype.delete = function(bookId, callback) {
-  this.getCollection(function(error, book_collection) {
-    if(error) callback(error);
-    else {
-      book_collection.remove(
-      {_id:ObjectID.createFromHexString(bookId)},
-      function(error, book){
-        if(error) callback(error);
-        else callback(null, book)
-      });
-    }
-  });
-};
-
 
 BookProvider.prototype.getCollection = function(callback) {
   this.db.collection('bks', function(error, book_collection) {
@@ -157,8 +135,6 @@ BookProvider.prototype.searchRefs = function(query, callback) {
   });
 };
 
-
-
 //search books and return subset based on a feild and query (_ref)
 BookProvider.prototype.browseRefs = function(query, callback) {
   var dbQuery = {};
@@ -192,6 +168,7 @@ BookProvider.prototype.browseRefs = function(query, callback) {
       });
   });
 };
+
 //search books and return subset based on a feild and query (_ref)
 BookProvider.prototype.browse = function(query, callback) {
   var dbQuery = {};
@@ -248,6 +225,21 @@ BookProvider.prototype.save = function(books, callback) {
     });
 };
 
+//delete book
+BookProvider.prototype.delete = function(bookId, callback) {
+  this.getCollection(function(error, book_collection) {
+    if(error) callback(error);
+    else {
+      book_collection.remove(
+      {_id:ObjectID.createFromHexString(bookId)},
+      function(error, book){
+        if(error) callback(error);
+        else callback(null, book)
+      });
+    }
+  });
+};
+
 BookProvider.prototype.addType = function(type, callback) {
   this.getCollection(function(error, book_collection) {
     if (error) callback(error);
@@ -255,7 +247,8 @@ BookProvider.prototype.addType = function(type, callback) {
       book_collection.update({info:{$exists:true}}, {$addToSet:{"info._types":type}}, 
         function (error) {
           console.log(error);
-        });
+        }
+      );
     }
   });
 };
@@ -354,10 +347,6 @@ BookProvider.prototype.update = function(bookId, books, callback) {
     }
   });
 };
-
-
-
-
 
 
 exports.BookProvider = BookProvider;
