@@ -167,6 +167,10 @@ textarea:focus {
   color: #808080;
 }
 .book-single .name,
+.book-single .genre {
+  width: 25%;
+}
+.book-single .name,
 .book-single .pubdate,
 .book-single .genre,
 .book-single .readdate {
@@ -179,7 +183,6 @@ textarea:focus {
 .book-single .genre input,
 .book-single .readdate input {
   font-size: 14px;
-  width: 100px;
 }
 .book-single input[type="text"].save {
   min-width: 40px;
