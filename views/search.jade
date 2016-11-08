@@ -9,8 +9,6 @@ block content
 		each book in books
 			div.book
 				div.title
-					form( method="get", action="book/:id/edit")
-						input(name="_id", type="hidden", value=book._id.toHexString())
-						button(type="submit")=book.title
+					a(href="/book/"+book._id.toHexString()+"/edit")=book.title
 				div.name="by "+ book.name
 				div.genre= book.genre

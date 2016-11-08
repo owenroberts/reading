@@ -1,5 +1,8 @@
 @import "reset.css";
 /*  globes   */
+* {
+  box-sizing: border-box;
+}
 body {
   font: 12px/14px Verdana, Helvetica, Arial, sans-serif;
   background: url("/images/bkg-dot-sm.jpg");
@@ -29,8 +32,8 @@ a:hover {
   text-align: center;
   border-radius: 4px;
 }
-.clickable:hover {
-  border: none;
+a.clickable:hover {
+  border-bottom: none;
 }
 .underlined {
   margin: 0 3px;
@@ -47,20 +50,13 @@ input[type="submit"] {
   cursor: pointer;
   border-bottom: 2px solid transparent;
 }
-input[type="submit"]:hover {
-  border-bottom: 2px solid #fdf;
-}
 button {
   text-align: left;
   font-family: Verdana;
   border: none;
+  background: transparent;
   cursor: pointer;
-  background: none;
   padding: 0;
-  border-bottom: 2px solid transparent;
-}
-button:hover {
-  border-bottom: 2px solid #8181c7;
 }
 button:focus {
   outline: none;
@@ -74,12 +70,6 @@ textarea {
 textarea:focus {
   outline: none;
 }
-.backhome a {
-  border-bottom: 2px solid transparent;
-}
-.backhome a:hover {
-  border-bottom: 2px solid #fdf;
-}
 .book {
   width: 160px;
   display: inline-block;
@@ -88,6 +78,7 @@ textarea:focus {
   padding: 0.25em;
   box-shadow: -2px 2px 0 #8181c7;
   vertical-align: top;
+  margin-bottom: 2em;
 }
 .book .title button {
   color: #8181c7;
@@ -120,8 +111,10 @@ textarea:focus {
 #index .search,
 #index .browse {
   display: inline-block;
-  margin-bottom: 1em;
-  margin-right: 1em;
+  margin-bottom: 2em;
+  padding-right: 1em;
+  min-width: 200px;
+  width: 50%;
 }
 #index .search input,
 #index .search select,
@@ -145,7 +138,17 @@ textarea:focus {
   font-size: 24px;
   width: 160px;
 }
+#index .add {
+  margin-bottom: 2em;
+}
+#index .title a {
+  color: #8181c7;
+  font-size: 18px;
+}
 /*  single book page   */
+.book-single {
+  cursor: pointer;
+}
 .book-single .bk {
   background: transparent;
   position: relative;
@@ -162,6 +165,7 @@ textarea:focus {
   color: #fff;
 }
 .book-single .created-at {
+  font-size: 12px;
   margin-left: 1em;
   display: inline-block;
   color: #808080;
@@ -169,6 +173,9 @@ textarea:focus {
 .book-single .name,
 .book-single .genre {
   width: 25%;
+}
+.book-single .delete {
+  font-size: 12px;
 }
 .book-single .name,
 .book-single .pubdate,
@@ -208,7 +215,6 @@ textarea:focus {
   display: inline-block;
   vertical-align: top;
   box-shadow: -2px 2px 0 #8181c7;
-  padding: 0.25em;
   padding-right: 3em;
 }
 .book-single .notes .note textarea,
@@ -219,7 +225,7 @@ textarea:focus {
 }
 .book-single .hidecontents {
   position: relative;
-  height: 20px;
+  height: 26px;
   overflow: hidden;
 }
 .book-single .hidecontents span {
@@ -232,14 +238,16 @@ textarea:focus {
   padding: 2px;
   display: inline-block;
   margin-right: 3px;
+  font-size: 18px;
 }
 .book-single .link a,
-.book-single .tag a,
+.book-single .tag a {
+  font-size: 18px;
+}
 .book-single .link input,
 .book-single .tag input {
-  color: #f3f;
-  cursor: pointer;
   font-size: 18px;
+  color: #f3f;
 }
 .book-single div {
   margin: 0.25em 0;
@@ -300,10 +308,10 @@ textarea:focus {
 .book-single .refs .addref {
   display: none;
 }
-.book-single .refs select {
+.book-single select {
   margin: 3px;
 }
-.book-single .refs .by input[type="submit"] {
+.book-single .by input[type="submit"] {
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
@@ -366,6 +374,9 @@ textarea:focus {
   body {
     padding: 0;
   }
+  #wrap {
+    margin-top: 2em;
+  }
   .search input {
     display: block;
     margin: 8px;
@@ -374,16 +385,19 @@ textarea:focus {
     margin: 0;
     float: none;
     height: auto;
-    width: 266px;
   }
-  .book #delete {
+  .book-single .name,
+  .book-single .genre,
+  .book-single .pubdate,
+  .book-single .readdate {
+    width: 50%;
+  }
+  .book-single .delete {
     display: none;
   }
-  .book-single .bk {
-    width: 300px;
-  }
-  .book-single .refs {
-    width: 300px;
+  .book-single .notes .note,
+  .book-single .quotes .quote {
+    width: 100%;
   }
   .notes-column {
     margin-left: 0;
