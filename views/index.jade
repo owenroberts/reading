@@ -24,25 +24,25 @@ block content
 					input.clickable(type="submit", value="Browse")
 			div.add
 				a.clickable(href="/book/new")!= "Add New Book"
-			h3= "Recently Edited"
+
+			h2= "Recently Edited"
+
 			each book in recentlyEdited
 				if (!book.info)
 					div.book
 						div.title
-							form( method="get", action="book/:id/edit")
-								input(name="_id", type="hidden", value=book._id.toHexString())
-								button(type="submit")=book.title
+							a(href="/book/"+book._id.toHexString()+"/edit")=book.title
 						div.name="by "+ book.name
 						div.genre= book.genre
+
 						
-			h3= "Recently Looged"
+			h2= "Recently Looged"
+
 			each book in recentlyLogged
 				if (!book.info)
 					div.book
 						div.title
-							form( method="get", action="book/:id/edit")
-								input(name="_id", type="hidden", value=book._id.toHexString())
-								button(type="submit")=book.title
+							a(href="/book/"+book._id.toHexString()+"/edit")=book.title
 						div.name="by "+ book.name
 						div.genre= book.genre
 	else

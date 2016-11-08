@@ -2,7 +2,7 @@ extends layout
 
 block content
 	div.backhome.clickable
-		a(href="/")= "Back"
+		a(href="/")= "Home"
 	div.book-single
 		.bk
 			form(id="form" method="post")
@@ -32,12 +32,15 @@ block content
 							span= "read "
 							br
 							input.select.edit(type="text", name="readdate", placeholder="date read", value=book.readdate)
+						br
+						div.delete
+							a(href="/delete/"+book._id.toHexString() onclick="return confirm('Are you sure you want to delete" + book.title + "?')" )="Delete"
 						if book.tags
 							div.tags="Tags: "
 								each value in book.tags
 									div.tag
-										form( method="get", action="/:tag")
-											input(name="_tag", value=value, type="submit")
+										a(href="/tag/"+value)=value
+										
 						if book.links
 							div.links="Links: "
 								each value in book.links
@@ -47,14 +50,14 @@ block content
 						
 					div.notes-column
 						div.notes
-							h2= "Notes"
+							h3= "Notes"
 							each value, index in book.notes
 								div.note.hidecontents
 									span= "+"
 									div.hiddencontents
 										textarea.edit(type="text", name="notes")=value
 						div.quotes
-							h2= "Quotes"
+							h3= "Quotes"
 							each value, index in book.quotes
 								div.quote.hidecontents
 									span= "+"
@@ -122,7 +125,7 @@ block content
 										option= item
 							input.clickable(type="submit")
 			div.refs.by
-				h2= "Referenced by "
+				h3= "Referenced by "
 				div.ref
 					if book.referencedBy
 						each refby, index in book.referencedBy
