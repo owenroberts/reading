@@ -58,13 +58,6 @@ app.get('/init', function(req, res) {
 });
 
 
-//delete a book
-app.post('/book/:id/delete', function(req, res) {
-        bookProvider.delete(req.param('_id'), function(error, docs) {
-                res.redirect('/')
-        });
-});
-
 app.post('/init', function(req, res) {
     bookProvider.init(
         {
@@ -154,9 +147,11 @@ app.post('/book/new', function(req, res){
     });
 });
 
+
 // edit a book
 app.get('/book/:id/edit', function(req, res) {
-    bookProvider.findById(req.param('_id'), function(error, book, info) { 
+    console.log( "mother fucker get edit", req.params.id );
+    bookProvider.findById(req.params.id, function(error, book, info) { 
         if (book == null) {
             console.log("book is null");
             res.redirect('/404');
@@ -177,6 +172,7 @@ app.get('/404', function(req, res) {
 
 // save book
 app.post('/book/:id/edit', function(req, res) {
+    console.log( "post" );
     var editedBook = {};
     for (item in req.body) { 
         if (item != '_id' && item != 'newlabel' && item != 'newvalue') {
@@ -222,7 +218,7 @@ app.post('/book/:id/edit', function(req, res) {
         }
         console.log(editedBook);
         bookProvider.update(req.param('_id'), editedBook, function(error, docs) {
-            res.redirect('/book/:id/edit?_id='+req.body._id);
+            res.redirect('/book/'+req.body._id+'/edit');
         });
     } else {
         res.redirect(req.get('referer'));
@@ -231,10 +227,10 @@ app.post('/book/:id/edit', function(req, res) {
 
 
 // get all tags
-app.get('/:tag', function(req, res) {
-    bookProvider.findTag(req.param('_tag'), function(error, books) { 
+app.get('/tag/:tag', function(req, res) {
+    bookProvider.findTag(req.params.tag, function(error, books) { 
         res.render('search', {
-            books:books,
+            books: books,
             title: req.query["_tag"]
         });
     });
@@ -269,8 +265,8 @@ app.get('/addref/browse', function(req, res) {
 
 
 //delete a book
-app.post('/book/:id/delete', function(req, res) {
-        bookProvider.delete(req.param('_id'), function(error, docs) {
+app.get('/delete/:id', function(req, res) {
+        bookProvider.delete(req.params.id, function(error, docs) {
                 res.redirect('/')
         });
 });

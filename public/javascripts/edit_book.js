@@ -52,12 +52,17 @@ $('.book-single').on( 'change keyup keydown paste cut', 'textarea', function (){
     $(this).height(0).height(this.scrollHeight);
 }).find( 'textarea' ).change();
 
+$('.book-single').on( 'change keyup keydown paste cut', 'textarea', function (){
+    this.parentNode.parentNode.style.height = "0px";
+     this.parentNode.parentNode.style.height = this.offsetHeight + "px";
+});
+
 /* hidden stuff */
 function hiddenToggle() {
 	var state = $(this).text();
 	if (state[0] == "-") {
 		var d = $(this).parent();
-		d.height(20);
+		d.height(26);
 		$(this).text('+');	
 	} else {
 		var d = $(this).parent();
