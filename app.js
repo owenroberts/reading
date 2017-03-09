@@ -6,7 +6,9 @@ var express = require('express')
     ,   favicon = require('serve-favicon')
     ,   logger = require('morgan')
     ,   cookieParser = require('cookie-parser')
-    ,   bodyParser = require('body-parser');
+    ,   bodyParser = require('body-parser')
+    ,   cookies = require('browser-cookies')
+    ;
 
 var users = require('./routes/users');
 
@@ -31,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Authentication module.
 var auth = require('http-auth');
 var basic = auth.basic({
-    realm: "Fart monster: ",
+    realm: "Fart monster",
     file: "htpasswd" 
 });
 
@@ -248,8 +250,6 @@ app.get('/addref/search', function(req, res) {
     });
 });
 
-
-
 //get references browse 
 app.get('/addref/browse', function(req, res) {
     bookProvider.browseRefs(req.query, function(error, books) { 
@@ -307,8 +307,6 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
-
 
 app.listen(port);
 module.exports = app;
