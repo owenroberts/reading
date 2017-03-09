@@ -5,8 +5,8 @@ block content
 		div#index
 			div.search
 				form(method="get", action="/search")
-					
 					input.select.underlined(name="_query", type="text", placeholder=title)
+					
 					select(name="_field")
 								each field in info.info._fields
 									option= field
@@ -45,11 +45,17 @@ block content
 							a(href="/book/"+book._id.toHexString()+"/edit")=book.title
 						div.name="by "+ book.name
 						div.genre= book.genre
+						if (book.tags)
+							for tag in book.tags
+								a.tag(href="/tag/"+tag)= tag
+
 	else
 		h1= title
 		form(method="get", action="/init")
 			input.clickable(type="submit", value="Initialize info")
 
 			
-
+	script.
+		var d = !{JSON.stringify(recentlyLogged)}
+		console.log(d)
 	script(type="text/javascript", src="/javascripts/options.js")

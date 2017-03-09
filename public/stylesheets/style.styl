@@ -1,7 +1,7 @@
 @import "reset.css"
 
 primary = #8181C7
-secondary = #f3f
+secondary = #c9aff9
 highlight = #fdf
 bkg = #f5f5f5
 wht = #fff
@@ -10,43 +10,32 @@ wht = #fff
 *
 	box-sizing: border-box
 body
-	font: 12px/14px Verdana, Helvetica, Arial, sans-serif
+	font: 14px/14px Verdana, Helvetica, Arial, sans-serif
+	line-height:1.4
 	background: url('/images/bkg-dot-sm.jpg')
 #wrap
 	max-width:800px
 	margin:0 auto
-	margin-top:4em
+	background:  #efefef 
+	margin-top:1em
+	padding:1em 2em
+*:focus
+	outline:none
 h2, h3
 	font-weight:normal
+	background: wht
+	padding:0.25em .5em
+	box-shadow: -2px 2px 0 primary
 a
-	color: secondary
+	color: inherit
 	text-decoration:none
 a:hover
-	border-bottom:2px solid highlight
-.clickable
-	padding: 3px 6px 
-	font-size:16px
-	background: highlight
-	display:inline-block
-	cursor:pointer
-	text-align:center
-	border-radius: 4px
-a.clickable:hover
-	border-bottom: none
-
-.underlined
-	margin:0 3px
-	border-bottom:1px solid black
-	padding:0 !important
-	&:focus
-		outline:none !important
+	/*border-bottom:2px solid highlight*/
 input
 	&:focus
 		outline: primary auto 5px;
 	&[type="submit"]
 		cursor:pointer
-		border-bottom:2px solid transparent
-
 button
 	text-align: left
 	font-family:Verdana
@@ -56,26 +45,53 @@ button
 	padding:0
 	&:focus
 		outline:none
+.clickable
+	font-size:inherit
+	font-family: inherit
+	background: highlight
+	display:inline-block
+	cursor:pointer
+	text-align:center
+	box-shadow: -2px 2px 0 primary
+	padding: .5em 1em
+	transition: background-color 300ms
+.clickable:hover
+	background-color: secondary
+a.clickable:hover
+	border-bottom: none
 textarea
 	resize:none
 	border:none
 	background: lighten(primary, 85%)
 	font-size:14px
-textarea:focus
-	outline:none
+
+select
+	-webkit-appearance: button;
+	-webkit-border-radius: 0;
+	box-shadow: -2px 2px 0 primary
+	-webkit-padding-end: 20px;
+	-webkit-padding-start: 2px;
+	background-image: url(/images/drop.gif);
+	background-color:wht;
+	background-repeat: no-repeat;
+	background-position: 90% center;
+	background-size: 0.5em;
+	border: none
+	font-size: inherit;
+	font-family: inherit
+	padding: .5em 1em
+	white-space: nowrap;
+
 .backhome
 	a
 .book
 	width:160px
 	display:inline-block
-	background:bkg
+	background:wht
 	margin-right:1em
-	padding:0.25em
+	padding:0.5em
 	box-shadow: -2px 2px 0 primary
 	vertical-align:top
-	.title button
-		color: primary
-		font-size:20px
 	div
 		margin:.5em 0
 	margin-bottom: 2em
@@ -95,36 +111,41 @@ textarea:focus
 	
 /*  index */
 #index
-	.book, h3
-		margin-top:1em
 	.search
 	.browse
-		display:inline-block
-		margin-bottom:2em
-		padding-right:1em
-		min-width: 200px
-		width:50%
+		display:block
 	.search input
 	.search select
 	.browse input
 	.browse select
-		margin: 0.5em 0
-		display:block
+		margin: 1em
+		margin-left: 0
+		display:inline-block
 	.search form, .browse form
-		/*display: inline*/
 		margin-right: 1em
 	.name 
 		color: black
 	.genre
 		color: primary
 	input[name="_query"]
-		font-size:24px
-		width:160px
+		box-shadow: -2px 2px 0 primary
+		font-size:18px
+		background: wht
+		padding: 0.25em .5em; 
 	.add
 		margin-bottom: 2em
 	.title a
 		color: primary
 		font-size: 18px
+		&:hover
+			background-color: secondary
+	a.tag
+		background-color: highlight
+		padding:0.25em 0.5em
+		transition: background-color 300ms
+		&:hover
+			background-color: secondary
+	
 		
 
 /*  single book page   */    
