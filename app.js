@@ -3,12 +3,13 @@ var express = require('express')
 	,	http = require('http')
 	,	path = require('path')
 	,	BookProvider = require('./bookprovider').BookProvider
-    ,   favicon = require('serve-favicon')
-    ,   logger = require('morgan')
-    ,   cookieParser = require('cookie-parser')
-    ,   bodyParser = require('body-parser');
+	,	favicon = require('serve-favicon')
+	,	logger = require('morgan')
+	,	cookieParser = require('cookie-parser')
+	,	bodyParser = require('body-parser')
+	,	passport = require('passport')	
+	;
 
-var users = require('./routes/users');
 
 var app = express();
 
@@ -19,7 +20,7 @@ app.set('port', process.env.PORT || 3000);
 app.set('view options', {layout: false});
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+//app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,70 +29,61 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// Authentication module.
-var auth = require('http-auth');
-var basic = auth.basic({
-    realm: "Fart monster: ",
-    file: "htpasswd" 
-});
-
-app.use(auth.connect(basic));
-
 
 app.get('/', function(req, res) {
-    bookProvider.findRecentEdits(function(error, edits) {
-        bookProvider.findRecentLogs(function(error, logs) {
-            bookProvider.getInfo(function(error, info) {
-                res.render('index', {
-                    title:"Reading",
-                    info:info,
-                    recentlyEdited:edits,
-                    recentlyLogged:logs
-                });
-            });
-        });
-    });
+	bookProvider.findRecentEdits(function(error, edits) {
+		bookProvider.findRecentLogs(function(error, logs) {
+			bookProvider.getInfo(function(error, info) {
+				res.render('index', {
+					title:"Reading",
+					info:info,
+					recentlyEdited:edits,
+					recentlyLogged:logs
+				});
+			});
+		});
+	});
 });
 
 app.get('/init', function(req, res) {
-    res.render('init');
+	res.render('init');
 });
 
 
 app.post('/init', function(req, res) {
-    bookProvider.init(
-        {
-            "_atts" : [
-              "quote",
-              "note",
-              "link",
-              "tag"
-            ],
-            "_types" : [
-              "book",
-              "article",
-              "film/movie",
-              "art",
-              "comix",
-              "game"
-            ],
-            "_fields" : [
-              "title",
-              "name",
-              "type",
-              "genre",
-              "pubdate",
-              "readdate",
-              "quotes",
-              "notes",
-              "links",
-              "tags",
-              "refs"
-            ]
-        },
-        function(error, docs) {
-            res.redirect('/');
-        }); 
+	bookProvider.init(
+		{
+			"_atts" : [
+				"quote",
+				"note",
+				"link",
+				"tag"
+			],
+			"_types" : [
+				"book",
+				"article",
+				"film/movie",
+				"art",
+				"comix",
+				"game"
+			],
+			"_fields" : [
+				"title",
+				"name",
+				"type",
+				"genre",
+				"pubdate",
+				"readdate",
+				"quotes",
+				"notes",
+				"links",
+				"tags",
+				"refs"
+			]
+		},
+		function(error, docs) {
+			res.redirect('/');
+		}); 
 });
 
 //get references browse 
