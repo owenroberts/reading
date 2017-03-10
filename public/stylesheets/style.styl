@@ -15,7 +15,13 @@ body
 #wrap
 	max-width:800px
 	margin:0 auto
-	margin-top:4em
+#index
+.book-single
+	background:  #efefef 
+	margin-top:1em
+	padding:1em 2em
+*:focus
+	outline:none
 h2, h3
 	font-weight:normal
 a
@@ -61,12 +67,26 @@ textarea
 	border:none
 	background: lighten(primary, 85%)
 	font-size:14px
-textarea:focus
-	outline:none
-.backhome
-	a
+select
+	-webkit-appearance: button;
+	-webkit-border-radius: 0;
+	box-shadow: -2px 2px 0 primary
+	-webkit-padding-end: 20px;
+	-webkit-padding-start: 2px;
+	background-image: url(/images/drop.svg);
+	background-color:wht;
+	background-repeat: no-repeat;
+	background-position: 90% center;
+	background-size: 1em;
+	border: none
+	font-size: inherit;
+	font-family: inherit
+	padding: .5em 1em
+	white-space: nowrap;
+
 .book
-	width:160px
+	min-width: 100px
+	width:30%
 	display:inline-block
 	background:bkg
 	margin-right:1em
