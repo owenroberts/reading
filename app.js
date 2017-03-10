@@ -142,13 +142,13 @@ app.post('/book/new', function(req, res){
 
 // edit a book
 app.get('/book/:id/edit', function(req, res) {
-    console.log( "mother fucker get edit", req.params.id );
     bookProvider.findById(req.params.id, function(error, book, info) { 
         if (book == null) {
             console.log("book is null");
             res.redirect('/404');
         } else {
-            res.render('book_edit', {
+            res.render('edit', {
+                referer: req.get('referer'),
                 book: book,
                 info: info,
                 title: book.title
@@ -156,6 +156,10 @@ app.get('/book/:id/edit', function(req, res) {
         }
 
     });
+});
+
+app.post('/param/:id', function(req, res) {
+    console.log(req);
 });
 
 app.get('/404', function(req, res) {

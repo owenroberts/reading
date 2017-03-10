@@ -3,7 +3,36 @@ extends layout
 block content
 	div.backhome.clickable
 		a(href="/")= "Home"
+	if referer
+		div.clickable
+			a(href="referer")= "Back"
 	div.book-single
+
+		div.title
+			input.select.edit(type="text", name="title", placeholder="title", value=book.title)
+		
+		script.
+			var data = !{JSON.stringify(book)}
+			var id = "!{book._id.toHexString()}";
+			$('.edit').on('blur', function() {
+			console.log(this.name);
+				if (this.value != data[this.name]) {
+					$.ajax({
+						url: '/param/'+id,
+						type: 'post',
+						dataType:'json',
+						data: {
+							id: id,
+							param: this.name,
+							edit: this.value
+						},					
+						success: function() {
+							console.log("okay!");
+						} 
+					});
+				}
+			});
+
 		.bk
 			form(id="form" method="post")
 				input(name="_id", type="hidden", value=book._id.toHexString())
