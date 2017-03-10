@@ -13,7 +13,8 @@ body {
   margin: 0 auto;
 }
 #index,
-.book-single {
+.book-single,
+.newbook {
   background: #efefef;
   margin-top: 1em;
   padding: 1em 2em;
@@ -21,6 +22,7 @@ body {
 *:focus {
   outline: none;
 }
+h1,
 h2,
 h3 {
   font-weight: normal;
@@ -31,9 +33,6 @@ h3 {
 a {
   color: inherit;
   text-decoration: none;
-}
-input:focus {
-  outline: #8181c7 auto 5px;
 }
 input[type="submit"] {
   cursor: pointer;
@@ -49,11 +48,20 @@ button {
 button:focus {
   outline: none;
 }
+.box {
+  box-shadow: -2px 2px 0 #8181c7;
+  background: #fff;
+  padding: 0.25em 0.5em;
+}
+.title {
+  font-size: 18px;
+}
 .clickable {
   font-size: inherit;
   font-family: inherit;
   background: #fdf;
   display: inline-block;
+  margin-right: 0.5em;
   cursor: pointer;
   text-align: center;
   box-shadow: -2px 2px 0 #8181c7;
@@ -129,8 +137,8 @@ select {
 #index .search select,
 #index .browse input,
 #index .browse select {
-  margin: 1em;
-  margin-left: 0;
+  margin-bottom: 1em;
+  margin-right: 1em;
   display: inline-block;
 }
 #index .search form,
@@ -359,30 +367,15 @@ select {
   margin: 3px 0;
 }
 /* NEW BOOK */
-.newbook {
-  width: 640px;
-  background: transparent;
-  margin-top: 16px;
-}
-.newbook #book {
-  float: left;
-}
-.newbook div {
-  margin: 6px 0;
-}
-.newbook .label {
-  width: 75px;
-  dislay: block;
-  text-decoration: center;
-}
-.newbook .in {
-  background: #f5f5f5;
-  padding: 6px;
-  margin: 3px 0;
+.newbook div,
+.newbook input {
+  display: block;
+  margin-bottom: 1em;
+  margin-right: 1em;
   font-size: 18px;
 }
-.newbook .newtype {
-  font-size: 18px;
+.newbook .addtype {
+  display: inline-block;
 }
 /* smaller than 800px styles */
 @media only screen and (max-width : 800px) {
