@@ -1,6 +1,5 @@
 $( document ).ready(function() {
 
-
 var bookform = document.querySelector('#form');
 document.onkeypress = function(ev) {
 	if (ev.which == 13 && ev.altKey) bookform.submit();
