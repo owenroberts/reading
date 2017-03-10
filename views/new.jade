@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	a.clickable(href="/")= "Home"
+	div.newbook
+		h1.box= title
+		div#book
+			form( method="post")
+				input.box.select(type="text", name="title", placeholder="Title")
+				div.type= "Type: "
+					select.selecttype(name="type")
+						each type in info.info._types
+							option= type
+				div.clickable.addtype= "Add Type"
+				input.box.select(type="text", name="name", placeholder="Author")
+				input.box.select(type="text", name="genre", placeholder="Genre")
+				div.label Date Published:
+				input.box.select(type="text", name="pubdate", placeholder="YYYY")
+				div.label Date Read:
+				input.box(type="text", name="readdate", placeholder="MMYYYY")
+				input.clickable(type="submit", value="Save")
+
+	script(type='text/javascript' src="/javascripts/add_types.js")
