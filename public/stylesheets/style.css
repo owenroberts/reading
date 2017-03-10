@@ -11,6 +11,9 @@ body {
 #wrap {
   max-width: 800px;
   margin: 0 auto;
+}
+#index,
+.book-single {
   background: #efefef;
   margin-top: 1em;
   padding: 1em 2em;
@@ -75,11 +78,11 @@ select {
   box-shadow: -2px 2px 0 #8181c7;
   -webkit-padding-end: 20px;
   -webkit-padding-start: 2px;
-  background-image: url("/images/drop.gif");
+  background-image: url("/images/drop.svg");
   background-color: #fff;
   background-repeat: no-repeat;
   background-position: 90% center;
-  background-size: 0.5em;
+  background-size: 1em;
   border: none;
   font-size: inherit;
   font-family: inherit;
@@ -87,7 +90,8 @@ select {
   white-space: nowrap;
 }
 .book {
-  width: 160px;
+  min-width: 100px;
+  width: 30%;
   display: inline-block;
   background: #fff;
   margin-right: 1em;
