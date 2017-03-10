@@ -44,7 +44,7 @@ block content
 						div.title
 							a(href="/book/"+book._id.toHexString()+"/edit")=book.title
 						div.name="by "+ book.name
-						div.genre= book.genre
+						//div.genre= book.genre
 						if (book.tags)
 							for tag in book.tags
 								a.tag(href="/tag/"+tag)= tag
