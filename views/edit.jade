@@ -7,7 +7,6 @@ block content
 		div.clickable
 			a(href="referer")= "Back"
 	div.book-single
-
 		div.title
 			input.select.edit(type="text", name="title", placeholder="title", value=book.title)
 		
@@ -15,7 +14,6 @@ block content
 			var data = !{JSON.stringify(book)}
 			var id = "!{book._id.toHexString()}";
 			$('.edit').on('blur', function() {
-			console.log(this.name);
 				if (this.value != data[this.name]) {
 					$.ajax({
 						url: '/param/'+id,
@@ -23,11 +21,11 @@ block content
 						dataType:'json',
 						data: {
 							id: id,
-							param: this.name,
+							param: this.name.replace("+", ""),
 							edit: this.value
 						},					
-						success: function() {
-							console.log("okay!");
+						success: function(data) {
+							console.log(data);
 						} 
 					});
 				}
@@ -39,7 +37,7 @@ block content
 				div#form-body
 					div.infocolumn
 						div.title
-							input.select.edit(type="text", name="title", placeholder="title", value=book.title)
+							input.select.edit(type="text", name="flitle", placeholder="title", value=book.title)
 						div.type= book.type	
 						div.created-at
 							span= " logged on " 

@@ -346,5 +346,22 @@ BookProvider.prototype.update = function(bookId, books, callback) {
   });
 };
 
+// update one parameter
+BookProvider.prototype.updateParam = function(bookId, param, edit, callback) {
+  this.getCollection(function(error, book_collection) {
+    if (error) callback(error);
+    else {
+      var updateValue = {};
+      updateValue[param] = edit;
+      book_collection.update(
+        {_id:ObjectID.createFromHexString(bookId)}, 
+        {$set:updateValue}
+      );
+      callback(null, "Success");
+    }
+  })
+}
+
+
 
 exports.BookProvider = BookProvider;

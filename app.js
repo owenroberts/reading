@@ -63,33 +63,9 @@ app.get('/init', function(req, res) {
 app.post('/init', function(req, res) {
     bookProvider.init(
         {
-            "_atts" : [
-              "quote",
-              "note",
-              "link",
-              "tag"
-            ],
-            "_types" : [
-              "book",
-              "article",
-              "film/movie",
-              "art",
-              "comix",
-              "game"
-            ],
-            "_fields" : [
-              "title",
-              "name",
-              "type",
-              "genre",
-              "pubdate",
-              "readdate",
-              "quotes",
-              "notes",
-              "links",
-              "tags",
-              "refs"
-            ]
+            "_atts" : [ "quote", "note", "link", "tag" ],
+            "_types" : [ "book", "article", "film/movie", "art", "comix", "game" ],
+            "_fields" : [ "title", "name", "type", "genre", "pubdate", "readdate", "quotes", "notes", "links", "tags", "refs" ]
         },
         function(error, docs) {
             res.redirect('/');
@@ -118,12 +94,10 @@ app.get('/search', function(req, res) {
     });
 });
 
-
-
 // create a book
 app.get('/book/new', function(req, res) {
     bookProvider.getInfo(function(error, info) {
-        res.render('book_new', {
+        res.render('new', {
             info:info,
             title: 'New Book'
         });
@@ -169,7 +143,10 @@ app.get('/book/:id/edit', function(req, res) {
 });
 
 app.post('/param/:id', function(req, res) {
-    console.log(req);
+    bookProvider.updateParam(req.body.id, req.body.param, req.body.edit, function(error, result) {
+        if (error) console.log(error);
+        else res.json({ data: result });
+    });
 });
 
 app.get('/404', function(req, res) {
@@ -178,7 +155,6 @@ app.get('/404', function(req, res) {
 
 // save book
 app.post('/book/:id/edit', function(req, res) {
-    console.log( "post" );
     var editedBook = {};
     for (item in req.body) { 
         if (item != '_id' && item != 'newlabel' && item != 'newvalue') {
@@ -222,7 +198,6 @@ app.post('/book/:id/edit', function(req, res) {
             editedBook["$set"] = {};
             editedBook["$set"]["last_edit"] = new Date();
         }
-        console.log(editedBook);
         bookProvider.update(req.param('_id'), editedBook, function(error, docs) {
             res.redirect('/book/'+req.body._id+'/edit');
         });
