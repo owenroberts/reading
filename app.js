@@ -1,16 +1,12 @@
 var express = require('express')
 	,	path = require('path')
-	,	http = require('http')
-	,	path = require('path')
 	,	BookProvider = require('./bookprovider').BookProvider
-    ,   favicon = require('serve-favicon')
     ,   logger = require('morgan')
     ,   cookieParser = require('cookie-parser')
     ,   bodyParser = require('body-parser')
     ,   cookies = require('browser-cookies')
     ;
 
-var users = require('./routes/users');
 
 var app = express();
 
@@ -39,7 +35,7 @@ app.use(auth.connect(basic));
 
 app.get('/', function(req, res) {
 
-    console.log(basic.options.users);
+    //console.log(basic.options.users);
 
     bookProvider.findRecentEdits(function(error, edits) {
         bookProvider.findRecentLogs(function(error, logs) {
@@ -251,7 +247,7 @@ app.get('/delete/:id', function(req, res) {
 });
 
 var port = process.env.PORT || 3000;
-var mongoUri = process.env.MONGOLAB_URI || 
+var mongoUri =  process.env.MONGOLAB_URI || 
   process.env.MONGOHQ_URL || 
   'localhost';
 var bookProvider = new BookProvider(mongoUri);
@@ -289,3 +285,7 @@ app.use(function(err, req, res, next) {
 
 app.listen(port);
 module.exports = app;
+
+/*
+https://community.c9.io/t/setting-up-mongodb/1717
+*/
