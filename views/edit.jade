@@ -9,56 +9,65 @@ block content
 	div.book-single
 		div.title
 			input.select.edit(type="text", name="title", placeholder="title", value=book.title)
-		
+		div.type= book.type
+		div.created-at
+			span= " logged on " 
+			span= book.created_at.getMonth()+1+" "+book.created_at.getDate()+" "+book.created_at.getFullYear()
+		div#status
+		br
+		div.name
+			span= "by "
+			br
+			input.select.edit(type="text", name="name", placeholder="author" value=book.name)
+		div.genre
+			span= "genre "
+			br
+			input.select.edit(type="text", name="genre", placeholder="genre", value=book.genre)
+		div.pubdate
+			span= "published "
+			br
+			input.select.edit(type="text", name="pubdate", placeholder="date published", value=book.pubdate)
+		div.readdate
+			span= "read "
+			br
+			input.select.edit(type="text", name="readdate", placeholder="date read", value=book.readdate)
+	
 		script.
-			var data = !{JSON.stringify(book)}
-			var id = "!{book._id.toHexString()}";
-			$('.edit').on('blur', function() {
-				if (this.value != data[this.name]) {
-					$.ajax({
-						url: '/param/'+id,
-						type: 'post',
-						dataType:'json',
-						data: {
-							id: id,
-							param: this.name.replace("+", ""),
-							edit: this.value
-						},					
-						success: function(data) {
-							console.log(data);
-						} 
-					});
-				}
-			});
+			window.onload = function() {
+				var status = document.getElementById('status');
+				var data = !{JSON.stringify(book)};
+				console.log(data);
+				var id = "!{book._id.toHexString()}";
+				$('.edit').on('blur', function() {
+					if (this.value != data[this.name]) {
+						status.innerHTML = "Saving...";
+						status.className = "fadeIn";
+						$.ajax({
+							url: '/param/'+id,
+							type: 'post',
+							dataType:'json',
+							data: {
+								id: id,
+								param: this.name.replace("+", ""),
+								edit: this.value
+							},					
+							success: function(data) {
+								console.log(data);
+								status.innerHTML = "Saved.";
+								status.className = "fadeOut";
+							} 
+						});
+					}
+				});
+			}
 
 		.bk
 			form(id="form" method="post")
 				input(name="_id", type="hidden", value=book._id.toHexString())
 				div#form-body
 					div.infocolumn
-						div.title
-							input.select.edit(type="text", name="flitle", placeholder="title", value=book.title)
-						div.type= book.type	
-						div.created-at
-							span= " logged on " 
-							span= book.created_at.getMonth()+1+" "+book.created_at.getDate()+" "+book.created_at.getFullYear()
-						br
-						div.name
-							span= "by "
-							br
-							input.select.edit(type="text", name="name", placeholder="author" value=book.name)
-						div.genre
-							span= "genre "
-							br
-							input.select.edit(type="text", name="genre", placeholder="genre", value=book.genre)
-						div.pubdate
-							span= "published "
-							br
-							input.select.edit(type="text", name="pubdate", placeholder="date published", value=book.pubdate)
-						div.readdate
-							span= "read "
-							br
-							input.select.edit(type="text", name="readdate", placeholder="date read", value=book.readdate)
+						
+						
 						br
 						div.delete
 							a(href="/delete/"+book._id.toHexString() onclick="return confirm('Are you sure you want to delete" + book.title + "?')" )="Delete"

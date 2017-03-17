@@ -187,12 +187,27 @@ select {
   font-size: 36px;
   width: 100%;
   text-overflow: ellipsis;
+  border-bottom: 1px solid transparent;
 }
 .book-single .type {
   display: inline-block;
   background: #fdf;
   padding: 3px 6px;
   color: #fff;
+}
+.book-single #status {
+  font-style: italic;
+  opacity: 1;
+  display: inline-block;
+  margin: 0 1em;
+  transition: opacity 300ms;
+}
+.book-single #status.fadeIn {
+  opacity: 1;
+}
+.book-single #status.fadeOut {
+  opacity: 0;
+  transition-delay: 1000ms;
 }
 .book-single .created-at {
   font-size: 12px;

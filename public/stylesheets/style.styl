@@ -163,11 +163,23 @@ select
 		font-size:36px
 		width:100%
 		text-overflow: ellipsis;
+		border-bottom: 1px solid transparent
 	.type
 		display:inline-block
 		background:highlight
 		padding:3px 6px
 		color:white
+	#status 
+		font-style:italic
+		opacity: 1
+		display:inline-block
+		margin: 0 1em
+		transition: opacity 300ms
+		&.fadeIn
+			opacity: 1
+		&.fadeOut
+			opacity: 0
+			transition-delay: 1000ms
 	.created-at
 		font-size: 12px
 		margin-left:1em
@@ -194,7 +206,6 @@ select
 			outline: none;
 			border-bottom:1px solid primary;
 
-    
 	.plus
 		margin-right:10px
 	.notes-column
