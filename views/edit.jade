@@ -5,14 +5,17 @@ block content
 		a(href="/")= "Home"
 	if referer
 		div.clickable
-			a(href="referer")= "Back"
+			a(href=referer)= "Back"
 	div.book-single
 		div.title
 			input.select.edit(type="text", name="title", placeholder="title", value=book.title)
-		div.type= book.type
+	
 		div.created-at
 			span= " logged on " 
 			span= book.created_at.getMonth()+1+" "+book.created_at.getDate()+" "+book.created_at.getFullYear()
+		div.type.box= book.type
+		div.delete.clickable
+			a(href="/delete/"+book._id.toHexString() onclick="return confirm('Are you sure you want to delete" + book.title + "?')" )="Delete"
 		div#status
 		br
 		div.name
@@ -31,7 +34,27 @@ block content
 			span= "read "
 			br
 			input.select.edit(type="text", name="readdate", placeholder="date read", value=book.readdate)
-	
+		br
+		if book.tags
+			div.tags="Tags: "
+				each value in book.tags
+					div.tag.clickable
+						a(href="/tag/"+value)=value
+		if book.links
+			div.links="Links: "
+				each value in book.links
+					div.link.clickable
+						a(href="#{value[1]}" target="blank")= value[0]
+		
+		div.notes-column
+			div.notes
+				h3= "Notes"
+				each value, index in book.notes
+					div.note.hidecontents
+						span= "+"
+						div.hiddencontents
+							textarea.edit(type="text", name="notes", data-num=index)=value
+		
 		script.
 			window.onload = function() {
 				var status = document.getElementById('status');
@@ -39,6 +62,8 @@ block content
 				console.log(data);
 				var id = "!{book._id.toHexString()}";
 				$('.edit').on('blur', function() {
+					//console.log(this.dataset.num);
+					console.log(this.value, data[this.name])
 					if (this.value != data[this.name]) {
 						status.innerHTML = "Saving...";
 						status.className = "fadeIn";
@@ -49,7 +74,8 @@ block content
 							data: {
 								id: id,
 								param: this.name.replace("+", ""),
-								edit: this.value
+								edit: this.value,
+								arrayIndex: this.dataset.num
 							},					
 							success: function(data) {
 								console.log(data);
@@ -66,32 +92,6 @@ block content
 				input(name="_id", type="hidden", value=book._id.toHexString())
 				div#form-body
 					div.infocolumn
-						
-						
-						br
-						div.delete
-							a(href="/delete/"+book._id.toHexString() onclick="return confirm('Are you sure you want to delete" + book.title + "?')" )="Delete"
-						if book.tags
-							div.tags="Tags: "
-								each value in book.tags
-									div.tag
-										a(href="/tag/"+value)=value
-										
-						if book.links
-							div.links="Links: "
-								each value in book.links
-									div.link
-										a(href="#{value[1]}" target="blank")= value[0]
-						
-						
-					div.notes-column
-						div.notes
-							h3= "Notes"
-							each value, index in book.notes
-								div.note.hidecontents
-									span= "+"
-									div.hiddencontents
-										textarea.edit(type="text", name="notes")=value
 						div.quotes
 							h3= "Quotes"
 							each value, index in book.quotes
@@ -109,7 +109,6 @@ block content
 				
 					script(type='text/javascript' src="/javascripts/edit_book.js")
 					
-
 			div.refs
 				h2= "References"
 				div.ref

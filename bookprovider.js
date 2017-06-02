@@ -124,7 +124,6 @@ BookProvider.prototype.searchRefs = function(query, callback) {
     }
   }
   dbQuery[name] = {$regex:value, $options:"-i"};
-  console.log(JSON.stringify(dbQuery));
   this.getCollection(function(error, book_collection) {
       book_collection.find(dbQuery).toArray(function(error, results){
         if (error) callback(error);
@@ -158,7 +157,6 @@ BookProvider.prototype.browseRefs = function(query, callback) {
       dbQuery = {_id:{$ne:exclude}};
     }
   }
-  console.log(dbQuery);
   this.getCollection(function(error, book_collection) {
       book_collection.find(dbQuery).toArray(function(error, results){
         if (error) callback(error);
@@ -179,7 +177,6 @@ BookProvider.prototype.browse = function(query, callback) {
   } else if (f == "_tags") {
     dbQuery = {tags:{$in:[q]}};
   }
-  console.log(dbQuery);
   this.getCollection(function(error, book_collection) {
       book_collection.find(dbQuery).toArray(function(error, results){
         if (error) callback(error);
@@ -242,7 +239,7 @@ BookProvider.prototype.addType = function(type, callback) {
   this.getCollection(function(error, book_collection) {
     if (error) callback(error);
     else {
-      book_collection.update({info:{$exists:true}}, {$addToSet:{"info._types":type}}, 
+      book_collection.update({info:{$exists:true}}, {$addToSet:{"info._types":type}},
         function (error) {
           console.log(error);
         }
@@ -347,12 +344,14 @@ BookProvider.prototype.update = function(bookId, books, callback) {
 };
 
 // update one parameter
-BookProvider.prototype.updateParam = function(bookId, param, edit, callback) {
+BookProvider.prototype.updateParam = function(bookId, param, edit, arrayIndex, callback) {
   this.getCollection(function(error, book_collection) {
     if (error) callback(error);
     else {
+      console.log("this?", bookId, param, edit, arrayIndex);
       var updateValue = {};
-      updateValue[param] = edit;
+      if (arrayIndex >= 0) updateValue[param+"."+arrayIndex] = edit;
+      else updateValue[param] = edit;
       book_collection.update(
         {_id:ObjectID.createFromHexString(bookId)}, 
         {$set:updateValue}

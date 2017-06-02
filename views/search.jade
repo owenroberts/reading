@@ -1,11 +1,13 @@
 extends layout
 
 block content
-
 	div#search
-		.backhome
-			a.clickable(href="/")!= "Back"
-		h3=title
+		div.backhome.clickable
+			a(href="/")= "Home"
+		if referer
+			div.clickable
+				a(href=referer)= "Back"
+		h3=search_term + ": " + title
 		each book in books
 			div.book
 				div.title
