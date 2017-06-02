@@ -129,7 +129,7 @@ app.get('/book/:id/edit', function(req, res) {
 });
 
 app.post('/param/:id', function(req, res) {
-    bookProvider.updateParam(req.body.id, req.body.param, req.body.edit, function(error, result) {
+    bookProvider.updateParam(req.body.id, req.body.param, req.body.edit, req.body.arrayIndex,  function(error, result) {
         if (error) console.log(error);
         else res.json({ data: result });
     });
@@ -195,10 +195,13 @@ app.post('/book/:id/edit', function(req, res) {
 
 // get all tags
 app.get('/tag/:tag', function(req, res) {
+    console.log(req.get('referer'));
     bookProvider.findTag(req.params.tag, function(error, books) { 
         res.render('search', {
             books: books,
-            title: req.query["_tag"]
+            title: req.params.tag,
+            search_term: "Tagged",
+            referer: req.get('referer')
         });
     });
 });
@@ -237,7 +240,7 @@ app.get('/delete/:id', function(req, res) {
 });
 
 var port = process.env.PORT || 3000;
-var mongoUri =  process.env.MONGOLAB_URI || 
+var mongoUri = process.env.MONGOLAB_URI || 
   process.env.MONGOHQ_URL || 
   'localhost';
 var bookProvider = new BookProvider(mongoUri);

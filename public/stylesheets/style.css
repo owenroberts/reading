@@ -3,6 +3,9 @@
 * {
   box-sizing: border-box;
 }
+br {
+  clear: both;
+}
 body {
   font: 14px/14px Verdana, Helvetica, Arial, sans-serif;
   line-height: 1.4;
@@ -130,55 +133,68 @@ select {
 }
 /*  index */
 #index .search,
-#index .browse {
+#search .search,
+#index .browse,
+#search .browse {
   display: block;
 }
 #index .search input,
+#search .search input,
 #index .search select,
+#search .search select,
 #index .browse input,
-#index .browse select {
+#search .browse input,
+#index .browse select,
+#search .browse select {
   margin-bottom: 1em;
   margin-right: 1em;
   display: inline-block;
 }
 #index .search form,
-#index .browse form {
+#search .search form,
+#index .browse form,
+#search .browse form {
   margin-right: 1em;
 }
-#index .name {
+#index .name,
+#search .name {
   color: #000;
 }
-#index .genre {
+#index .genre,
+#search .genre {
   color: #8181c7;
 }
-#index input[name="_query"] {
+#index input[name="_query"],
+#search input[name="_query"] {
   box-shadow: -2px 2px 0 #8181c7;
   font-size: 18px;
   background: #fff;
   padding: 0.25em 0.5em;
 }
-#index .add {
+#index .add,
+#search .add {
   margin-bottom: 2em;
 }
-#index .title a {
+#index .title a,
+#search .title a {
   color: #8181c7;
   font-size: 18px;
 }
-#index .title a:hover {
+#index .title a:hover,
+#search .title a:hover {
   background-color: #c9aff9;
 }
-#index a.tag {
+#index a.tag,
+#search a.tag {
   background-color: #fdf;
   padding: 0.25em 0.5em;
   transition: background-color 300ms;
 }
-#index a.tag:hover {
+#index a.tag:hover,
+#search a.tag:hover {
   background-color: #c9aff9;
 }
 /*  single book page   */
-.book-single {
-  cursor: pointer;
-}
 .book-single .bk {
   background: transparent;
   position: relative;
@@ -192,8 +208,7 @@ select {
 .book-single .type {
   display: inline-block;
   background: #fdf;
-  padding: 3px 6px;
-  color: #fff;
+  font-size: 12px;
 }
 .book-single #status {
   font-style: italic;
@@ -211,21 +226,22 @@ select {
 }
 .book-single .created-at {
   font-size: 12px;
-  margin-left: 1em;
+  margin-right: 1em;
   display: inline-block;
   color: #808080;
 }
-.book-single .name,
-.book-single .genre {
-  width: 25%;
-}
 .book-single .delete {
   font-size: 12px;
+  padding: 0.25em 0.5em;
+  margin-left: 1em;
+  color: #808080;
 }
 .book-single .name,
 .book-single .pubdate,
 .book-single .genre,
 .book-single .readdate {
+  float: left;
+  min-width: 100px;
   font-size: 12px;
   color: #808080;
   display: inline-block;
@@ -245,9 +261,6 @@ select {
 }
 .book-single .plus {
   margin-right: 10px;
-}
-.book-single .notes-column {
-  padding-top: 10px;
 }
 .book-single .notes .note,
 .book-single .quotes .note,
@@ -280,19 +293,9 @@ select {
 }
 .book-single .link,
 .book-single .tag {
-  padding: 2px;
   display: inline-block;
   margin-right: 3px;
-  font-size: 18px;
-}
-.book-single .link a,
-.book-single .tag a {
-  font-size: 18px;
-}
-.book-single .link input,
-.book-single .tag input {
-  font-size: 18px;
-  color: #c9aff9;
+  padding: 0.25em 0.5em;
 }
 .book-single div {
   margin: 0.25em 0;
