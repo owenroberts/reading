@@ -24,9 +24,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', function(req, res) {
-
-    //console.log(basic.options.users);
-
     bookProvider.findRecentEdits(function(error, edits) {
         bookProvider.findRecentLogs(function(error, logs) {
             bookProvider.getInfo(function(error, info) {

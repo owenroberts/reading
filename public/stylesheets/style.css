@@ -99,7 +99,10 @@ select {
   font-family: inherit;
   padding: 0.5em 1em;
   white-space: nowrap;
+<<<<<<< HEAD
   min-width: 80px;
+=======
+>>>>>>> 6e1dfed20fd439ed70de134ef12b84bbb2a260e7
 }
 .book {
   min-width: 100px;
