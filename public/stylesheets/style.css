@@ -91,6 +91,7 @@ select {
   font-family: inherit;
   padding: 0.5em 1em;
   white-space: nowrap;
+  min-width: 80px;
 }
 .book {
   min-width: 100px;

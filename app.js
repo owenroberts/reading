@@ -28,16 +28,6 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// Authentication module.
-var auth = require('http-auth');
-var basic = auth.basic({
-    realm: "Fart monster: ",
-    file: "htpasswd" 
-});
-
-app.use(auth.connect(basic));
-
-
 app.get('/', function(req, res) {
     bookProvider.findRecentEdits(function(error, edits) {
         bookProvider.findRecentLogs(function(error, logs) {
