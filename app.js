@@ -6,7 +6,9 @@ var express = require('express')
     ,   favicon = require('serve-favicon')
     ,   logger = require('morgan')
     ,   cookieParser = require('cookie-parser')
-    ,   bodyParser = require('body-parser');
+    ,   bodyParser = require('body-parser')
+    ,   cookies = require('browser-cookies')
+    ;
 
 var users = require('./routes/users');
 
@@ -238,8 +240,6 @@ app.get('/addref/search', function(req, res) {
     });
 });
 
-
-
 //get references browse 
 app.get('/addref/browse', function(req, res) {
     bookProvider.browseRefs(req.query, function(error, books) { 
@@ -297,8 +297,6 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
-
 
 app.listen(port);
 module.exports = app;
