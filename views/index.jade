@@ -5,6 +5,7 @@ block content
 		div#index
 			div.search
 				form(method="get", action="/search")
+					
 					input.select.underlined(name="_query", type="text", placeholder=title)
 					
 					select(name="_field")
@@ -48,6 +49,7 @@ block content
 						if (book.tags)
 							for tag in book.tags
 								a.tag(href="/tag/"+tag)= tag
+
 
 	else
 		h1= title

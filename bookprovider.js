@@ -237,16 +237,16 @@ BookProvider.prototype.delete = function(bookId, callback) {
 };
 
 BookProvider.prototype.addType = function(type, callback) {
-  this.getCollection(function(error, book_collection) {
-    if (error) callback(error);
-    else {
-      book_collection.update({info:{$exists:true}}, {$addToSet:{"info._types":type}},
-        function (error) {
-          console.log(error);
-        }
-      );
-    }
-  });
+	this.getCollection(function(error, book_collection) {
+		if (error) callback(error);
+		else {
+			book_collection.update({info:{$exists:true}}, {$addToSet:{"info._types":type}},
+				function (error) {
+					console.log(error);
+				}
+			);
+		}
+	});
 };
 
 // find a book by id
@@ -344,6 +344,7 @@ BookProvider.prototype.update = function(bookId, books, callback) {
   });
 };
 
+<<<<<<< HEAD
 // update one parameter
 BookProvider.prototype.updateParam = function(bookId, param, edit, arrayIndex, callback) {
 	this.getCollection(function(error, book_collection) {
@@ -371,5 +372,7 @@ BookProvider.prototype.updateParam = function(bookId, param, edit, arrayIndex, c
     	}
   	})
 };
+=======
+>>>>>>> 1eafb8df52e59baa3978ee6b1f2a20d3fb0ca2c6
 
 exports.BookProvider = BookProvider;

@@ -21,7 +21,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.get('/', function(req, res) {
 	bookProvider.findRecentEdits(function(error, edits) {
 		bookProvider.findRecentLogs(function(error, logs) {
@@ -136,6 +135,7 @@ app.get('/404', function(req, res) {
 
 // save book
 app.post('/book/:id/edit', function(req, res) {
+    console.log( "post" );
     var editedBook = {};
     for (item in req.body) { 
         if (item != '_id' && item != 'newlabel' && item != 'newvalue') {
@@ -190,7 +190,6 @@ app.post('/book/:id/edit', function(req, res) {
 
 // get all tags
 app.get('/tag/:tag', function(req, res) {
-    console.log(req.get('referer'));
     bookProvider.findTag(req.params.tag, function(error, books) { 
         res.render('search', {
             books: books,
