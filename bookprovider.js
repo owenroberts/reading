@@ -344,7 +344,6 @@ BookProvider.prototype.update = function(bookId, books, callback) {
   });
 };
 
-<<<<<<< HEAD
 // update one parameter
 BookProvider.prototype.updateParam = function(bookId, param, edit, arrayIndex, callback) {
 	this.getCollection(function(error, book_collection) {
@@ -372,7 +371,6 @@ BookProvider.prototype.updateParam = function(bookId, param, edit, arrayIndex, c
     	}
   	})
 };
-=======
->>>>>>> 1eafb8df52e59baa3978ee6b1f2a20d3fb0ca2c6
+
 
 exports.BookProvider = BookProvider;
