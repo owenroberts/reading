@@ -4,7 +4,8 @@ var mongodb = require('mongodb'),
 	Connection = require('mongodb').Connection, 
 	Server = require('mongodb').Server, 
 	BSON = require('mongodb').BSON, 
-	ObjectID = require('mongodb').ObjectID;
+	ObjectID = require('mongodb').ObjectID
+	;
 
 
 BookProvider = function(uri) {
@@ -13,10 +14,10 @@ BookProvider = function(uri) {
 		this.db.open(function(){});
 	} else {
 		var that = this;
-		  mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
-		  	if (error) console.log(error);
-		  	that.db = database;
-		  });
+		mongodb.MongoClient.connect(uri, { server: { auto_reconnect: true } }, function (error, database) {
+			if (error) console.log(error);
+			that.db = database;
+		});
 	}	
 };
 
@@ -345,22 +346,30 @@ BookProvider.prototype.update = function(bookId, books, callback) {
 
 // update one parameter
 BookProvider.prototype.updateParam = function(bookId, param, edit, arrayIndex, callback) {
-  this.getCollection(function(error, book_collection) {
-    if (error) callback(error);
-    else {
-      console.log("this?", bookId, param, edit, arrayIndex);
-      var updateValue = {};
-      if (arrayIndex >= 0) updateValue[param+"."+arrayIndex] = edit;
-      else updateValue[param] = edit;
-      book_collection.update(
-        {_id:ObjectID.createFromHexString(bookId)}, 
-        {$set:updateValue}
-      );
-      callback(null, "Success");
-    }
-  })
-}
-
-
+	this.getCollection(function(error, book_collection) {
+		if (error) callback(error);
+		else {
+			console.log("this?", bookId, param, edit, arrayIndex);
+			var updateValue = {};
+			if (arrayIndex == -1) {
+				if (param == "links") updateValue[param] = [edit.split(',')[0], edit.split(',')[1]];
+				else updateValue[param] = edit;
+				console.log(updateValue);
+				book_collection.update(
+					{_id:ObjectID.createFromHexString(bookId)},
+					{$push:updateValue}
+				);
+			} else {
+			    if (arrayIndex >= 0) updateValue[param+"."+arrayIndex] = edit;
+			    else updateValue[param] = edit;
+			    book_collection.update(
+			    	{_id:ObjectID.createFromHexString(bookId)}, 
+			    	{$set:updateValue}
+			    );
+			}
+			callback(null, "Success");
+    	}
+  	})
+};
 
 exports.BookProvider = BookProvider;

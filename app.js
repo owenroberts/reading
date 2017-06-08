@@ -1,12 +1,11 @@
 var express = require('express')
 	,	path = require('path')
 	,	BookProvider = require('./bookprovider').BookProvider
-    ,   logger = require('morgan')
-    ,   cookieParser = require('cookie-parser')
-    ,   bodyParser = require('body-parser')
-    ,   cookies = require('browser-cookies')
-    ;
-
+	,	logger = require('morgan')
+	,	cookieParser = require('cookie-parser')
+	,	bodyParser = require('body-parser')
+	,	cookies = require('browser-cookies')
+	;
 
 var app = express();
 
@@ -24,24 +23,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', function(req, res) {
-    bookProvider.findRecentEdits(function(error, edits) {
-        bookProvider.findRecentLogs(function(error, logs) {
-            bookProvider.getInfo(function(error, info) {
-                res.render('index', {
-                    title:"Reading",
-                    info:info,
-                    recentlyEdited:edits,
-                    recentlyLogged:logs
-                });
-            });
-        });
-    });
+	bookProvider.findRecentEdits(function(error, edits) {
+		bookProvider.findRecentLogs(function(error, logs) {
+			bookProvider.getInfo(function(error, info) {
+				res.render('index', {
+					title:"Reading",
+					info:info,
+					recentlyEdited:edits,
+					recentlyLogged:logs
+				});
+			});
+		});
+	});
 });
 
 app.get('/init', function(req, res) {
-    res.render('init');
+	res.render('init');
 });
-
 
 app.post('/init', function(req, res) {
     bookProvider.init(

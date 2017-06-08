@@ -1,5 +1,4 @@
 @import "reset.css";
-/*  globes   */
 * {
   box-sizing: border-box;
 }
@@ -14,11 +13,12 @@ body {
 #wrap {
   max-width: 800px;
   margin: 0 auto;
+  min-width: 320px;
 }
 #index,
 .book-single,
 .newbook {
-  background: #efefef;
+  background: #f7f7f7;
   margin-top: 1em;
   padding: 1em 2em;
 }
@@ -64,7 +64,7 @@ button:focus {
   font-family: inherit;
   background: #fdf;
   display: inline-block;
-  margin-right: 0.5em;
+/*margin-right:0.5em*/
   cursor: pointer;
   text-align: center;
   box-shadow: -2px 2px 0 #8181c7;
@@ -76,6 +76,9 @@ button:focus {
 }
 a.clickable:hover {
   border-bottom: none;
+}
+.backhome {
+  margin-right: 2px;
 }
 textarea {
   resize: none;
@@ -99,10 +102,7 @@ select {
   font-family: inherit;
   padding: 0.5em 1em;
   white-space: nowrap;
-<<<<<<< HEAD
-  min-width: 80px;
-=======
->>>>>>> 6e1dfed20fd439ed70de134ef12b84bbb2a260e7
+  min-width: 90px;
 }
 .book {
   min-width: 100px;
@@ -120,7 +120,7 @@ select {
 }
 .refd {
   float: left;
-  background: #f5f5f5;
+  background: #f7f7f7;
   box-shadow: -2px 2px 0 #8181c7;
   padding: 1em;
   margin-right: 1em;
@@ -134,7 +134,6 @@ select {
 .refd input[value="Save"] {
   display: block;
 }
-/*  index */
 #index .search,
 #search .search,
 #index .browse,
@@ -182,22 +181,24 @@ select {
 #search .title a {
   color: #8181c7;
   font-size: 18px;
+  transition: color 150ms;
 }
 #index .title a:hover,
 #search .title a:hover {
   background-color: #c9aff9;
+  color: #fff;
 }
 #index a.tag,
 #search a.tag {
   background-color: #fdf;
   padding: 0.25em 0.5em;
   transition: background-color 300ms;
+  margin-right: 2px;
 }
 #index a.tag:hover,
 #search a.tag:hover {
   background-color: #c9aff9;
 }
-/*  single book page   */
 .book-single .bk {
   background: transparent;
   position: relative;
@@ -210,8 +211,8 @@ select {
 }
 .book-single .type {
   display: inline-block;
-  background: #fdf;
-  font-size: 12px;
+  background: #fff;
+  font-size: 0.75em;
 }
 .book-single #status {
   font-style: italic;
@@ -234,10 +235,13 @@ select {
   color: #808080;
 }
 .book-single .delete {
-  font-size: 12px;
+  font-size: 0.75em;
   padding: 0.25em 0.5em;
   margin-left: 1em;
   color: #808080;
+}
+.book-single .delete:hover {
+  color: #db7093;
 }
 .book-single .name,
 .book-single .pubdate,
@@ -269,7 +273,7 @@ select {
 .book-single .quotes .note,
 .book-single .notes .quote,
 .book-single .quotes .quote {
-  background: #f5f5f5;
+  background: #b3b3dd;
   margin: 1em 0;
   width: 30%;
   margin-right: 1em;
@@ -277,12 +281,19 @@ select {
   vertical-align: top;
   box-shadow: -2px 2px 0 #8181c7;
   padding-right: 3em;
+  padding-left: 0.25em;
 }
 .book-single .notes .note textarea,
 .book-single .quotes .note textarea,
 .book-single .notes .quote textarea,
 .book-single .quotes .quote textarea {
   width: 100%;
+}
+.book-single .notes .note span,
+.book-single .quotes .note span,
+.book-single .notes .quote span,
+.book-single .quotes .quote span {
+  color: #fff;
 }
 .book-single .hidecontents {
   position: relative;
@@ -298,23 +309,55 @@ select {
 .book-single .tag {
   display: inline-block;
   margin-right: 3px;
-  padding: 0.25em 0.5em;
+  padding: 0.125em 0.25em;
+}
+.book-single .link a,
+.book-single .tag a {
+  font-size: 0.75em;
 }
 .book-single div {
   margin: 0.25em 0;
+  margin-right: 1px;
 }
 .book-single .new-attribute {
-  background: #f5f5f5;
+  background: #f7f7f7;
   padding: 8px;
+  box-shadow: -2px 2px 0 #8181c7;
+  position: relative;
+}
+.book-single .new-attribute input {
+  font-size: 1em;
+  display: block;
+  width: 50%;
+  margin-bottom: 1em;
 }
 .book-single .new-attribute .label {
   text-transform: capitalize;
   padding: 6px 0;
 }
+.book-single .new-attribute textarea {
+  resize: auto;
+  width: 75%;
+}
+.book-single .new-attribute #cancel-att {
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  font-size: 0.62em;
+}
+.book-single .new-attribute #save-att {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 0.75em;
+}
 .book-single #atts-container {
   display: none;
-  margin-top: 16px;
   position: relative;
+  box-shadow: -2px 2px 0 #8181c7;
+  background: #fff;
+  margin: 0.25em 0;
+  padding: 0.5em 0.25em;
 }
 .book-single #atts-container .atts {
   background: #fdf;
@@ -322,6 +365,11 @@ select {
   margin: 3px 0 3px 3px;
   padding: 0.25em;
   cursor: pointer;
+  transition: color 150ms;
+}
+.book-single #atts-container .atts:hover {
+  background: #8181c7;
+  color: #fff;
 }
 .book-single #atts-container .cancel {
   background: #c9aff9;
@@ -331,13 +379,8 @@ select {
   padding: 0.25em;
   cursor: pointer;
 }
-.book-single .new-attribute {
-  position: relative;
-}
-.book-single #cancel-att {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.book-single #atts-container .cancel:hover {
+  background: #8181c7;
 }
 .book-single .refs {
   margin: 2em 0;
@@ -368,7 +411,6 @@ select {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/*  new reference page */
 .nothing {
   margin: 12px 0;
 }
@@ -384,10 +426,9 @@ select {
 .nothing .note {
   width: 140px;
   height: 90px;
-  background: #f5f5f5;
+  background: #f7f7f7;
   margin: 3px 0;
 }
-/* NEW BOOK */
 .newbook div,
 .newbook input {
   display: block;
@@ -398,14 +439,12 @@ select {
 .newbook .addtype {
   display: inline-block;
 }
-/* smaller than 800px styles */
 @media only screen and (max-width : 800px) {
   .book-single .notes-column {
     clear: left;
     margin-left: 0;
   }
 }
-/* iphone 5 styles*/
 @media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
   body {
     padding: 0;

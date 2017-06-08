@@ -1,172 +1,156 @@
-$( document ).ready(function() {
+function setup() {
 
-var bookform = document.querySelector('#form');
-document.onkeypress = function(ev) {
-	if (ev.which == 13 && ev.altKey) bookform.submit();
-};
-
-var pageload = true;
-$('[name="_refNote"]').on('change keyup keydown paste cut', function() {
-	if (pageload) {
-		pageload = false;
-	} else {
-		$(this).parent().find('.refedit').attr({type:"submit"});
-	}
-});
-
-function addRef() {
-	$('.addref').show();
-}
-
-$('select[name=_field]').on('change', function(){
-	$('select.choices').css('display', 'none').attr('disabled', true);
-	$('select[name='+$(this).val()+']').css('display', 'inline').attr('disabled', false);
-});
-$('select[name=_types]').css('display', 'inline').attr('disabled', false);
-
-
-var count = 0;
-$('input.edit').on('change', function() {
-	if (this.name[0] != "+") {
-		if (this.name == "quotes") {
-			$('textarea[name="quotes"]').attr('name', '+quotes');
-		} else {
-			this.name = "+"+this.name;
+	function editParameter(elem) {
+		if (elem.value != Updater.data[elem.name]) {
+			Updater.status.innerHTML = "Saving...";
+			Updater.status.className = "fadeIn";
+			Updater.updateParameter(elem.name.replace("+", ""), elem.value, elem.dataset.num);
 		}
 	}
-});
-$('textarea.edit').on('keydown', function() {
-	if (this.name[0] != "+") {
-		if (this.name == "quotes") {
-			$('textarea[name="quotes"]').attr('name', '+quotes');
-		} else if (this.name == "notes") {
-			$('textarea[name="notes"]').attr('name', '+notes');
+	$('.edit').on('blur', function() {
+		editParameter(this);
+	});
+	$('input.edit').on('keyup', function(ev) {
+		if (ev.keyCode == 13) editParameter(this);
+	});
+
+	/* hidden stuff */
+	function hiddenToggle() {
+		var state = $(this).text();
+		if (state[0] == "-") {
+			var d = $(this).parent();
+			d.height(26);
+			d.innerWidth('30%');
+			$(this).text('+');
+			var text = $(this).parent().find( 'textarea' );
+			text.css({resize:"none", width:"100%"})
 		} else {
-			this.name = "+"+this.name;
+			var d = $(this).parent();
+			d.height(d[0].scrollHeight);
+			d.innerWidth('100%');
+			$(this).text('-');
+			var text = $(this).parent().find( 'textarea' );
+			text.css({resize:"auto", width:"75%", maxWidth: "100%", maxHeight: "100%"});
 		}
 	}
-});
+	$('body').on('click', '.hidecontents span', hiddenToggle);
 
-$('.book-single').on( 'change keyup keydown paste cut', 'textarea', function (){
-    $(this).height(0).height(this.scrollHeight);
-}).find( 'textarea' ).change();
+	/* changes height of textareas for notes and quotes */
+	$('.book-single').on( 'change keyup keydown paste cut', 'textarea.edit', function (){
+		$(this).height(0).height(this.scrollHeight);
+	}).find( 'textarea' ).change();
 
-$('.book-single').on( 'change keyup keydown paste cut', 'textarea', function (){
-    this.parentNode.parentNode.style.height = "0px";
-     this.parentNode.parentNode.style.height = this.offsetHeight + "px";
-});
+	$('.book-single').on( 'change keyup keydown paste cut', 'textarea.edit', function (){
+		this.parentNode.parentNode.style.height = "0px";
+		this.parentNode.parentNode.style.height = this.offsetHeight + "px";
+	});
 
-/* hidden stuff */
-function hiddenToggle() {
-	var state = $(this).text();
-	if (state[0] == "-") {
-		var d = $(this).parent();
-		d.height(26);
-		$(this).text('+');	
-	} else {
-		var d = $(this).parent();
-		d.height(d[0].scrollHeight);
-		$(this).text('-');
-		/*var text = $(this).parent().find( 'textarea' );
-		text.height(text[0].scrollHeight);*/
-	}
-}
-$('.hidecontents span').on('click', hiddenToggle);
 
-$('#addAtts').on('click', function() {
-	$('#atts-container').css('display', 'block');
-	$(this).hide();
-});
-$('.cancel').on('click', function() {
-	console.log("what")
-	$('#atts-container').hide();
-	$('#addAtts').show();
-});
-
-$('.atts').on('click', function(elem){
-	addAttribute(elem.target.innerHTML);
-	$('#atts-container').hide();
-});
-
-function addAttribute(type) {
-	var container = $('#form');
-	var newAttDiv = $('<div>')
-		.addClass('new-attribute');
-	var cancel = $('<span>')
-		.attr({	'class': 'clickable',
-				'id': 'cancel-att'
-			})
-		.text("Cancel");
-	var newLabel, newInput;
-
-	if (type == "link") {
-		newLabel = $('<input>')
-			.attr({	'type': 'text',
-					'name': 'newlabel',
-					'placeholder': 'Name',
-					'id': 'newLabel'+count,
-				});
-
-		newInput = $('<input>')
-			.attr({	'type':'text',
-					'name': 'new'+type,
-					'placeholder': 'URL',
-					'id': 'newAtt'+count
-				});
-		newAttDiv.append(newLabel)
-			.append(newInput);
-
-		newLabel.on('change', function(elem) {
-			var targetIndex = elem.target.id;
-			targetIndex = targetIndex.substring(8);
-			//var newInput = document.getElementById('newAtt'+targetIndex);
-			newInput.attr('name', 'new'+type);
-		});
-		newInput.on('change', function() {
-			newInput.val(newLabel.val()+","+newInput.val());
-		});
-	} else if (type == "tag") {
-		newLabel = $('<div>')
-			.addClass('label')
-			.text(type);
-
-		newInput = $('<input>')
-			.attr({	'type':'text',
-					'name': 'new'+type,
-					'placeholder': 'Input new ' + type,
-					'id': 'newAtt'+count
-				});
-		newAttDiv.append(newLabel)
-			.append(newInput);
-	} else  {
-		newLabel = $('<div>')
-			.addClass('label')
-			.text(type);
-
-		newInput = $('<textarea>')
-			.attr({	'type':'text',
-					'name': 'new'+type,
-					'value': 'Input new ' + type,
-					'id': 'newAtt'+count
-				});
-		newAttDiv.append(newLabel)
-			.append(newInput);
-	} 
-
-	//container.append(newAttDiv);
-	newAttDiv.insertBefore('#editBookSubmit');
-	newAttDiv.append(cancel);
-
-	cancel.on('click', function() {
-		$('.new-attribute').remove();
+	/* shows attribute adding buttons */
+	$('#addAtts').on('click', function() {
+		$('#atts-container').css('display', 'block');
+		$(this).hide();
+	});
+	/* calls addAttributes(), removes atts container after clicking on one of the optoins */
+	$('.atts').on('click', function(elem){
+		addAttribute(elem.target.innerHTML);
+		$('#atts-container').hide();
+	});
+	/* removes  */
+	$('.cancel').on('click', function() {
+		console.log("what")
+		$('#atts-container').hide();
 		$('#addAtts').show();
 	});
 
-	count++;
+
+	/* adds attribute section */
+	function addAttribute(type) {
+		var newAttDiv = $('<div>')
+			.addClass('new-attribute');
+		var cancel = $('<span>')
+			.attr({	'class': 'clickable',
+					'id': 'cancel-att'
+				})
+			.text("Cancel");
+		var save = $('<span>')
+			.attr({	'class': 'clickable',
+					'id': 'save-att'
+				})
+			.text("Save");
+		
+		var newLabel, newInput;
+
+		if (type == "link") {
+			newLabel = $('<input>')
+				.attr({	'type': 'text',
+						'name': 'newlabel',
+						'placeholder': 'Name'
+					});
+			newInput = $('<input>')
+				.attr({	'type':'text',
+						'name': 'new'+type,
+						'placeholder': 'URL'
+					});
+			newAttDiv.append(newLabel)
+				.append(newInput);
+
+			save.on('click', function() {
+				type += "s";
+				Updater.updateParameter(type, newLabel[0].value+","+newInput[0].value, -1);
+				$('.new-attribute').remove();
+				$('#addAtts').show();
+			});
+		// note or quote or tag
+		} else  {
+			newLabel = $('<div>')
+				.addClass('label')
+				.text(type);
+
+			if (type == "tag") newInput = $('<input>')
+			else newInput = $('<textarea>')
+
+			newInput.attr({	'type':'text',
+				'name': 'new'+type,
+				'placeholder': 'Input new ' + type
+			});
+
+			newAttDiv.append(newLabel)
+				.append(newInput);
+
+			save.on('click', function() {
+				type += "s";
+				Updater.updateParameter(type, newInput[0].value, -1);
+				$('.new-attribute').remove();
+				$('#addAtts').show();
+			});
+		} 
+
+		newAttDiv.append(cancel);
+		newAttDiv.append(save);
+
+		cancel.on('click', function() {
+			$('.new-attribute').remove();
+			$('#addAtts').show();
+		});
+
+		newAttDiv.insertBefore('#references');
+	}
+
+	/* maybe does some stuff with references */
+	var pageload = true;
+	$('[name="_refNote"]').on('change keyup keydown paste cut', function() {
+		if (pageload) {
+			pageload = false;
+		} else {
+			$(this).parent().find('.refedit').attr({type:"submit"});
+		}
+	});
+	function addRef() {
+		$('.addref').show();
+	}
+	$('#addRef').on('click', function(){
+		$('.addref').show();
+		$(this).hide();
+	});
 }
-$('#addRef').on('click', function(){
-	$('.addref').show();
-	$(this).hide();
-});
-	
-});

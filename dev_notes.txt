@@ -1,0 +1,5 @@
+6.6.2017
+- on edit page, leaving the focus is only way to save information
+	- clicking save button is basically just leaving focus
+	- cases where user edits and never leaves?
+		- detect for changes?  shouldn't constantly save

@@ -49,121 +49,116 @@ block content
 		div.notes-column
 			div.notes
 				h3= "Notes"
-				each value, index in book.notes
-					div.note.hidecontents
-						span= "+"
-						div.hiddencontents
-							textarea.edit(type="text", name="notes", data-num=index)=value
+				if book.notes
+					each value, index in book.notes
+						div.note.hidecontents
+							span= "+"
+							div.hiddencontents
+								textarea.edit(type="text", name="notes", data-num=index)=value
+		div.quotes-column
+			div.quotes
+				h3= "Quotes"
+				if book.quotes
+					each value, index in book.quotes
+						div.quote.hidecontents
+							span= "+"
+							div.hiddencontents
+								textarea.edit(type="text", name="quotes", data-num=index)=value
+
+		div#addAtts.clickable()= "Add Information"
+		//input.clickable(class="save", type="submit", value="Save")
+		div#atts-container
+			each value in info.info._atts
+				div.atts= value
+			span.cancel= "x"
 		
 		script.
+			var Updater = {};
 			window.onload = function() {
-				var status = document.getElementById('status');
-				var data = !{JSON.stringify(book)};
-				console.log(data);
-				var id = "!{book._id.toHexString()}";
-				$('.edit').on('blur', function() {
-					//console.log(this.dataset.num);
-					console.log(this.value, data[this.name])
-					if (this.value != data[this.name]) {
-						status.innerHTML = "Saving...";
-						status.className = "fadeIn";
-						$.ajax({
-							url: '/param/'+id,
-							type: 'post',
-							dataType:'json',
-							data: {
-								id: id,
-								param: this.name.replace("+", ""),
-								edit: this.value,
-								arrayIndex: this.dataset.num
-							},					
-							success: function(data) {
-								console.log(data);
-								status.innerHTML = "Saved.";
-								status.className = "fadeOut";
-							} 
-						});
-					}
-				});
+				Updater.status = document.getElementById('status');
+				Updater.data = !{JSON.stringify(book)};
+				Updater.id = "!{book._id.toHexString()}";
+	
+				// -1 index is push, 0 index is standalone, >0 is updated array
+				Updater.updateParameter = function(param, value, index) {
+					$.ajax({
+						url: '/param/' + Updater.id,
+						type: 'post',
+						dataType:'json',
+						data: {
+							id: Updater.id,
+							param: param,
+							edit: value,
+							arrayIndex: index
+						},					
+						success: function(data) {
+							// fuck doing a bunch of testing and adding elements and shit
+							if (index == -1) location.reload();
+							Updater.status.innerHTML = "Saved.";
+							Updater.status.className = "fadeOut";
+						} 
+					});
+				};
+				setup();
 			}
 
-		.bk
-			form(id="form" method="post")
-				input(name="_id", type="hidden", value=book._id.toHexString())
-				div#form-body
-					div.infocolumn
-						div.quotes
-							h3= "Quotes"
-							each value, index in book.quotes
-								div.quote.hidecontents
-									span= "+"
-									div.hiddencontents
-										textarea.edit(type="text", name="quotes")=value
-					div#addAtts.clickable()= "Add Att"
-					div#atts-container
-						each value in info.info._atts
-							div.atts= value
-						span.cancel= "x"
-					div#editBookSubmit
-						input.clickable(class="save", type="submit", value="Save")
-				
-					script(type='text/javascript' src="/javascripts/edit_book.js")
-					
-			div.refs
-				h2= "References"
-				div.ref
-					if book.refs
-						each ref, index in book.refs
-							div.hidecontents.book
-								span="+"
-								form(method="get", action="/book/:id/edit")
-									input(name="_id", type="hidden", value=ref.id)
-									input.title(type="submit", value=ref.title)
-								div.hiddencontents
-									form(method="post", action="/book/:id/edit")
-										input(name="_editRef", type="hidden", value=ref.id)
-										input(name="_title", type="hidden", value=ref.title)
-										input(name="_id", type="hidden" value=book._id.toHexString())
-										textarea.select(name="_refNote", type="text")=ref.note
-										input.refedit.clickable(type="hidden", value="Save")= "Save"
+		script(type='text/javascript' src="/javascripts/edit_book.js")
 
-				div#addRef.plus.clickable()= "Add Reference"
-				div.addref
-					div.search
-						form(method="get", action="/addref/search")
-							input(name="_id", type="hidden", value=book._id.toHexString())
-							if book.refs
-								each ref in book.refs
-									input(name="_refs", type="hidden", value=ref.id)
-							input(name="_bookTitle", type="hidden", value=book.title)
-							span="Search: "
-							select(name="_field")
-								each field in info.info._fields
-									option= field
-							input.select.underlined(name="_ref", type="text", placeholder="query")
-							input.clickable(type="submit")
-					div.browse
-						form(method="get", action="/addref/browse")
-							input(name="_id", type="hidden", value=book._id.toHexString())
-							if book.refs
-								each ref in book.refs
-									input(name="_refs", type="hidden", value=ref.id)
-							input(name="_bookTitle", type="hidden", value=book.title)
-							span="Browse by: "
-							select(name="_field")
-								each item, name in info.info
-									if name != "_atts"
-										option= name
-							each item, name in info.info 
-								select.choices(style="display:none", disabled, name=name)
-									each item in info.info[name]
-										option= item
-							input.clickable(type="submit")
-			div.refs.by
-				h3= "Referenced by "
-				div.ref
-					if book.referencedBy
-						each refby, index in book.referencedBy
+		div.refs#references
+			h2= "References"
+			div.ref
+				if book.refs
+					each ref, index in book.refs
+						div.hidecontents.book
+							span="+"
 							form(method="get", action="/book/:id/edit")
-								input.title(type="submit", value=refby.title)
-								input(name="_id", type="hidden", value=refby.id)
+								input(name="_id", type="hidden", value=ref.id)
+								input.title(type="submit", value=ref.title)
+							div.hiddencontents
+								form(method="post", action="/book/:id/edit")
+									input(name="_editRef", type="hidden", value=ref.id)
+									input(name="_title", type="hidden", value=ref.title)
+									input(name="_id", type="hidden" value=book._id.toHexString())
+									textarea.select(name="_refNote", type="text")=ref.note
+									input.refedit.clickable(type="hidden", value="Save")= "Save"
+
+			div#addRef.plus.clickable()= "Add Reference"
+			div.addref
+				div.search
+					form(method="get", action="/addref/search")
+						input(name="_id", type="hidden", value=book._id.toHexString())
+						if book.refs
+							each ref in book.refs
+								input(name="_refs", type="hidden", value=ref.id)
+						input(name="_bookTitle", type="hidden", value=book.title)
+						span="Search: "
+						select(name="_field")
+							each field in info.info._fields
+								option= field
+						input.select.underlined(name="_ref", type="text", placeholder="query")
+						input.clickable(type="submit")
+				div.browse
+					form(method="get", action="/addref/browse")
+						input(name="_id", type="hidden", value=book._id.toHexString())
+						if book.refs
+							each ref in book.refs
+								input(name="_refs", type="hidden", value=ref.id)
+						input(name="_bookTitle", type="hidden", value=book.title)
+						span="Browse by: "
+						select(name="_field")
+							each item, name in info.info
+								if name != "_atts"
+									option= name
+						each item, name in info.info 
+							select.choices(style="display:none", disabled, name=name)
+								each item in info.info[name]
+									option= item
+						input.clickable(type="submit")
+		div.refs.by
+			h3= "Referenced by "
+			div.ref
+				if book.referencedBy
+					each refby, index in book.referencedBy
+						form(method="get", action="/book/:id/edit")
+							input.title(type="submit", value=refby.title)
+							input(name="_id", type="hidden", value=refby.id)

@@ -1,0 +1,39 @@
+#index
+#search
+	.search
+	.browse
+		display:block
+	.search input
+	.search select
+	.browse input
+	.browse select
+		margin-bottom: 1em
+		margin-right: 1em
+		display:inline-block
+	.search form, .browse form
+		margin-right: 1em
+	.name 
+		color: black
+	.genre
+		color: primary
+	input[name="_query"]
+		box-shadow: -2px 2px 0 primary
+		font-size:18px
+		background: wht
+		padding: 0.25em .5em; 
+	.add
+		margin-bottom: 2em
+	.title a
+		color: primary
+		font-size: 18px
+		transition: color 150ms
+		&:hover
+			background-color: secondary
+			color: wht
+	a.tag
+		background-color: highlight
+		padding:0.25em 0.5em
+		transition: background-color 300ms
+		margin-right: 2px
+		&:hover
+			background-color: secondary
