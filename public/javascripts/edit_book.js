@@ -15,25 +15,35 @@ function setup() {
 	});
 
 	/* hidden stuff */
-	function hiddenToggle() {
-		var state = $(this).text();
+	function hiddenToggle(elem) {
+		var state = $(elem).text();
 		if (state[0] == "-") {
-			var d = $(this).parent();
-			d.height(26);
-			d.innerWidth('30%');
-			$(this).text('+');
-			var text = $(this).parent().find( 'textarea' );
-			text.css({resize:"none", width:"100%"})
+			hideText(elem);
 		} else {
-			var d = $(this).parent();
-			d.height(d[0].scrollHeight);
-			d.innerWidth('100%');
-			$(this).text('-');
-			var text = $(this).parent().find( 'textarea' );
-			text.css({resize:"auto", width:"75%", maxWidth: "100%", maxHeight: "100%"});
+			showText(elem);
 		}
 	}
-	$('body').on('click', '.hidecontents span', hiddenToggle);
+
+	function hideText(elem) {
+		var d = $(elem).parent();
+		d.height(26);
+		d.innerWidth('30%');
+		$(elem).text('+');
+		var text = $(elem).parent().find( 'textarea' );
+		text.css({resize:"none", width:"100%"});
+	}
+	function showText(elem) {
+		var d = $(elem).parent();
+		d.height(d[0].scrollHeight);
+		d.innerWidth('100%');
+		$(elem).text('-');
+		var text = $(elem).parent().find( 'textarea' );
+		text.css({resize:"auto", width:"75%", maxWidth: "100%", maxHeight: "100%"});
+	}
+
+	$('body').on('click', '.hidecontents span', function() { hiddenToggle(this); } );
+	$('body').on('focus', 'textarea', function() { showText(this.parentNode.parentNode.firstChild) });
+	$('body').on('blur', 'textarea', function() { hideText(this.parentNode.parentNode.firstChild) });
 
 	/* changes height of textareas for notes and quotes */
 	$('.book-single').on( 'change keyup keydown paste cut', 'textarea.edit', function (){
