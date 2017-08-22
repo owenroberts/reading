@@ -69,7 +69,7 @@ app.get('/search', function(req, res) {
         res.render('search', {
             bookId:req.query["_id"],
             books:books,
-            title: req.query["_field"] + ": " + req.query["_query"]
+            title: "Search " + req.query["_field"] + ": " + req.query["_query"]
         });
     });
 });
