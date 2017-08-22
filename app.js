@@ -122,6 +122,7 @@ app.get('/book/:id/edit', function(req, res) {
     });
 });
 
+// update a parameter
 app.post('/param/:id', function(req, res) {
     bookProvider.updateParam(req.body.id, req.body.param, req.body.edit, req.body.arrayIndex,  function(error, result) {
         if (error) console.log(error);
@@ -135,7 +136,6 @@ app.get('/404', function(req, res) {
 
 // save book
 app.post('/book/:id/edit', function(req, res) {
-    console.log( "post" );
     var editedBook = {};
     for (item in req.body) { 
         if (item != '_id' && item != 'newlabel' && item != 'newvalue') {
@@ -190,47 +190,47 @@ app.post('/book/:id/edit', function(req, res) {
 
 // get all tags
 app.get('/tag/:tag', function(req, res) {
-    bookProvider.findTag(req.params.tag, function(error, books) { 
-        res.render('search', {
-            books: books,
-            title: req.params.tag,
-            search_term: "Tagged",
-            referer: req.get('referer')
-        });
-    });
+	bookProvider.findTag(req.params.tag, function(error, books) { 
+		res.render('search', {
+			books: books,
+			title: req.params.tag,
+			search_term: "Tagged",
+			referer: req.get('referer')
+		});
+	});
 });
 
 //get references query 
 app.get('/addref/search', function(req, res) {
-    bookProvider.searchRefs(req.query, function(error, books) { 
-        res.render('search_refs', {
-            bookId:req.query["_id"],
-            bookTitle:req.query["_bookTitle"],
-            books:books,
-            title: req.query["_field"] + ": " + req.query["_ref"]
-        });
-    });
+	bookProvider.searchRefs(req.query, function(error, books) { 
+		res.render('search_refs', {
+			bookId:req.query["_id"],
+			bookTitle:req.query["_bookTitle"],
+			books:books,
+			title: req.query["_field"] + ": " + req.query["_ref"]
+		});
+	});
 });
 
 //get references browse 
 app.get('/addref/browse', function(req, res) {
-    bookProvider.browseRefs(req.query, function(error, books) { 
-        res.render('browse_refs', {
-            bookId:req.query["_id"],
-            browseField: req.query["_field"],
-            bookTitle:req.query["_bookTitle"],
-            browseKey: req.query[req.query["_field"]],
-            books:books
-        });
-    });
+	bookProvider.browseRefs(req.query, function(error, books) { 
+		res.render('browse_refs', {
+			bookId:req.query["_id"],
+			browseField: req.query["_field"],
+			bookTitle:req.query["_bookTitle"],
+			browseKey: req.query[req.query["_field"]],
+			books:books
+		});
+	});
 });
 
 
 //delete a book
 app.get('/delete/:id', function(req, res) {
-        bookProvider.delete(req.params.id, function(error, docs) {
-                res.redirect('/')
-        });
+	bookProvider.delete(req.params.id, function(error, docs) {
+		res.redirect('/')
+	});
 });
 
 var port = process.env.PORT || 3000;
@@ -241,9 +241,9 @@ var bookProvider = new BookProvider(mongoUri);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+	var err = new Error('Not Found');
+	err.status = 404;
+	next(err);
 });
 
 // error handlers
@@ -251,23 +251,23 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
+	app.use(function(err, req, res, next) {
+		res.status(err.status || 500);
+		res.render('error', {
+			message: err.message,
+			error: err
+		});
+	});
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+	res.status(err.status || 500);
+	res.render('error', {
+		message: err.message,
+		error: {}
+	});
 });
 
 app.listen(port);
