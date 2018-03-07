@@ -7,3 +7,4 @@ htpasswd
 .htpasswd
 data/
 mongod
+admin.txt

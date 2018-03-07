@@ -9,7 +9,6 @@ block content
 	div.book-single
 		div.title
 			input.select.edit(type="text", name="title", placeholder="title", value=book.title)
-	
 		div.created-at
 			span= " logged on " 
 			span= book.created_at.getMonth()+1+" "+book.created_at.getDate()+" "+book.created_at.getFullYear()
@@ -65,12 +64,18 @@ block content
 							div.hiddencontents
 								textarea.edit(type="text", name="quotes", data-num=index)=value
 
-		div#addAtts.clickable()= "Add Information"
-		//input.clickable(class="save", type="submit", value="Save")
-		div#atts-container
+		div#atts-container= " Add info: "
 			each value in info.info._atts
 				div.atts= value
-			span.cancel= "x"
+		div#new-attribute
+			div.newlink
+				input(id="newlinktitle" placeholder="Title")
+				input(id="newlinkurl" placeholder="URL")
+			div.newother
+				div.label
+				textarea(type="text" id="newother" placeholder="Input")
+			span.clickable#save-att="Save"
+			span.clickable#cancel-att="Cancel"
 		
 		script.
 			var Updater = {};
@@ -104,23 +109,23 @@ block content
 
 		script(type='text/javascript' src="/javascripts/edit_book.js")
 
-		div.refs#references
-			h2= "References"
-			div.ref
-				if book.refs
-					each ref, index in book.refs
-						div.hidecontents.book
-							span="+"
-							form(method="get", action="/book/:id/edit")
-								input(name="_id", type="hidden", value=ref.id)
-								input.title(type="submit", value=ref.title)
-							div.hiddencontents
-								form(method="post", action="/book/:id/edit")
-									input(name="_editRef", type="hidden", value=ref.id)
-									input(name="_title", type="hidden", value=ref.title)
-									input(name="_id", type="hidden" value=book._id.toHexString())
-									textarea.select(name="_refNote", type="text")=ref.note
-									input.refedit.clickable(type="hidden", value="Save")= "Save"
+		div#references
+			if refs
+				h3= "References"
+				div.ref
+					each ref in refs
+						if ref.src_id == book._id.toHexString()
+							div.book
+								a.reftitle(href="/book/" + ref.ref_id + "/edit")=ref.ref_title
+								p= ref.note
+				div.refs.by
+					h3= "Referenced by "
+					each ref in refs
+						if ref.ref_id == book._id.toHexString()
+							div.book
+								a.reftitle(href="/book/" + ref.src_id + "/edit")=ref.src_title
+								p= ref.note
+
 
 			div#addRef.plus.clickable()= "Add Reference"
 			div.addref
@@ -131,12 +136,11 @@ block content
 							each ref in book.refs
 								input(name="_refs", type="hidden", value=ref.id)
 						input(name="_bookTitle", type="hidden", value=book.title)
-						span="Search: "
 						select(name="_field")
 							each field in info.info._fields
 								option= field
-						input.select.underlined(name="_ref", type="text", placeholder="query")
-						input.clickable(type="submit")
+						input.select.underlined.query(name="_ref", type="text", placeholder="query")
+						input.clickable(type="submit" value="Search")
 				div.browse
 					form(method="get", action="/addref/browse")
 						input(name="_id", type="hidden", value=book._id.toHexString())
@@ -144,7 +148,6 @@ block content
 							each ref in book.refs
 								input(name="_refs", type="hidden", value=ref.id)
 						input(name="_bookTitle", type="hidden", value=book.title)
-						span="Browse by: "
 						select(name="_field")
 							each item, name in info.info
 								if name != "_atts"
@@ -153,12 +156,5 @@ block content
 							select.choices(style="display:none", disabled, name=name)
 								each item in info.info[name]
 									option= item
-						input.clickable(type="submit")
-		div.refs.by
-			h3= "Referenced by "
-			div.ref
-				if book.referencedBy
-					each refby, index in book.referencedBy
-						form(method="get", action="/book/:id/edit")
-							input.title(type="submit", value=refby.title)
-							input(name="_id", type="hidden", value=refby.id)
+						input.clickable(type="submit" value="Browse")
+				script(type='text/javascript' src="/javascripts/options.js")

@@ -10,7 +10,7 @@ var mongodb = require('mongodb'),
 
 BookProvider = function(uri) {
 	if (uri == "localhost") {
-		this.db = new Db('books', new Server('localhost', 27017, {safe:false}, {auto_reconnect:true}, {}));
+		this.db = new Db('test', new Server('localhost', 27017, {safe:false}, {auto_reconnect:true}, {}));
 		this.db.open(function(){});
 	} else {
 		var that = this;
@@ -40,6 +40,45 @@ BookProvider.prototype.getCollection = function(callback) {
 		else callback(null, book_collection);
 	});
 };
+
+// add ref 
+BookProvider.prototype.getRefCollection = function(callback) {
+	this.db.collection('refs', function(error, ref_collection) {
+		if (error) callback(error);
+		else callback(null, ref_collection);
+	});
+};
+
+BookProvider.prototype.addRef = function(ref, callback) {
+	this.getRefCollection(function(error, ref_collection) {
+		if (error) callback(error);
+		else {
+			ref.created_at = new Date();
+			ref_collection.insert(ref, function(){
+				callback(null, ref);
+			})
+		}
+	});
+};
+
+BookProvider.prototype.getRefs = function(id, callback) {
+	this.getRefCollection(function(error, ref_collection) {
+		if (error) callback(error);
+		else {
+			var or = {
+				'$or': [
+					{'src_id': id},
+					{'ref_id': id}
+				]
+			}
+			ref_collection.find(or).toArray(function(error, refs)  {
+				if (error) console.log(error);
+				else callback(null, refs);
+			});
+		}
+	});
+};
+
 
 //find all books
 BookProvider.prototype.findAll = function(callback) {
@@ -187,21 +226,6 @@ BookProvider.prototype.browse = function(query, callback) {
 	});
 };
 
-// get references from single book to display query from id 
-BookProvider.prototype.getRefs = function(refs, callback) {
-	var query = {_id:{$in:[]}};
-	for (var i = 0; i < refs.length; i++) {
-		var objId = new ObjectID(refs[i].refId);
-		query._id["$in"].push(objId);
-	}
-	this.getCollection(function(error, book_collection) {
-		book_collection.find(query).toArray(function(error, results){
-			if (error) callback(error);
-			else callback(null, results);
-		});
-	});
-};
-
 //save new book
 BookProvider.prototype.save = function(books, callback) {
 	this.getCollection(function(error, book_collection) {
@@ -285,50 +309,6 @@ BookProvider.prototype.addTag = function(query, set) {
 	});
 };
 
-// referenced by add note 
-BookProvider.prototype.addReferencedBy = function(refId, id, title, note) {
-	var query = {_id:new ObjectID(refId)};
-	var set = { referencedBy: {}};
-	set["referencedBy"] = {id:id, note:note, title:title};
-	this.getCollection(function(error, book_collection){
-		if (error) console.log(error);
-		else {
-			book_collection.update(query, {$addToSet:set}, function(error){
-				if (error) console.log("addReferencedBy: " + error);
-			});
-		}
-	});
-};
-
-// edit referenced by 
-BookProvider.prototype.editReferencedBy = function(refId, id, title, note) {
-	var query = {_id:new ObjectID(refId), referencedBy:{$elemMatch:{id:id}}};
-	var set = {};
-	set["referencedBy.$.note"] = note;
-	this.getCollection(function(error, book_collection){
-		if (error) console.log("edit ref by: " + error);
-		else {
-			book_collection.update(query, {$set:set}, function(error) {
-				console.log("edit ref by: " + error);
-			});
-		}
-	});
-};
-
-// edit reference
-BookProvider.prototype.editRef = function(refId, id, title, note) {
-	var query = {_id:new ObjectID(refId), refs:{$elemMatch:{id:id}}};
-	var set = {};
-	set["refs.$.note"] = note;
-	this.getCollection(function(error, book_collection){
-		if (error) console.log("editRef: " + error);
-		else {
-			book_collection.update(query, {$set:set}, function(error){
-				console.log("edit ref: " + error);
-			});
-		}
-	});
-};
 
 // update a book
 BookProvider.prototype.update = function(bookId, books, callback) {

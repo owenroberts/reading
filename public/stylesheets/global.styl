@@ -1,11 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Arimo');
 *
 	box-sizing: border-box
 br 
 	clear: both
 body
-	font: 14px/14px Verdana, Helvetica, Arial, sans-serif
+	font: 14px/14px 'Arimo', Verdana, Helvetica, Arial, sans-serif
 	line-height:1.4
 	background: url('/images/bkg-dot-sm.jpg')
+input
+	font: 14px/14px 'Arimo', Verdana, Helvetica, Arial, sans-serif
 #wrap
 	max-width:800px
 	margin:0 auto
@@ -98,12 +101,12 @@ select
 	div
 		margin:.5em 0
 	margin-bottom: 2em
+	
 .refd
-	float:left
 	background:bkg
 	box-shadow: -2px 2px 0 primary
-	padding:1em
-	margin-right:1em
+	padding: 0 1em
+	margin:1em
 	input
 	textarea
 	div
@@ -111,3 +114,7 @@ select
 		margin: 0.5em 0
 	input[value="Save"]
 		display:block
+
+#books
+	display: grid
+	grid-template-columns: repeat(3, 1fr)

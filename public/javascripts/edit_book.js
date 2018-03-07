@@ -1,6 +1,7 @@
 function setup() {
 
 	function editParameter(elem) {
+
 		if (elem.value != Updater.data[elem.name]) {
 			Updater.status.innerHTML = "Saving...";
 			Updater.status.className = "fadeIn";
@@ -8,6 +9,7 @@ function setup() {
 		}
 	}
 	$('.edit').on('blur', function() {
+
 		editParameter(this);
 	});
 	$('input.edit').on('keyup', function(ev) {
@@ -41,9 +43,9 @@ function setup() {
 		text.css({resize:"auto", width:"75%", maxWidth: "100%", maxHeight: "100%"});
 	}
 
-	$('body').on('click', '.hidecontents span', function() { hiddenToggle(this); } );
-	$('body').on('focus', 'textarea', function() { showText(this.parentNode.parentNode.firstChild) });
-	$('body').on('blur', 'textarea', function() { hideText(this.parentNode.parentNode.firstChild) });
+	$('body').on('click', '.hidecontents span', function() { 
+		hiddenToggle(this); 
+	});
 
 	/* changes height of textareas for notes and quotes */
 	$('.book-single').on( 'change keyup keydown paste cut', 'textarea.edit', function (){
@@ -55,96 +57,39 @@ function setup() {
 		this.parentNode.parentNode.style.height = this.offsetHeight + "px";
 	});
 
-
-	/* shows attribute adding buttons */
-	$('#addAtts').on('click', function() {
-		$('#atts-container').css('display', 'block');
-		$(this).hide();
-	});
 	/* calls addAttributes(), removes atts container after clicking on one of the optoins */
 	$('.atts').on('click', function(elem){
 		addAttribute(elem.target.innerHTML);
-		$('#atts-container').hide();
-	});
-	/* removes  */
-	$('.cancel').on('click', function() {
-		console.log("what")
-		$('#atts-container').hide();
-		$('#addAtts').show();
 	});
 
-
-	/* adds attribute section */
+	/* adds attribute section -- this sucks ... */
 	function addAttribute(type) {
-		var newAttDiv = $('<div>')
-			.addClass('new-attribute');
-		var cancel = $('<span>')
-			.attr({	'class': 'clickable',
-					'id': 'cancel-att'
-				})
-			.text("Cancel");
-		var save = $('<span>')
-			.attr({	'class': 'clickable',
-					'id': 'save-att'
-				})
-			.text("Save");
-		
-		var newLabel, newInput;
-
+		$('#new-attribute').show();
 		if (type == "link") {
-			newLabel = $('<input>')
-				.attr({	'type': 'text',
-						'name': 'newlabel',
-						'placeholder': 'Name'
-					});
-			newInput = $('<input>')
-				.attr({	'type':'text',
-						'name': 'new'+type,
-						'placeholder': 'URL'
-					});
-			newAttDiv.append(newLabel)
-				.append(newInput);
-
-			save.on('click', function() {
-				type += "s";
-				Updater.updateParameter(type, newLabel[0].value+","+newInput[0].value, -1);
-				$('.new-attribute').remove();
-				$('#addAtts').show();
-			});
-		// note or quote or tag
-		} else  {
-			newLabel = $('<div>')
-				.addClass('label')
-				.text(type);
-
-			if (type == "tag") newInput = $('<input>')
-			else newInput = $('<textarea>')
-
-			newInput.attr({	'type':'text',
-				'name': 'new'+type,
-				'placeholder': 'Input new ' + type
-			});
-
-			newAttDiv.append(newLabel)
-				.append(newInput);
-
-			save.on('click', function() {
-				type += "s";
-				Updater.updateParameter(type, newInput[0].value, -1);
-				$('.new-attribute').remove();
-				$('#addAtts').show();
-			});
-		} 
-
-		newAttDiv.append(cancel);
-		newAttDiv.append(save);
-
-		cancel.on('click', function() {
-			$('.new-attribute').remove();
-			$('#addAtts').show();
+			$('.newlink').show();
+		} else {
+			$('.newother').show();
+			$('.newother .label').text(type);
+		}
+		$('#save-att').on('click', function() {
+			var value = "";
+			if (type == "link") {
+				value = $('#newlinktitle').val() + "," + $('#newlinkurl').val();
+			} else {
+				value = $('#newother').val();
+			}
+			type += "s";
+			Updater.updateParameter(type, value, -1);
+			$('#new-attribute').hide();
+			$('.newlink').hide();
+			$('.newother').hide();
 		});
 
-		newAttDiv.insertBefore('#references');
+		$('#cancel-att').on('click', function() {
+			$('#new-attribute').hide();
+			$('.newlink').hide();
+			$('.newother').hide();
+		});
 	}
 
 	/* maybe does some stuff with references */
@@ -156,11 +101,8 @@ function setup() {
 			$(this).parent().find('.refedit').attr({type:"submit"});
 		}
 	});
-	function addRef() {
-		$('.addref').show();
-	}
+
 	$('#addRef').on('click', function(){
-		$('.addref').show();
-		$(this).hide();
+		$('.addref').toggle();
 	});
 }
