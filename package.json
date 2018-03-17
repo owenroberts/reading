@@ -1,8 +1,8 @@
 {
 	"name": "Reading",
 	"version": "0.1.0",
-	"description":"A cataloging app for reading or other media.",
-	"main":"app.js",
+	"description": "A cataloging app for reading or other media.",
+	"main": "app.js",
 	"author": "Owen Roberts",
 	"license": "MIT",
 	"private": true,
@@ -10,7 +10,7 @@
 		"start": "node ./bin/www"
 	},
 	"engines": {
-		"node":"6.11.1"
+		"node": "6.11.1"
 	},
 	"dependencies": {
 		"express": "~4.9.0",
