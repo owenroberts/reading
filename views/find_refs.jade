@@ -1,0 +1,34 @@
+extends layout
+
+block content
+	if referer
+		div.clickable
+			a(href=referer)= "Back"
+	h2= "Add reference to " + bookTitle
+	if browseKey
+		h2= "Browsing: " + browseKey
+	if searchKey
+		h2= "Searching by " + searchKey
+	- var foo = false // in case only returned book is itself
+	div#books
+		if books.length > 0
+			each book in books
+				if (!book.info)
+					if (book._id.toHexString() !== bookId)
+						- foo = true
+						div.refd
+							if (browseField == "_fields")
+								div.browsekey= book[browseKey]
+							form( method="post", action="/addref")
+								input(name="src_id", type="hidden", value=bookId)
+								input(name="src_title", type="hidden", value=bookTitle)
+								input(name="ref_id", type="hidden", value=book._id.toHexString())
+								input(name="ref_title", type="hidden", value=book.title)
+								div.title= book.title
+								if (browseField == "_tags")
+									each tag in book.tags
+										div.type= tag
+								textarea.note(name="note", placeholder="Note")
+								input.clickable(id="edit", value="Save", type="submit")
+		if foo == false
+			div.nothing= "Nothing matches this query."

@@ -9,6 +9,7 @@ var express = require('express')
 
 var app = express();
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -106,20 +107,26 @@ app.post('/book/new', function(req, res){
 
 // edit a book
 app.get('/book/:id/edit', function(req, res) {
-    bookProvider.findById(req.params.id, function(error, book, info) { 
-        if (book == null) {
-            console.log("book is null");
-            res.redirect('/404');
-        } else {
-            res.render('edit', {
-                referer: req.get('referer'),
-                book: book,
-                info: info,
-                title: book.title
-            });
-        }
-
-    });
+	bookProvider.findById(req.params.id, function(error, book, info) { 
+		if (book == null) {
+			console.log("book is null");
+			res.redirect('/404');
+		} else {
+			bookProvider.getRefs(req.params.id, function(error, refs) {
+				console.log(refs);
+				if (error) console.log(error);
+				else {
+					res.render('edit', {
+						referer: req.get('referer'),
+						book: book,
+						info: info,
+						title: book.title,
+						refs: refs
+					});
+				}
+			});
+		}
+	});
 });
 
 // update a parameter
@@ -200,14 +207,32 @@ app.get('/tag/:tag', function(req, res) {
 	});
 });
 
+app.post('/addref', function(req, res) {
+	var ref = {
+		src_id: req.param('src_id'),
+		src_title: req.param('src_title'),
+		ref_id: req.param('ref_id'),
+		ref_title: req.param('ref_title'),
+		note: req.param('note')
+	};
+	bookProvider.addRef(ref, function(error, result) {
+		if (error) console.log(error);
+		else {
+			console.log(result);
+			res.redirect('/book/'+ref.src_id+'/edit');
+		}
+	});
+});
+
 //get references query 
 app.get('/addref/search', function(req, res) {
 	bookProvider.searchRefs(req.query, function(error, books) { 
-		res.render('search_refs', {
+		res.render('find_refs', {
+            referer: req.get('referer'),
 			bookId:req.query["_id"],
 			bookTitle:req.query["_bookTitle"],
-			books:books,
-			title: req.query["_field"] + ": " + req.query["_ref"]
+			searchKey: req.query["_field"] + ": " + req.query["_ref"],
+			books:books
 		});
 	});
 });
@@ -215,10 +240,11 @@ app.get('/addref/search', function(req, res) {
 //get references browse 
 app.get('/addref/browse', function(req, res) {
 	bookProvider.browseRefs(req.query, function(error, books) { 
-		res.render('browse_refs', {
+		res.render('find_refs', {
+            referer: req.get('referer'),
 			bookId:req.query["_id"],
-			browseField: req.query["_field"],
 			bookTitle:req.query["_bookTitle"],
+			browseField: req.query["_field"],
 			browseKey: req.query[req.query["_field"]],
 			books:books
 		});
@@ -270,7 +296,9 @@ app.use(function(err, req, res, next) {
 	});
 });
 
-app.listen(port);
+app.listen(port, function() {
+    console.log("App running on port", port);
+});
 module.exports = app;
 
 /*

@@ -5,9 +5,7 @@ block content
 		div#index
 			div.search
 				form(method="get", action="/search")
-					
 					input.select.underlined(name="_query", type="text", placeholder=title)
-					
 					select(name="_field")
 								each field in info.info._fields
 									option= field

@@ -1,4 +1,5 @@
 @import "reset.css";
+@import url("https://fonts.googleapis.com/css?family=Arimo");
 * {
   box-sizing: border-box;
 }
@@ -6,9 +7,12 @@ br {
   clear: both;
 }
 body {
-  font: 14px/14px Verdana, Helvetica, Arial, sans-serif;
+  font: 14px/14px 'Arimo', Verdana, Helvetica, Arial, sans-serif;
   line-height: 1.4;
   background: url("/images/bkg-dot-sm.jpg");
+}
+input {
+  font: 14px/14px 'Arimo', Verdana, Helvetica, Arial, sans-serif;
 }
 #wrap {
   max-width: 800px;
@@ -119,11 +123,10 @@ select {
   margin: 0.5em 0;
 }
 .refd {
-  float: left;
   background: #f7f7f7;
   box-shadow: -2px 2px 0 #8181c7;
-  padding: 1em;
-  margin-right: 1em;
+  padding: 0 1em;
+  margin: 1em;
 }
 .refd input,
 .refd textarea,
@@ -133,6 +136,10 @@ select {
 }
 .refd input[value="Save"] {
   display: block;
+}
+#books {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 #index .search,
 #search .search,
@@ -319,40 +326,46 @@ select {
   margin: 0.25em 0;
   margin-right: 1px;
 }
-.book-single .new-attribute {
-  background: #f7f7f7;
+.book-single #new-attribute {
+  display: none;
+  background: #fff;
   padding: 8px;
   box-shadow: -2px 2px 0 #8181c7;
   position: relative;
 }
-.book-single .new-attribute input {
+.book-single #new-attribute .newlink {
+  display: none;
+}
+.book-single #new-attribute .newother {
+  display: none;
+}
+.book-single #new-attribute input {
   font-size: 1em;
   display: block;
   width: 50%;
   margin-bottom: 1em;
 }
-.book-single .new-attribute .label {
+.book-single #new-attribute .label {
   text-transform: capitalize;
   padding: 6px 0;
 }
-.book-single .new-attribute textarea {
+.book-single #new-attribute textarea {
   resize: auto;
   width: 75%;
 }
-.book-single .new-attribute #cancel-att {
+.book-single #new-attribute #cancel-att {
   position: absolute;
   top: 40px;
   right: 10px;
   font-size: 0.62em;
 }
-.book-single .new-attribute #save-att {
+.book-single #new-attribute #save-att {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 0.75em;
 }
 .book-single #atts-container {
-  display: none;
   position: relative;
   box-shadow: -2px 2px 0 #8181c7;
   background: #fff;
@@ -382,25 +395,36 @@ select {
 .book-single #atts-container .cancel:hover {
   background: #8181c7;
 }
-.book-single .refs {
+.book-single #references {
   margin: 2em 0;
 }
-.book-single .refs input.title {
+.book-single #references input.title {
   font-size: 14px;
 }
-.book-single .refs .book {
+.book-single #references .book {
   margin-right: 1em;
 }
-.book-single .refs .h1 {
+.book-single #references .h1 {
   color: #8181c7;
   font-size: 18px;
 }
-.book-single .refs .title {
+.book-single #references .title {
   color: #8181c7;
   padding: 0;
 }
-.book-single .refs .addref {
+.book-single #references .query {
+  font-size: 1.5em;
+  margin: 0.5em;
+}
+.book-single #references .addref {
   display: none;
+}
+.book-single #references .reftitle {
+  color: #8181c7;
+}
+.book-single #references .reftitle:hover {
+  color: #fff;
+  background: #8181c7;
 }
 .book-single select {
   margin: 3px;

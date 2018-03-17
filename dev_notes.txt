@@ -3,3 +3,24 @@
 	- clicking save button is basically just leaving focus
 	- cases where user edits and never leaves?
 		- detect for changes?  shouldn't constantly save
+
+3.5.2018
+- need to finish this crap
+- node app.js doesn't run....
+- update jade to something else ... 
+- finish refs
+- update style
+- no notes on fixing db?  wtf
+	- mongodump + mongorestore (admin)
+	- back to initialize?
+		- mongod not working
+		- deleted db/ from /data/ and the redumped and restored
+	- need to move refs collection from "books" to "bks"
+
+3.7.2018
+- somehow moved "refs" into new "books" ....
+- adding refs issues
+	- double refs?
+	- changing the name of the src or reference....
+	- getting references when loading page ... 
+	- edit ref notes
