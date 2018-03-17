@@ -24,3 +24,7 @@
 	- changing the name of the src or reference....
 	- getting references when loading page ... 
 	- edit ref notes
+
+3.17.2018
+- couldn't connect to mongo db locally on mac air
+	- this fixed it : https://stackoverflow.com/questions/47662220/db-collection-is-not-a-function-when-using-mongoclient-v3-0

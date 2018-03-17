@@ -2,22 +2,42 @@ extends layout
 
 block content
 	a.clickable(href="/")= "Home"
-	div.newbook
+	div.new-book
 		h1.box= title
 		div#book
 			form( method="post")
 				input.box.select(type="text", name="title", placeholder="Title")
-				div.type= "Type: "
+				div.type
 					select.selecttype(name="type")
 						each type in info.info._types
 							option= type
 				div.clickable.addtype= "Add Type"
 				input.box.select(type="text", name="name", placeholder="Author")
 				input.box.select(type="text", name="genre", placeholder="Genre")
-				div.label Date Published:
-				input.box.select(type="text", name="pubdate", placeholder="YYYY")
-				div.label Date Read:
-				input.box(type="text", name="readdate", placeholder="MMYYYY")
+				input.box.select(type="text", name="pubdate", placeholder="Pub date: YYYY")
+				input.box(type="text", name="readdate", placeholder="Read date: MMYYYY")
 				input.clickable(type="submit", value="Save")
 
-	script(type='text/javascript' src="/javascripts/add_types.js")
+	script.
+		$(document).ready( function() {
+			function openTypeDiv(e) {
+				$(e.target).hide();
+				$('.selecttype').remove();
+				var newTypeDiv = $('<input>')
+					.addClass('newtype underlined')
+					.attr({
+						name:"type",
+						type: "text",
+						placeholder: "New Type"
+					});
+				var newTypeAlert = $('<input>')
+					.attr({
+						name:"newtype",
+						type:"hidden"
+					});
+				$('.type').append(newTypeDiv)
+					.append(newTypeAlert);
+			}
+			$('.addtype').on('click', openTypeDiv);
+			$('.newtype').hide();
+		});

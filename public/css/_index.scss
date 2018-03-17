@@ -1,0 +1,18 @@
+#index {
+	#header  {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		input, select {
+			margin-bottom: 3px;
+			margin-right: 3px;
+		}
+	}
+	.search, .browse {
+		display: block;
+	}
+	input[name="_query"] {
+		font-size: 18px;
+		background: $wht;
+		padding: 0.25em .5em; 
+	}
+}

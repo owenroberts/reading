@@ -8,32 +8,27 @@ block content
 			a(href=referer)= "Back"
 	div.book-single
 		div.title
-			input.select.edit(type="text", name="title", placeholder="title", value=book.title)
+			input.select.edit(type="text", name="title", placeholder="Title", value=book.title)
 		div.created-at
 			span= " logged on " 
 			span= book.created_at.getMonth()+1+" "+book.created_at.getDate()+" "+book.created_at.getFullYear()
-		div.type.box= book.type
+		div.type= book.type
 		div.delete.clickable
 			a(href="/delete/"+book._id.toHexString() onclick="return confirm('Are you sure you want to delete" + book.title + "?')" )="Delete"
 		div#status
-		br
-		div.name
-			span= "by "
-			br
-			input.select.edit(type="text", name="name", placeholder="author" value=book.name)
-		div.genre
-			span= "genre "
-			br
-			input.select.edit(type="text", name="genre", placeholder="genre", value=book.genre)
-		div.pubdate
-			span= "published "
-			br
-			input.select.edit(type="text", name="pubdate", placeholder="date published", value=book.pubdate)
-		div.readdate
-			span= "read "
-			br
-			input.select.edit(type="text", name="readdate", placeholder="date read", value=book.readdate)
-		br
+		div.info
+			div.name
+				span= "by "
+				input.select.edit(type="text", name="name", placeholder="author" value=book.name)
+			div.genre
+				span= "genre "
+				input.select.edit(type="text", name="genre", placeholder="genre", value=book.genre)
+			div.pubdate
+				span= "published "
+				input.select.edit(type="text", name="pubdate", placeholder="date published", value=book.pubdate)
+			div.readdate
+				span= "read "
+				input.select.edit(type="text", name="readdate", placeholder="date read", value=book.readdate)
 		if book.tags
 			div.tags="Tags: "
 				each value in book.tags
@@ -45,26 +40,29 @@ block content
 					div.link.clickable
 						a(href="#{value[1]}" target="blank")= value[0]
 		
-		div.notes-column
-			div.notes
-				h3= "Notes"
-				if book.notes
-					each value, index in book.notes
-						div.note.hidecontents
-							span= "+"
-							div.hiddencontents
-								textarea.edit(type="text", name="notes", data-num=index)=value
-		div.quotes-column
-			div.quotes
-				h3= "Quotes"
-				if book.quotes
-					each value, index in book.quotes
-						div.quote.hidecontents
-							span= "+"
-							div.hiddencontents
-								textarea.edit(type="text", name="quotes", data-num=index)=value
+		if book.notes
+			div.notes-column
+				div.notes
+					h3= "Notes"
+					if book.notes
+						each value, index in book.notes
+							div.note.hidecontents
+								span= "+"
+								div.hiddencontents
+									textarea.edit(type="text", name="notes", data-num=index)=value
 
-		div#atts-container= " Add info: "
+		if book.quotes
+			div.quotes-column
+				div.quotes
+					h3= "Quotes"
+					if book.quotes
+						each value, index in book.quotes
+							div.quote.hidecontents
+								span= "+"
+								div.hiddencontents
+									textarea.edit(type="text", name="quotes", data-num=index)=value
+
+		div#atts-container= " Add: "
 			each value in info.info._atts
 				div.atts= value
 		div#new-attribute
@@ -76,38 +74,7 @@ block content
 				textarea(type="text" id="newother" placeholder="Input")
 			span.clickable#save-att="Save"
 			span.clickable#cancel-att="Cancel"
-		
-		script.
-			var Updater = {};
-			window.onload = function() {
-				Updater.status = document.getElementById('status');
-				Updater.data = !{JSON.stringify(book)};
-				Updater.id = "!{book._id.toHexString()}";
-	
-				// -1 index is push, 0 index is standalone, >0 is updated array
-				Updater.updateParameter = function(param, value, index) {
-					$.ajax({
-						url: '/param/' + Updater.id,
-						type: 'post',
-						dataType:'json',
-						data: {
-							id: Updater.id,
-							param: param,
-							edit: value,
-							arrayIndex: index
-						},					
-						success: function(data) {
-							// fuck doing a bunch of testing and adding elements and shit
-							if (index == -1) location.reload();
-							Updater.status.innerHTML = "Saved.";
-							Updater.status.className = "fadeOut";
-						} 
-					});
-				};
-				setup();
-			}
 
-		script(type='text/javascript' src="/javascripts/edit_book.js")
 
 		div#references
 			if refs
@@ -157,4 +124,36 @@ block content
 								each item in info.info[name]
 									option= item
 						input.clickable(type="submit" value="Browse")
-				script(type='text/javascript' src="/javascripts/options.js")
+		
+		script.
+			var Updater = {};
+			window.onload = function() {
+				Updater.status = document.getElementById('status');
+				Updater.data = !{JSON.stringify(book)};
+				Updater.id = "!{book._id.toHexString()}";
+	
+				// -1 index is push, 0 index is standalone, >0 is updated array
+				Updater.updateParameter = function(param, value, index) {
+					$.ajax({
+						url: '/param/' + Updater.id,
+						type: 'post',
+						dataType:'json',
+						data: {
+							id: Updater.id,
+							param: param,
+							edit: value,
+							arrayIndex: index
+						},					
+						success: function(data) {
+							// fuck doing a bunch of testing and adding elements and shit
+							if (index == -1) location.reload();
+							Updater.status.innerHTML = "Saved.";
+							Updater.status.className = "fadeOut";
+						} 
+					});
+				};
+				setup();
+			}
+
+		script(type='text/javascript' src="/javascripts/edit_book.js")
+		script(type='text/javascript' src="/javascripts/options.js")

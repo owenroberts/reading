@@ -1,0 +1,57 @@
+.book-single {
+	.title input {
+		background: $wht;
+		font-size: 36px;
+		width: 100%;
+		text-overflow: ellipsis;
+		border-bottom: 1px solid transparent;
+		margin-bottom: 0.25em;
+	}
+	.created-at {
+		font-size: 12px;
+		margin-right: 1em;
+		display: inline-block;
+		color: gray;
+	}
+	.type { display: inline-block; }
+	.delete {
+		font-size:0.75em;
+		padding: 0.25em 0.5em;
+		margin-left: 1em;
+		color: gray;
+		&:hover { color: palevioletred; }
+	}
+	#status {
+		font-style: italic;
+		opacity: 1;
+		display: inline-block;
+		margin: 0 1em;
+		transition: opacity 300ms;
+		&.fadeIn { opacity: 1; }
+		&.fadeOut {
+			opacity: 0;
+			transition-delay: 1000ms;
+		}
+	}
+	.info {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		margin: 1em 0;
+		input { max-width: 100px; }
+		.name, .pubdate, .genre, .readdate {
+			min-width: 100px;
+			font-size: 12px;
+			color: gray;
+			display: inline-block;
+			input { font-size:14px; }
+		}
+		input[type="text"] {
+			&.save {  min-width:40px }
+			&:focus { 
+				outline: none;
+				border-bottom: 1px solid primary;
+			}
+		}
+	}
+	.plus { margin-right:10px }
+}

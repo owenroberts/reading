@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Arimo');
+
+$primary: #8181C7;
+$secondary: #c9aff9;
+$highlight: #fdf;
+$bkg: #373438;
+$obkg: #f5f5f5;
+$wht: #fff;
+
+@import "reset.css";
+@import "global";
+@import "index";
+@import "edit";
+@import "new";
+// @import "small"
+// @import "iphone"

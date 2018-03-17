@@ -10,7 +10,8 @@ var mongodb = require('mongodb'),
 
 BookProvider = function(uri) {
 	if (uri == "localhost") {
-		this.db = new Db('test', new Server('localhost', 27017, {safe:false}, {auto_reconnect:true}, {}));
+		const server = new Server('localhost', 27017, {safe:false}, {auto_reconnect:true}, {});
+		this.db = new Db('books', server);
 		this.db.open(function(){});
 	} else {
 		var that = this;

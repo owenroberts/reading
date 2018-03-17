@@ -1,7 +1,6 @@
 function setup() {
 
 	function editParameter(elem) {
-
 		if (elem.value != Updater.data[elem.name]) {
 			Updater.status.innerHTML = "Saving...";
 			Updater.status.className = "fadeIn";

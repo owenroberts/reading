@@ -87,21 +87,19 @@ app.get('/book/new', function(req, res) {
 
 // saves created book
 app.post('/book/new', function(req, res){
-    if (req.body.newtype != undefined) {
-        bookProvider.addType(req.body.type);
-    }
-    bookProvider.save({
-        title: req.param('title'),
-        type: req.param('type'),
-        name: req.param('name'),
-        genre: req.param('genre'),
-        pubdate: req.param('pubdate'),
-        readdate: req.param('readdate'),
-        quotes: ['Add first quote here.'],
-        notes: ['Add first note here.']
-    }, function( error, docs) {
-        res.redirect('/')
-    });
+	if (req.body.newtype != undefined) {
+		bookProvider.addType(req.body.type);
+	}
+	bookProvider.save({
+		title: req.param('title'),
+		type: req.param('type'),
+		name: req.param('name'),
+		genre: req.param('genre'),
+		pubdate: req.param('pubdate'),
+		readdate: req.param('readdate')
+	}, function( error, docs) {
+		res.redirect('/')
+	});
 });
 
 

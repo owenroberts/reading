@@ -1,0 +1,17 @@
+.new-book {
+	input[type="text"] {
+		padding: 0.5em;
+		background: $wht;
+		display: block;
+		margin-bottom: 1em;
+		margin-right: 1em;
+		font-size:18px;
+	}
+	div { 
+		margin-bottom: 1em;
+		margin-right: 1em;
+	}
+	.addtype {
+		display: inline-block;
+	}
+}

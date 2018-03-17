@@ -3,47 +3,54 @@ extends layout
 block content
 	if info != undefined
 		div#index
-			div.search
-				form(method="get", action="/search")
-					input.select.underlined(name="_query", type="text", placeholder=title)
-					select(name="_field")
-								each field in info.info._fields
-									option= field
-					input.clickable(type="submit", value="Search")
-			div.browse
-				form(method="get", action="/browse")
-					select(name="_field")
-						each item, name in info.info
-							if name != "_atts"
-								option= name
-					each item, name in info.info 
-						select.choices(style="display:none", disabled, name=name)
-							each item in info.info[name]
-								option= item
-					input.clickable(type="submit", value="Browse")
-			div.add
-				a.clickable(href="/book/new")!= "Add New Book"
+			div#header 
+				div.search
+					form(method="get", action="/search")
+						input.select.underlined(name="_query", type="text", placeholder=title)
+						select(name="_field")
+									each field in info.info._fields
+										option= field
+						input.clickable(type="submit", value="Search")
+				div.browse
+					form(method="get", action="/browse")
+						select(name="_field")
+							each item, name in info.info
+								if name != "_atts"
+									option= name
+						each item, name in info.info 
+							select.choices(style="display:none", disabled, name=name)
+								each item in info.info[name]
+									option= item
+						input.clickable(type="submit", value="Browse")
+				div.add
+					a.clickable(href="/book/new")!= "Add New Book"
 
 			h2= "Recently Edited"
 
-			each book in recentlyEdited
-				if (!book.info)
-					div.book
-						div.title
-							a(href="/book/"+book._id.toHexString()+"/edit")=book.title
-						div.name="by "+ book.name
-						div.genre= book.genre
+			div.books 
+				each book in recentlyEdited
+					if (!book.info)
+						div.book
+							div.title
+								a(href="/book/"+book._id.toHexString()+"/edit")=book.title
+							div.name="by "+ book.name
+							div.genre= book.genre
+							if book.tags
+								each tag in book.tags
+									a(href="/tag/"+tag).tag.clickable= tag
+
 
 						
 			h2= "Recently Looged"
 
-			each book in recentlyLogged
-				if (!book.info)
-					div.book
-						div.title
-							a(href="/book/"+book._id.toHexString()+"/edit")=book.title
-						div.name="by "+ book.name
-						div.genre= book.genre
+			div.books 
+				each book in recentlyLogged
+					if (!book.info)
+						div.book
+							div.title
+								a(href="/book/"+book._id.toHexString()+"/edit")=book.title
+							div.name="by "+ book.name
+							div.genre= book.genre
 
 	else
 		h1= title
