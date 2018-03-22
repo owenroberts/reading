@@ -26,8 +26,8 @@ input[type="submit"] {
 
 h1, h2, h3 {
   font-weight: normal;
-  background: #fff;
-  padding: 0.25em .5em; }
+  /* background: $wht;
+  padding: 0.25em .5em; */ }
 
 select {
   -webkit-appearance: button;
@@ -51,7 +51,7 @@ select {
   margin: 0 auto;
   min-width: 320px; }
 
-#index, .book-single, .new-book {
+#index, .book-single, .new-book, #search {
   background: #e7dbf9;
   padding: 1em; }
 
@@ -90,6 +90,8 @@ a.clickable:hover {
   display: inline-block;
   background: #fff;
   padding: 0.5em; }
+  .book .title {
+    line-height: 1; }
   .book .title a {
     color: #8181C7;
     font-size: 18px;
@@ -125,13 +127,13 @@ a.clickable:hover {
   padding: 0.25em .5em; }
 
 .book-single .title input {
-  background: #fff;
+  /* background: $wht; */
   font-size: 36px;
   width: 100%;
   text-overflow: ellipsis;
   border-bottom: 1px solid transparent;
   margin-bottom: 0.25em;
-  padding: 0 0.25em; }
+  /* padding: 0 0.25em; */ }
 .book-single .created-at {
   font-size: 12px;
   margin-right: 1em;

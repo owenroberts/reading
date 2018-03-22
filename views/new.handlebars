@@ -1,0 +1,48 @@
+<div class="backhome clickable">
+	<a href="/">Home</a>
+</div>
+
+<div class="new-book">
+	<h1>{{title}}</h1>
+	<form method="post">
+		<input type="text" name="title" placeholder="Title" class="select">
+		<div class="type">
+			<select name="type" id="" class="selecttype">
+				{{#each info.info._types}}
+					<option value="{{this}}">{{this}}</option>
+				{{/each}}
+			</select>
+		</div>
+		<div class="clickable addtype">Add Type</div>
+		<input type="text" name="name" placeholder="Author" class="select">
+		<input type="text" name="genre" placeholder="Genre" class="select">
+		<input type="text" name="pubdate" placeholder="Pub date: YYYY" class="select">
+		<input type="text" name="readdate" placeholder="Read date: MMYYYY" class="select">
+		<input type="submit" class="clickable" value="Save">
+	</form>
+</div>
+
+<script>
+$(document).ready( function() {
+	function openTypeDiv(e) {
+		$(e.target).hide();
+		$('.selecttype').remove();
+		var newTypeDiv = $('<input>')
+			.addClass('newtype underlined')
+			.attr({
+				name:"type",
+				type: "text",
+				placeholder: "New Type"
+			});
+		var newTypeAlert = $('<input>')
+			.attr({
+				name:"newtype",
+				type:"hidden"
+			});
+		$('.type').append(newTypeDiv)
+			.append(newTypeAlert);
+	}
+	$('.addtype').on('click', openTypeDiv);
+	$('.newtype').hide();
+});
+</script>

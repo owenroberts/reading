@@ -44,7 +44,6 @@ block content
 		if book.notes
 			div.notes
 				h3= "Notes"
-				if book.notes
 					each value, index in book.notes
 						div.note
 							textarea.edit(type="text", name="notes", data-num=index)=value
@@ -52,7 +51,6 @@ block content
 		if book.quotes
 			div.quotes
 				h3= "Quotes"
-				if book.quotes
 					each value, index in book.quotes
 						div.quote
 							textarea.edit(type="text", name="quotes", data-num=index)=value

@@ -5,14 +5,36 @@ var express = require('express')
 	,	cookieParser = require('cookie-parser')
 	,	bodyParser = require('body-parser')
 	,	cookies = require('browser-cookies')
+	,	handlebars = require("express-handlebars")
 	;
 
 var app = express();
 
 
+const hbs = handlebars.create({
+	defaultLayout: "main",
+	helpers: {
+		json: function(content) {
+			return JSON.stringify(content);
+		},
+		date: function(dateString) {
+			return dateString.getMonth() + 1 + " " + dateString.getDate() + " " + dateString.getFullYear();
+		},
+		idString: function(id) {
+			return id.toHexString();
+		},
+		refIsBook: function(ref, id) {
+			return ref == id.toHexString();
+		}
+	}
+});
+
+// view engine setup
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 app.set('port', process.env.PORT || 3000);
 app.set('view options', {layout: false});
 
@@ -111,7 +133,6 @@ app.get('/book/:id/edit', function(req, res) {
 			res.redirect('/404');
 		} else {
 			bookProvider.getRefs(req.params.id, function(error, refs) {
-				console.log(refs);
 				if (error) console.log(error);
 				else {
 					res.render('edit', {

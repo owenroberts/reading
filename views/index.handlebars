@@ -1,0 +1,78 @@
+{{#if info}}
+	<div id="index">
+		<div id="header">
+			<div class="search">
+				
+				<form action="/search" method="GET">
+					<input type="text" class="select underlined" name="_query" placeholder="{{title}}">
+					<select name="_field">
+						{{#each info.info._fields}}
+							<option>{{this}}</option>
+						{{/each}}
+					</select>
+					<input type="submit" class="clickable" value="Search">
+				</form>
+				
+			</div>
+			<div class="browse">
+				<form action="/browse" method="GET">
+					<select name="_field">
+						{{#each info.info}}
+							<option>{{@key}}</option>
+						{{/each}}
+					</select>
+					{{#each info.info}}
+						<select name="{{@key}}" class="choices" disabled style="display:none;">
+							{{#each this}}
+								<option value="{{this}}">{{this}}</option>
+							{{/each}}
+						</select>
+					{{/each}}
+
+					
+					<input type="submit" class="clickable" value="Browse">
+				</form>
+			</div>
+			<div class="add">
+				<a href="/book/new" class="clickable">Add New Book</a>
+			</div>
+		</div>
+
+		<h2>Recently Edited</h2>
+		<div class="books">
+			{{#each recentlyEdited}}
+				<div class="book">
+					<div class="title">
+						<a href="/book/{{idString _id}}/edit">{{title}}</a>
+					</div>
+					<div class="name">by {{ name }}</div>
+					<div class="genre">{{ genre }}</div>
+					{{#if tags}}
+						{{#each tags}}
+							<a href="/{{this}}" class="tag clickable">{{this}}</a>
+						{{/each}}
+					{{/if}}
+				</div>
+			{{/each}}
+		</div>
+
+		<h2>Recently Looged</h2>
+		<div class="books">
+			{{#each recentlyLogged}}
+				<div class="book">
+					<div class="title">
+						<a href="/book/{{idString _id}}/edit">{{title}}</a>
+					</div>
+					<div class="name">by {{ name }}</div>
+					<div class="genre">{{ genre }}</div>
+					{{#if tags}}
+						{{#each tags}}
+							<a href="/{{this}}" class="tag clickable">{{this}}</a>
+						{{/each}}
+					{{/if}}
+				</div>
+			{{/each}}
+		</div>
+
+	</div>
+{{/if}}

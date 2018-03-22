@@ -1,0 +1,23 @@
+<div id="search">
+	<div class="backhome clickable">
+		<a href="/">Home</a>
+	</div>
+	{{#if referer}}
+		<div class=" clickable">
+			<a href="{{referer}}">Back</a>
+		</div>
+	{{/if}}
+	<h3>{{title}}</h3>
+	<div class="books">
+		{{#each books}}
+			<div class="book">
+				<div class="title">
+					<a href="/book/{{idString _id}}/edit">{{title}}</a>
+				</div>
+				<div class="name">by {{name}}</div>
+				<div class="genre">{{genre}}</div>
+			</div>
+		{{/each}}
+	</div>
+</div>
+

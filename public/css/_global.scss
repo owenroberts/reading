@@ -15,8 +15,8 @@ input[type="submit"] { cursor: pointer; }
 
 h1, h2, h3 {
 	font-weight: normal;
-	background: $wht;
-	padding: 0.25em .5em;
+	/* background: $wht;
+	padding: 0.25em .5em; */
 }
 
 select {
@@ -43,7 +43,7 @@ select {
 	min-width: 320px;
 }
 
-#index, .book-single, .new-book {
+#index, .book-single, .new-book, #search {
 	background: $bkg;
 	padding: 1em;
 }
@@ -82,6 +82,7 @@ a.clickable:hover { border-bottom: none; }
 	display: inline-block;
 	background: $wht;
 	padding: 0.5em;
+	.title { line-height: 1; }
 	.title a {
 		color: $primary;
 		font-size: 18px;
