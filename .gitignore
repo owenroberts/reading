@@ -1,4 +1,5 @@
 node_modules/*
+.sass-cache/
 /node_modules
 npm-debug.log
 .DS_Store
@@ -8,3 +9,4 @@ htpasswd
 data/
 mongod
 admin.txt
+.sass-cache/*
