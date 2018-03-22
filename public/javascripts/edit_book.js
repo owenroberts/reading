@@ -8,42 +8,10 @@ function setup() {
 		}
 	}
 	$('.edit').on('blur', function() {
-
 		editParameter(this);
 	});
 	$('input.edit').on('keyup', function(ev) {
 		if (ev.keyCode == 13) editParameter(this);
-	});
-
-	/* hidden stuff */
-	function hiddenToggle(elem) {
-		var state = $(elem).text();
-		if (state[0] == "-") {
-			hideText(elem);
-		} else {
-			showText(elem);
-		}
-	}
-
-	function hideText(elem) {
-		var d = $(elem).parent();
-		d.height(26);
-		d.innerWidth('30%');
-		$(elem).text('+');
-		var text = $(elem).parent().find( 'textarea' );
-		text.css({resize:"none", width:"100%"});
-	}
-	function showText(elem) {
-		var d = $(elem).parent();
-		d.height(d[0].scrollHeight);
-		d.innerWidth('100%');
-		$(elem).text('-');
-		var text = $(elem).parent().find( 'textarea' );
-		text.css({resize:"auto", width:"75%", maxWidth: "100%", maxHeight: "100%"});
-	}
-
-	$('body').on('click', '.hidecontents span', function() { 
-		hiddenToggle(this); 
 	});
 
 	/* changes height of textareas for notes and quotes */
@@ -51,12 +19,7 @@ function setup() {
 		$(this).height(0).height(this.scrollHeight);
 	}).find( 'textarea' ).change();
 
-	$('.book-single').on( 'change keyup keydown paste cut', 'textarea.edit', function (){
-		this.parentNode.parentNode.style.height = "0px";
-		this.parentNode.parentNode.style.height = this.offsetHeight + "px";
-	});
-
-	/* calls addAttributes(), removes atts container after clicking on one of the optoins */
+	/* calls addAttributes(), removes atts container after clicking on one of the options */
 	$('.atts').on('click', function(elem){
 		addAttribute(elem.target.innerHTML);
 	});

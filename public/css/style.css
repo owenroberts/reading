@@ -9,7 +9,7 @@ br {
 body {
   font: 14px/14px 'Arimo', Verdana, Helvetica, Arial, sans-serif;
   line-height: 1.4;
-  background-color: darkgray; }
+  background-color: #101010; }
 
 input {
   font: 14px/14px 'Arimo', Verdana, Helvetica, Arial, sans-serif; }
@@ -52,7 +52,7 @@ select {
   min-width: 320px; }
 
 #index, .book-single, .new-book {
-  background: #373438;
+  background: #e7dbf9;
   padding: 1em; }
 
 .title {
@@ -75,7 +75,8 @@ a.clickable:hover {
 
 #books {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); }
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1em; }
 
 .books {
   display: grid;
@@ -102,9 +103,8 @@ a.clickable:hover {
     color: #8181C7; }
 
 .refd {
-  background-color: #373438;
-  padding: 0 1em;
-  margin: 1em; }
+  background-color: #e7dbf9;
+  padding: 0 1em; }
   .refd input, .refd textarea, .refd div {
     font-size: 14px;
     margin: 0.5em 0; }
@@ -130,7 +130,8 @@ a.clickable:hover {
   width: 100%;
   text-overflow: ellipsis;
   border-bottom: 1px solid transparent;
-  margin-bottom: 0.25em; }
+  margin-bottom: 0.25em;
+  padding: 0 0.25em; }
 .book-single .created-at {
   font-size: 12px;
   margin-right: 1em;
@@ -176,6 +177,119 @@ a.clickable:hover {
     border-bottom: 1px solid primary; }
 .book-single .plus {
   margin-right: 10px; }
+.book-single .notes, .book-single .quotes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0.5em; }
+  .book-single .notes h3, .book-single .quotes h3 {
+    grid-column: 1 / span 3;
+    margin: 0; }
+  .book-single .notes .note textarea, .book-single .notes .quote textarea, .book-single .quotes .note textarea, .book-single .quotes .quote textarea {
+    width: 100%;
+    border: none;
+    padding: 0.25em;
+    font-size: 1em;
+    background: #a4a4d7; }
+  .book-single .notes .note span, .book-single .notes .quote span, .book-single .quotes .note span, .book-single .quotes .quote span {
+    color: #fff; }
+.book-single .links, .book-single .tags {
+  margin: 1em 0; }
+.book-single .link, .book-single .tag {
+  display: inline-block;
+  margin-right: 3px;
+  padding: 0.125em 0.5em; }
+.book-single #atts-container {
+  position: relative;
+  background: #fff;
+  margin: 0.25em 0;
+  padding: 0.5em 0.25em; }
+  .book-single #atts-container .atts {
+    background: #fdf;
+    display: inline-block;
+    margin: 3px 0 3px 3px;
+    padding: 0.25em;
+    cursor: pointer;
+    transition: color 150ms; }
+    .book-single #atts-container .atts:hover {
+      background: #8181C7;
+      color: #fff; }
+  .book-single #atts-container .cancel {
+    background: secondary;
+    border-radius: 0.25em;
+    margin: 0.5em;
+    color: white;
+    padding: 0.25em;
+    cursor: pointer; }
+    .book-single #atts-container .cancel:hover {
+      background: primary; }
+.book-single #new-attribute {
+  background: #fff;
+  padding: 0.5em;
+  position: relative;
+  display: none; }
+  .book-single #new-attribute .newlink {
+    display: none; }
+  .book-single #new-attribute .newother {
+    display: none; }
+  .book-single #new-attribute input {
+    font-size: 1em;
+    display: block;
+    width: 50%;
+    margin-bottom: 1em; }
+  .book-single #new-attribute .label {
+    text-transform: capitalize;
+    padding: 6px 0; }
+  .book-single #new-attribute textarea {
+    resize: auto;
+    width: 75%; }
+  .book-single #new-attribute #cancel-att {
+    position: absolute;
+    top: 45px;
+    right: 10px;
+    font-size: 0.75em; }
+  .book-single #new-attribute #save-att {
+    position: absolute;
+    top: 10px;
+    right: 10px; }
+.book-single #references {
+  margin: 2em 0; }
+  .book-single #references input.title {
+    font-size: 14px; }
+  .book-single #references .refs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0.5em; }
+    .book-single #references .refs h3 {
+      grid-column: 1 / span 3;
+      margin: 0; }
+  .book-single #references .title {
+    color: #8181C7;
+    padding: 0; }
+  .book-single #references .query {
+    font-size: 1.5em;
+    margin: 0.5em; }
+  .book-single #references .addref {
+    display: none; }
+  .book-single #references .reftitle {
+    color: #8181C7;
+    font-size: 1.5em; }
+    .book-single #references .reftitle:hover {
+      color: #fff;
+      background: #8181C7; }
+  .book-single #references select {
+    margin: 3px; }
+  .book-single #references .by {
+    margin: 0.5em 0; }
+    .book-single #references .by input[type="submit"] {
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
+
+/*  new reference page */
+.nothing {
+  margin: 12px 0;
+  color: #fff; }
 
 .new-book input[type="text"] {
   padding: 0.5em;
@@ -189,5 +303,51 @@ a.clickable:hover {
   margin-right: 1em; }
 .new-book .addtype {
   display: inline-block; }
+
+/* iphone 5 styles*/
+@media only screen and (max-device-width: 400px) {
+  body {
+    padding: 0;
+    margin: 0;
+    font-size: 20px; }
+
+  #index input[name="_query"] {
+    font-size: 22px; }
+  #index #header {
+    grid-template-columns: 1fr; }
+  #index select {
+    min-width: 120px; }
+
+  .search input {
+    display: block; }
+
+  .books {
+    grid-template-columns: repeat(2, 1fr); }
+
+  .book {
+    margin: 0;
+    float: none;
+    height: auto; }
+
+  .book-single .name,
+  .book-single .genre,
+  .book-single .pubdate,
+  .book-single .readdate {
+    width: 50%; }
+  .book-single .delete {
+    display: none; }
+  .book-single .notes .note,
+  .book-single .quotes .quote {
+    width: 100%; }
+  .book-single .notes, .book-single .quotes {
+    grid-template-columns: 1fr; }
+    .book-single .notes h3, .book-single .quotes h3 {
+      grid-column: 1; } }
+/* smaller than 800px styles */
+@media only screen and (min-width: 401px) and (max-width: 600px) {
+  .book-single .notes, .book-single .quotes {
+    grid-template-columns: repeat(2, 1fr); }
+    .book-single .notes h3, .book-single .quotes h3 {
+      grid-column: 1 / span 2; } }
 
 /*# sourceMappingURL=style.css.map */

@@ -6,6 +6,7 @@
 		text-overflow: ellipsis;
 		border-bottom: 1px solid transparent;
 		margin-bottom: 0.25em;
+		padding: 0 0.25em;
 	}
 	.created-at {
 		font-size: 12px;
@@ -54,4 +55,142 @@
 		}
 	}
 	.plus { margin-right:10px }
+	.notes, .quotes {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-gap: 0.5em;
+		h3 { 
+			grid-column: 1 / span 3; 
+			margin: 0;
+		}
+		.note, .quote {
+			textarea {
+				width: 100%;
+				border: none;
+				padding: 0.25em;
+				font-size: 1em;
+				background: lighten($primary, 10%);
+			}
+			span { color: $wht; }
+		}
+	}
+	.links, .tags { margin: 1em 0; }
+	.link, .tag {
+		display: inline-block;
+		margin-right: 3px;
+		padding: 0.125em 0.5em;
+	}
+
+	#atts-container {
+		position: relative;
+		background: $wht;
+		margin: 0.25em 0;
+		padding: 0.5em 0.25em;
+		.atts {
+			background: $highlight;
+			display: inline-block;
+			margin: 3px 0 3px 3px;
+			padding: 0.25em;
+			cursor: pointer;
+			transition: color 150ms;
+			&:hover {
+				background: $primary;
+				color: $wht;
+			}
+		}
+		.cancel {
+			background: secondary;
+			border-radius: 0.25em;
+			margin: 0.5em;
+			color: white;
+			padding: 0.25em;
+			cursor: pointer;
+			&:hover { background: primary; }
+		}
+	}
+
+	#new-attribute {
+		background: $wht;
+		padding: 0.5em;
+		position: relative;
+		display: none;
+		.newlink { display: none; }
+		.newother {display: none; }
+		input {
+			font-size: 1em;
+			display: block;
+			width: 50%;
+			margin-bottom: 1em;
+		}
+		.label {
+			text-transform: capitalize;
+			padding: 6px 0;
+		}
+		textarea {
+			resize: auto;
+			width: 75%;
+		}
+		#cancel-att {
+			position: absolute;
+			top: 45px;
+			right: 10px;
+			font-size: 0.75em;
+		}
+		#save-att {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+		}
+	}
+
+	#references {
+		margin: 2em 0;
+		input.title { font-size: 14px; }
+		.refs {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			grid-gap: 0.5em;
+			h3 { 
+				grid-column: 1 / span 3; 
+				margin: 0;
+			}
+		}
+		.title {
+			color: $primary;
+			padding: 0;
+		}
+		.query  {
+			font-size: 1.5em;
+			margin: 0.5em;
+		}
+		.addref {
+			display: none;
+		}
+		.reftitle {
+			color: $primary;
+			font-size: 1.5em;
+			&:hover {
+				color: $wht;
+				background: $primary;
+			}
+		}
+		select {
+			margin: 3px;
+		}
+		.by { 
+			margin: 0.5em 0 ; 
+			input[type="submit"] {
+				width: 100%;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+	}
+}
+
+/*  new reference page */
+.nothing {
+	margin: 12px 0;
+	color: $wht;
 }

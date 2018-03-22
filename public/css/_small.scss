@@ -1,0 +1,60 @@
+/* iphone 5 styles*/    
+@media only screen and (max-device-width : 400px) {
+	body { padding: 0; margin: 0; font-size: 20px; }
+
+	#index {
+		input[name="_query"] {
+			font-size: 22px;
+		}
+		#header {
+			grid-template-columns: 1fr;
+		}
+		select {
+			min-width: 120px;
+		}
+	}
+
+	.search {
+		input {
+			display: block;
+		}
+	}
+	.books {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.book {
+		margin: 0;
+		float: none;
+		height: auto;
+	}
+	.book-single {
+		.name,
+		.genre,
+		.pubdate,
+		.readdate {
+ 			width: 50%
+		}
+		.delete {
+			display:none
+		}
+		.notes .note, 
+		.quotes .quote {
+			width: 100%
+		}
+		.notes, .quotes {
+			h3 { grid-column: 1 ; }
+			grid-template-columns: 1fr;
+		}
+	}
+
+}
+
+/* smaller than 800px styles */
+@media only screen and (min-width: 401px) and (max-width : 600px) {
+	.book-single {
+		.notes, .quotes {
+			h3 { grid-column: 1 / span 2; }
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+}

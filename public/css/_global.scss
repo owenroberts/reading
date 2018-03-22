@@ -3,7 +3,7 @@ br { clear: both; }
 body {
 	font: 14px/14px 'Arimo', Verdana, Helvetica, Arial, sans-serif;
 	line-height: 1.4;
-	background-color: darkgray;
+	background-color: #101010;
 }
 input { font: 14px/14px 'Arimo', Verdana, Helvetica, Arial, sans-serif; }
 *:focus { outline:none }
@@ -67,6 +67,7 @@ a.clickable:hover { border-bottom: none; }
 #books {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 1em;
 }
 
 .books {
@@ -101,7 +102,6 @@ a.clickable:hover { border-bottom: none; }
 .refd {
 	background-color: $bkg;
 	padding: 0 1em;
-	margin: 1em;
 	input, textarea, div {
 		font-size: 14px;
 		margin: 0.5em 0;

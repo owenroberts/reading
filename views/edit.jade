@@ -29,38 +29,33 @@ block content
 			div.readdate
 				span= "read "
 				input.select.edit(type="text", name="readdate", placeholder="date read", value=book.readdate)
+		
 		if book.tags
-			div.tags="Tags: "
+			div.tags="Tags "
 				each value in book.tags
 					div.tag.clickable
 						a(href="/tag/"+value)=value
 		if book.links
-			div.links="Links: "
+			div.links="Links "
 				each value in book.links
 					div.link.clickable
 						a(href="#{value[1]}" target="blank")= value[0]
 		
 		if book.notes
-			div.notes-column
-				div.notes
-					h3= "Notes"
-					if book.notes
-						each value, index in book.notes
-							div.note.hidecontents
-								span= "+"
-								div.hiddencontents
-									textarea.edit(type="text", name="notes", data-num=index)=value
+			div.notes
+				h3= "Notes"
+				if book.notes
+					each value, index in book.notes
+						div.note
+							textarea.edit(type="text", name="notes", data-num=index)=value
 
 		if book.quotes
-			div.quotes-column
-				div.quotes
-					h3= "Quotes"
-					if book.quotes
-						each value, index in book.quotes
-							div.quote.hidecontents
-								span= "+"
-								div.hiddencontents
-									textarea.edit(type="text", name="quotes", data-num=index)=value
+			div.quotes
+				h3= "Quotes"
+				if book.quotes
+					each value, index in book.quotes
+						div.quote
+							textarea.edit(type="text", name="quotes", data-num=index)=value
 
 		div#atts-container= " Add: "
 			each value in info.info._atts
@@ -78,8 +73,8 @@ block content
 
 		div#references
 			if refs
-				h3= "References"
-				div.ref
+				div.refs
+					h3= "References"
 					each ref in refs
 						if ref.src_id == book._id.toHexString()
 							div.book

@@ -4,6 +4,7 @@ $primary: #8181C7;
 $secondary: #c9aff9;
 $highlight: #fdf;
 $bkg: #373438;
+$bkg: #e7dbf9;
 $obkg: #f5f5f5;
 $wht: #fff;
 
@@ -12,5 +13,4 @@ $wht: #fff;
 @import "index";
 @import "edit";
 @import "new";
-// @import "small"
-// @import "iphone"
+@import "small";
