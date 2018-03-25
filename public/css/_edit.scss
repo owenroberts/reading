@@ -81,6 +81,27 @@
 		padding: 0.125em 0.5em;
 	}
 
+	.images {
+		.image {
+			img { max-width: 100%; }
+		}
+	}
+
+	.youtubes, .vimeos {
+		.utube {
+			position:relative;
+			padding-bottom:56.25%;
+			height:0;
+		}
+		.utube iframe { 
+			position:absolute;
+			top:0;
+			left:0;
+			width:100%;
+			height:100%
+		}
+	}
+
 	#atts-container {
 		position: relative;
 		background: $wht;

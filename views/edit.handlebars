@@ -65,11 +65,46 @@
 		</div>
 	{{/if}}
 
+	{{#if book.images}}
+		<div class="images">
+			{{#each book.images}}
+			<div class="image">
+				<img src="{{this}}" alt="">
+			</div>
+			{{/each}}
+		</div>
+	{{/if}}
+
+	{{#if book.youtubes}}
+		<div class="youtubes">
+			{{#each book.youtubes}}
+			<div class="utube">
+				<iframe src="https://www.youtube.com/embed/{{this}}" frameborder="0" allowfullscreen=""></iframe>
+			</div>
+			{{/each}}
+		</div>
+	{{/if}}
+
+	{{#if book.vimeos}}
+		<div class="vimeos">
+			{{#each book.vimeos}}
+			<div class="utube">
+				<iframe src="https://player.vimeo.com/video/{{this}}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+			</div>
+			{{/each}}
+		</div>
+	{{/if}}
+
+	
+
 	<div id="atts-container">
 		Add
 		{{#each info.info._atts}}
 			<div class="atts">{{this}}</div>
 		{{/each}}
+		<div class="atts">image</div>
+		<div class="atts">youtube</div>
+		<div class="atts">vimeo</div>
 	</div>
 	<div id="new-attribute">
 		<div class="newlink">

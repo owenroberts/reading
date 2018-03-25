@@ -129,7 +129,6 @@ app.post('/book/new', function(req, res){
 app.get('/book/:id/edit', function(req, res) {
 	bookProvider.findById(req.params.id, function(error, book, info) { 
 		if (book == null) {
-			console.log("book is null");
 			res.redirect('/404');
 		} else {
 			bookProvider.getRefs(req.params.id, function(error, refs) {
@@ -159,8 +158,6 @@ app.post('/param/:id', function(req, res) {
 app.get('/404', function(req, res) {
     res.render('404');
 });
-
-\
 
 
 // get all tags

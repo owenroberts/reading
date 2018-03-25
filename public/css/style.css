@@ -201,6 +201,18 @@ a.clickable:hover {
   display: inline-block;
   margin-right: 3px;
   padding: 0.125em 0.5em; }
+.book-single .images .image img {
+  max-width: 100%; }
+.book-single .youtubes .utube, .book-single .vimeos .utube {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0; }
+.book-single .youtubes .utube iframe, .book-single .vimeos .utube iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
 .book-single #atts-container {
   position: relative;
   background: #fff;
