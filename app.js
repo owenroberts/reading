@@ -160,72 +160,20 @@ app.get('/404', function(req, res) {
     res.render('404');
 });
 
-// save book
-app.post('/book/:id/edit', function(req, res) {
-    var editedBook = {};
-    for (item in req.body) { 
-        if (item != '_id' && item != 'newlabel' && item != 'newvalue') {
-            var newitem = false;
-            if (item == 'newquote') {
-                editedBook["$push"] = {};
-                editedBook["$push"] = {'quotes': req.body[item]};
-            } else if (item == 'newnote') {
-                editedBook["$push"] = {};
-                editedBook["$push"] = {'notes': req.body[item]};
-            } else if (item == 'newlink') {
-                editedBook["$push"] = {};
-                editedBook["$push"] = {'links': req.body[item].split(',')};
-            } else if (item == 'newtag') {
-                editedBook["$addToSet"] = {};
-                editedBook["$addToSet"] = {'tags': req.body[item]};
-                bookProvider.addTag({info:{$exists:true}}, {$addToSet:{"info._tags":req.body[item]}});
-            } else if (item == '_refId') {
-                editedBook["$addToSet"] = {};
-                editedBook["$addToSet"] = {'refs': {id:req.body["_refId"], note:req.body["_refNote"], title:req.body["_refTitle"]}};
-                bookProvider.addReferencedBy(req.body["_refId"], req.body["_id"], req.body["_title"],  req.body["_refNote"]);
-            } else if (item == '_editRef') {
-                bookProvider.editRef(req.body["_id"], req.body["_editRef"], req.body["_title"],  req.body["_refNote"]);
-                bookProvider.editReferencedBy(req.body["_editRef"], req.body["_id"], req.body["_title"],  req.body["_refNote"]);
-            } 
-            else if (item[0] == "+"){
-                if (!newitem) editedBook["$set"] = {};
-                newitem = true;
-                var st = item.substr(1);
-                if ((st == "notes" || st == "quotes") && !(req.body[item] instanceof Array))
-                    editedBook["$set"][st] = [req.body[item]];
-                else
-                    editedBook["$set"][st] = req.body[item];
-            }
-        }
-    }
-    if (Object.getOwnPropertyNames(editedBook).length > 0) {
-        if (editedBook["$set"] != undefined) {
-            editedBook["$set"]["last_edit"] = new Date();
-        } else {
-            editedBook["$set"] = {};
-            editedBook["$set"]["last_edit"] = new Date();
-        }
-        bookProvider.update(req.param('_id'), editedBook, function(error, docs) {
-            res.redirect('/book/'+req.body._id+'/edit');
-        });
-    } else {
-        res.redirect(req.get('referer'));
-    }
-});
-
 
 // get all tags
 app.get('/tag/:tag', function(req, res) {
 	bookProvider.findTag(req.params.tag, function(error, books) { 
 		res.render('search', {
 			books: books,
-			title: req.params.tag,
+			title: "tagged " + req.params.tag,
 			search_term: "Tagged",
 			referer: req.get('referer')
 		});
 	});
 });
 
+// add new reference 
 app.post('/addref', function(req, res) {
 	var ref = {
 		src_id: req.param('src_id'),
@@ -246,7 +194,7 @@ app.post('/addref', function(req, res) {
 //get references query 
 app.get('/addref/search', function(req, res) {
 	bookProvider.searchRefs(req.query, function(error, books) { 
-		res.render('find_refs', {
+		res.render('refs', {
             referer: req.get('referer'),
 			bookId:req.query["_id"],
 			bookTitle:req.query["_bookTitle"],
@@ -259,7 +207,7 @@ app.get('/addref/search', function(req, res) {
 //get references browse 
 app.get('/addref/browse', function(req, res) {
 	bookProvider.browseRefs(req.query, function(error, books) { 
-		res.render('find_refs', {
+		res.render('refs', {
             referer: req.get('referer'),
 			bookId:req.query["_id"],
 			bookTitle:req.query["_bookTitle"],

@@ -1,0 +1,38 @@
+{{#if referer}}
+	<div class=" clickable">
+		<a href="{{referer}}">Back</a>
+	</div>
+{{/if}}
+<div id="search">
+	<h3>Add reference to {{bookTitle}}</h3>
+	{{#if browseKey}}
+		<h3>Browsing {{browseField}} {{browseKey}}</h3>
+	{{/if}}
+	{{#if searchKey}}
+		<h3>Searching by {{searchKey}}</h3>
+	{{/if}}
+
+	<div id="books">
+		{{#if books}}
+			{{#each books}}
+				{{#unless (refIsBook ../bookId _id)}}
+					<div class="book">
+
+						<form action="/addref" method="post">
+							<input type="hidden" name="src_id" value="{{../bookId}}">
+							<input type="hidden" name="src_title" value="{{../bookTitle}}">
+							<input type="hidden" name="ref_id" value="{{idString _id}}">
+							<input type="hidden" name="ref_title" value="{{title}}">
+							<div class="title">{{title}}</div>
+							<textarea name="note" placeholder="note" class="note"></textarea>
+							<br>
+							<input type="submit" id="edit" value="Save" class="clickable">
+						</form>
+					</div>
+				{{/unless}}
+			{{/each}}
+		{{else}}
+			<div class="nothing">Nothing matches this query.</div>
+		{{/if}}
+	</div>
+</div>

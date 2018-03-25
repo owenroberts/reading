@@ -1,12 +1,12 @@
-<div id="search">
-	<div class="backhome clickable">
-		<a href="/">Home</a>
+<div class="backhome clickable">
+	<a href="/">Home</a>
+</div>
+{{#if referer}}
+	<div class=" clickable">
+		<a href="{{referer}}">Back</a>
 	</div>
-	{{#if referer}}
-		<div class=" clickable">
-			<a href="{{referer}}">Back</a>
-		</div>
-	{{/if}}
+{{/if}}
+<div id="search">
 	<h3>{{title}}</h3>
 	<div class="books">
 		{{#each books}}

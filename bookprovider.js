@@ -333,9 +333,11 @@ BookProvider.prototype.updateParam = function(bookId, param, edit, arrayIndex, c
 		if (error) callback(error);
 		else {
 			var updateValue = {};
+			console.log(param, edit, arrayIndex);
 			if (arrayIndex == -1) {
 				if (param == "links") updateValue[param] = [edit.split(',')[0], edit.split(',')[1]];
 				else updateValue[param] = edit;
+				console.log(updateValue);
 				book_collection.update(
 					{_id:ObjectID.createFromHexString(bookId)},
 					{$push:updateValue}

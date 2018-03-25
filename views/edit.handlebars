@@ -26,7 +26,7 @@
 			Tags
 			{{#each book.tags}}
 				<div class="tag clickable">
-					<a href="/{{this}}">{{this}}</a>
+					<a href="/tag/{{this}}">{{this}}</a>
 				</div>
 			{{/each}}
 		</div>
@@ -37,7 +37,7 @@
 			Links
 			{{#each book.links}}
 				<div class="tag clickable">
-					<a href="/{{this}}">{{this}}</a>
+					<a href="{{this.[1]}}" target="blank">{{this.[0]}}</a>
 				</div>
 			{{/each}}
 		</div>
@@ -91,7 +91,7 @@
 				{{#each refs}}
 					{{#if (refIsBook src_id ../book._id) }}
 						<div class="book">
-							<a href="/book/{{ref_id}}/edit" class="reftitle">{{src_title}}</a>
+							<a href="/book/{{ref_id}}/edit" class="reftitle">{{ref_title}}</a>
 							<p>{{note}}</p>
 						</div>
 					{{/if}}
@@ -126,7 +126,7 @@
 				</form>
 			</div>
 			<div class="browse">
-				<form action="/addref/brose" method="GET">
+				<form action="/addref/browse" method="GET">
 					<input type="hidden" name="_id" value="{{idString book._id}}">
 					<input type="hidden" name="_bookTitle" value="{{book.title}}">
 					<select name="_field">
@@ -153,13 +153,14 @@
 	window.onload = function() {
 		Updater.status = document.getElementById('status');
 		Updater.id = "{{idString book._id}}";
-
+		Updater.data = {{{json book}}};
 		// -1 index is push, 0 index is standalone, >0 is updated array
 		Updater.updateParameter = function(param, value, index) {
+			console.log(param, value, index);
 			$.ajax({
 				url: '/param/' + Updater.id,
 				type: 'post',
-				dataType:'json',
+				dataType: 'json',
 				data: {
 					id: Updater.id,
 					param: param,
