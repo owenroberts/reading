@@ -24,10 +24,14 @@ BookProvider = function(uri) {
 
 //initialize info values
 BookProvider.prototype.init = function(info, callback) {
-	this.getCollection(function(error, book_collection) {
+	this.getInfoCollection(function(error, info_collection) {
 		if ( error ) callback(error);
 		else {
-			book_collection.insert({info:info}, function(error){
+			info_collection.insert([
+					{types: info.types},
+					{fields: info.fields},
+					{tags:[]}
+				], function(error){
 				if (error) callback(error);
 				else callback(null);
 			});
@@ -35,6 +39,75 @@ BookProvider.prototype.init = function(info, callback) {
 	});
 };
 
+// get info 
+BookProvider.prototype.getInfo = function(callback) {
+	this.getCollection(function(error, info_collection) {
+		if (error) callback(error);
+		else {
+			info_collection.findOne({info:{$exists:true}}, function(error, info) {
+				if (error) callback(error);
+				else callback(null, info);
+			});
+		}
+	});
+};
+
+// get info types 
+BookProvider.prototype.getInfoTypes = function(callback) {
+	this.getInfoCollection(function(error, info_collection){
+		if (error) callback(error);
+		else {
+			info_collection.findOne({types:{$exists:true}}, function(error, types) {
+				if (error) callback(error);
+				else callback(null, types);
+			});
+		}
+	});
+};
+
+// get info tags 
+BookProvider.prototype.getInfoTags = function(callback) {
+	this.getInfoCollection(function(error, info_collection){
+		if (error) callback(error);
+		else {
+			info_collection.findOne({tags:{$exists:true}}, function(error, tags) {
+				if (error) callback(error);
+				else callback(null, tags);
+			});
+		}
+	});
+};
+
+// add type
+BookProvider.prototype.addType = function(type, callback) {
+	this.getInfoCollection(function(error, info_collection) {
+		if (error) callback(error);
+		else {
+			info_collection.update({types:{$exists:true}}, {$push:{"types":type}},
+				function (error) {
+					console.log(error);
+				}
+			);
+		}
+	});
+};
+
+// add type
+BookProvider.prototype.addTag = function(tag, callback) {
+	this.getInfoCollection(function(error, info_collection) {
+		if (error) callback(error);
+		else {
+			info_collection.update({tags:{$exists:true}}, {$addToSet:{"tags":tag}},
+				function (error) {
+					console.log(error);
+				}
+			);
+		}
+	});
+};
+
+
+// gets bks collection
 BookProvider.prototype.getCollection = function(callback) {
 	this.db.collection('bks', function(error, book_collection) {
 		if( error ) callback(error);
@@ -42,7 +115,15 @@ BookProvider.prototype.getCollection = function(callback) {
 	});
 };
 
-// add ref 
+// get info collection
+BookProvider.prototype.getInfoCollection = function(callback) {
+	this.db.collection('info', function(error, book_collection) {
+		if( error ) callback(error);
+		else callback(null, book_collection);
+	});
+};
+
+// get ref collection
 BookProvider.prototype.getRefCollection = function(callback) {
 	this.db.collection('refs', function(error, ref_collection) {
 		if (error) callback(error);
@@ -50,6 +131,7 @@ BookProvider.prototype.getRefCollection = function(callback) {
 	});
 };
 
+// add ref
 BookProvider.prototype.addRef = function(ref, callback) {
 	this.getRefCollection(function(error, ref_collection) {
 		if (error) callback(error);
@@ -62,6 +144,7 @@ BookProvider.prototype.addRef = function(ref, callback) {
 	});
 };
 
+// get refs
 BookProvider.prototype.getRefs = function(id, callback) {
 	this.getRefCollection(function(error, ref_collection) {
 		if (error) callback(error);
@@ -80,8 +163,7 @@ BookProvider.prototype.getRefs = function(id, callback) {
 	});
 };
 
-
-//find all books
+// find all books
 BookProvider.prototype.findAll = function(callback) {
 	this.getCollection(function(error, book_collection) {
 		if( error ) callback(error);
@@ -94,7 +176,7 @@ BookProvider.prototype.findAll = function(callback) {
 	});
 };
 
-//find recently edited books
+// find recently edited books
 BookProvider.prototype.findRecentEdits = function(callback) {
 	this.getCollection(function(error, book_collection) {
 		if( error ) callback(error);
@@ -107,7 +189,7 @@ BookProvider.prototype.findRecentEdits = function(callback) {
 	});
 };
 
-//find recently logged books
+// find recently logged books
 BookProvider.prototype.findRecentLogs = function(callback) {
 	this.getCollection(function(error, book_collection) {
 		if( error ) callback(error);
@@ -120,7 +202,7 @@ BookProvider.prototype.findRecentLogs = function(callback) {
 	});
 };
 
-//find subset of books with tag 
+// find subset of books with tag 
 BookProvider.prototype.findTag = function(tag, callback) {
 	this.getCollection(function(error, book_collection) {
 		if(error) callback(error);
@@ -133,10 +215,10 @@ BookProvider.prototype.findTag = function(tag, callback) {
 	});
 };
 
-//search all books
+// search all books
 BookProvider.prototype.search = function(query, callback) {
-	var name = query._field;
-	var value = query._query;
+	var name = query.field;
+	var value = query.query;
 	var dbQuery = {};
 	dbQuery[name] = {$regex:value, $options:"-i"};
 	this.getCollection(function(error, book_collection) {
@@ -147,13 +229,13 @@ BookProvider.prototype.search = function(query, callback) {
 	});
 };
 
-//search books and return subset based on a feild and query (_ref)
+// search books and return subset based on a feild and query (_ref)
 BookProvider.prototype.searchRefs = function(query, callback) {
-	var name = query._field;
-	var value = query._ref;
+	var name = query.field;
+	var value = query.ref;
 	var dbQuery = {};
-	if (query._refs != undefined) {
-		var exclude = query._refs;
+	if (query.refs != undefined) {
+		var exclude = query.refs;
 		if (exclude.constructor == Array) {
 			for (var i = 0; i < exclude.length; i++) {
 				var obj = new ObjectID(exclude[i]);
@@ -174,20 +256,18 @@ BookProvider.prototype.searchRefs = function(query, callback) {
 	});
 };
 
-//search books and return subset based on a feild and query (_ref)
+// search books and return subset based on a feild and query (_ref)
 BookProvider.prototype.browseRefs = function(query, callback) {
 	var dbQuery = {};
-	var f = query._field;
-	var q = query[query._field];
-	if (f == "_fields") {
-		dbQuery[query[query._field]] = {$exists:true};
-	} else if (query._field == "_types") {
+	var f = query.field;
+	var q = query[query.field];
+	if (query.field == "types") {
 		dbQuery = {type:q};
-	} else if (f == "_tags") {
+	} else if (f == "tags") {
 		dbQuery = {tags:{$in:[q]}};
 	}
-	if (query._refs != undefined) {
-		var exclude = query._refs;
+	if (query.refs != undefined) {
+		var exclude = query.refs;
 		if (exclude.constructor == Array) {
 			for (var i = 0; i < exclude.length; i++) {
 				var obj = new ObjectID(exclude[i]);
@@ -207,16 +287,16 @@ BookProvider.prototype.browseRefs = function(query, callback) {
 	});
 };
 
-//search books and return subset based on a feild and query (_ref)
+// search books and return subset based on a feild and query (_ref)
 BookProvider.prototype.browse = function(query, callback) {
 	var dbQuery = {};
-	var f = query._field;
-	var q = query[query._field];
-	if (f == "_fields") {
+	var f = query.field;
+	var q = query[query.field];
+	if (f == "fields") {
 		dbQuery[query[query._field]] = {$exists:true};
-	} else if (query._field == "_types") {
+	} else if (query.field == "types") {
 		dbQuery = {type:q};
-	} else if (f == "_tags") {
+	} else if (f == "tags") {
 		dbQuery = {tags:{$in:[q]}};
 	}
 	this.getCollection(function(error, book_collection) {
@@ -227,14 +307,14 @@ BookProvider.prototype.browse = function(query, callback) {
 	});
 };
 
-//save new book
+// save new book
 BookProvider.prototype.save = function(books, callback) {
 	this.getCollection(function(error, book_collection) {
 		if ( error ) callback(error)
 		else {
 			if (typeof(books.length)=="undefined")
 				books = [books];
-			for (var i =0;i< books.length;i++ ) {
+			for (let i =0; i < books.length; i++) {
 			  book = books[i];
 			  book.created_at = new Date();
 			}
@@ -246,7 +326,7 @@ BookProvider.prototype.save = function(books, callback) {
 	});
 };
 
-//delete book
+// delete book
 BookProvider.prototype.delete = function(bookId, callback) {
 	this.getCollection(function(error, book_collection) {
 		if(error) callback(error);
@@ -261,83 +341,32 @@ BookProvider.prototype.delete = function(bookId, callback) {
 	});
 };
 
-BookProvider.prototype.addType = function(type, callback) {
-	this.getCollection(function(error, book_collection) {
-		if (error) callback(error);
-		else {
-			book_collection.update({info:{$exists:true}}, {$addToSet:{"info._types":type}},
-				function (error) {
-					console.log(error);
-				}
-			);
-		}
-	});
-};
-
 // find a book by id
 BookProvider.prototype.findById = function(id, callback) {
 	this.getCollection(function(error, book_collection) {
 		if (error) callback(error);
 		else {
-			book_collection.findOne({info:{$exists:true}}, function(error, info) {
-				book_collection.findOne({_id:ObjectID.createFromHexString(id)}, function(error, result) {
-					if (error) callback(error);
-					else callback(null, result, info);
-				});
-			});
-		}
-	});
-};
-
-// get info 
-BookProvider.prototype.getInfo = function(callback) {
-	this.getCollection(function(error, book_collection) {
-		if (error) callback(error);
-		else {
-			book_collection.findOne({info:{$exists:true}}, function(error, info) {
+			book_collection.findOne({_id:ObjectID.createFromHexString(id)}, function(error, result) {
 				if (error) callback(error);
-				else callback(null, info);
+				else callback(null, result);
 			});
 		}
 	});
 };
 
-// add a tag
-BookProvider.prototype.addTag = function(query, set) {
-	this.getCollection(function(error, book_collection) {
-		if (error) console.log("add tag: " + error);
-		else book_collection.update(query, set);
-	});
-};
-
-
-// update a book
-BookProvider.prototype.update = function(bookId, books, callback) {
-	this.getCollection(function(error, book_collection) {
-		if (error) callback(error);
-		else {
-			book_collection.update( 
-		    	{_id:ObjectID.createFromHexString(bookId)},
-		    	books,
-		    	function(error, books) {
-		    	  if (error) callback(error);
-		    	  else callback(null, books);
-		    });
-		}
-	});
-};
 
 // update one parameter
 BookProvider.prototype.updateParam = function(bookId, param, edit, arrayIndex, callback) {
+	if (param == "tags") {
+		this.addTag(edit);
+	}
 	this.getCollection(function(error, book_collection) {
 		if (error) callback(error);
 		else {
 			var updateValue = {};
-			console.log(param, edit, arrayIndex);
 			if (arrayIndex == -1) {
 				if (param == "links") updateValue[param] = [edit.split(',')[0], edit.split(',')[1]];
 				else updateValue[param] = edit;
-				console.log(updateValue);
 				book_collection.update(
 					{_id:ObjectID.createFromHexString(bookId)},
 					{$push:updateValue}
@@ -356,7 +385,7 @@ BookProvider.prototype.updateParam = function(bookId, param, edit, arrayIndex, c
 			);
 			callback(null, "Success");
     	}
-  	})
+  	});
 };
 
 

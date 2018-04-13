@@ -1,78 +1,75 @@
-{{#if info}}
-	<div id="index">
-		<div id="header">
-			<div class="search">
-				
-				<form action="/search" method="GET">
-					<input type="text" class="select underlined" name="_query" placeholder="{{title}}">
-					<select name="_field">
-						{{#each info.info._fields}}
-							<option>{{this}}</option>
-						{{/each}}
-					</select>
-					<input type="submit" class="clickable" value="Search">
-				</form>
-				
-			</div>
-			<div class="browse">
-				<form action="/browse" method="GET">
-					<select name="_field">
-						{{#each info.info}}
-							<option>{{@key}}</option>
-						{{/each}}
-					</select>
-					{{#each info.info}}
-						<select name="{{@key}}" class="choices" disabled style="display:none;">
-							{{#each this}}
-								<option value="{{this}}">{{this}}</option>
-							{{/each}}
-						</select>
+<div id="index">
+	<div id="header">
+		<div class="search">
+			<form action="/search" method="GET">
+				<input type="text" class="select underlined" name="query" placeholder="{{title}}">
+				<select name="field">
+					{{#each fields}}
+						<option>{{this}}</option>
 					{{/each}}
-
-					
-					<input type="submit" class="clickable" value="Browse">
-				</form>
-			</div>
-			<div class="add">
-				<a href="/book/new" class="clickable">Add New Book</a>
-			</div>
+				</select>
+				<input type="submit" class="clickable" value="Search">
+			</form>
 		</div>
-
-		<h2>Recently Edited</h2>
-		<div class="books">
-			{{#each recentlyEdited}}
-				<div class="book">
-					<div class="title">
-						<a href="/book/{{idString _id}}/edit">{{title}}</a>
-					</div>
-					<div class="name">by {{ name }}</div>
-					<div class="genre">{{ genre }}</div>
-					{{#if tags}}
-						{{#each tags}}
-							<a href="/{{this}}" class="tag clickable">{{this}}</a>
-						{{/each}}
-					{{/if}}
-				</div>
-			{{/each}}
+		<div class="browse">
+			<form action="/browse" method="GET">
+				<select name="field">
+					<option>types</option>
+					<option>tags</option>
+				</select>
+				<select name="types" class="choices">
+					{{#each types}}
+						<option value="{{this}}">{{this}}</option>
+					{{/each}}
+				</select>
+				<select name="tags" class="choices" disabled style="display:none;">
+					{{#each tags}}
+						<option value="{{this}}">{{this}}</option>
+					{{/each}}
+				</select>
+				<input type="submit" class="clickable" value="Browse">
+			</form>
 		</div>
-
-		<h2>Recently Looged</h2>
-		<div class="books">
-			{{#each recentlyLogged}}
-				<div class="book">
-					<div class="title">
-						<a href="/book/{{idString _id}}/edit">{{title}}</a>
-					</div>
-					<div class="name">by {{ name }}</div>
-					<div class="genre">{{ genre }}</div>
-					{{#if tags}}
-						{{#each tags}}
-							<a href="/{{this}}" class="tag clickable">{{this}}</a>
-						{{/each}}
-					{{/if}}
-				</div>
-			{{/each}}
+		<div class="add">
+			<a href="/book/new" class="clickable">Add New Book</a>
 		</div>
-
 	</div>
-{{/if}}
+
+	<h2>Recently Edited</h2>
+	<div class="books">
+		{{#each recentlyEdited}}
+			<div class="book">
+				<div class="title">
+					<a href="/book/{{idString _id}}/edit">{{title}}</a>
+				</div>
+				<div class="name">by {{ name }}</div>
+				<div class="genre">{{ genre }}</div>
+				{{#if tags}}
+					{{#each tags}}
+						<a href="/tag/{{this}}" class="tag clickable">{{this}}</a>
+					{{/each}}
+				{{/if}}
+			</div>
+		{{/each}}
+	</div>
+
+	<h2>Recently Looged</h2>
+	<div class="books">
+		{{#each recentlyLogged}}
+			<div class="book">
+				<div class="title">
+					<a href="/book/{{idString _id}}/edit">{{title}}</a>
+				</div>
+				<div class="name">by {{ name }}</div>
+				<div class="genre">{{ genre }}</div>
+				{{#if tags}}
+					{{#each tags}}
+						<a href="/tag/{{this}}" class="tag clickable">{{this}}</a>
+					{{/each}}
+				{{/if}}
+			</div>
+		{{/each}}
+	</div>
+</div>
+
+<script src="/javascripts/options.js"></script>

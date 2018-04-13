@@ -17,13 +17,13 @@
 			{{#each books}}
 				{{#unless (refIsBook ../bookId _id)}}
 					<div class="book">
-
 						<form action="/addref" method="post">
 							<input type="hidden" name="src_id" value="{{../bookId}}">
 							<input type="hidden" name="src_title" value="{{../bookTitle}}">
 							<input type="hidden" name="ref_id" value="{{idString _id}}">
 							<input type="hidden" name="ref_title" value="{{title}}">
 							<div class="title">{{title}}</div>
+							<div class="author">by {{name}}</div>
 							<textarea name="note" placeholder="note" class="note"></textarea>
 							<br>
 							<input type="submit" id="edit" value="Save" class="clickable">

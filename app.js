@@ -10,6 +10,9 @@ var express = require('express')
 
 var app = express();
 
+// fields for each book, doesn't change
+const fields =  [ "title", "name", "type", "genre", "pubdate", "readdate", "quotes", "notes", "links", "tags", "refs" ];
+
 
 const hbs = handlebars.create({
 	defaultLayout: "main",
@@ -46,12 +49,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req, res) {
 	bookProvider.findRecentEdits(function(error, edits) {
 		bookProvider.findRecentLogs(function(error, logs) {
-			bookProvider.getInfo(function(error, info) {
-				res.render('index', {
-					title:"Reading",
-					info:info,
-					recentlyEdited:edits,
-					recentlyLogged:logs
+			bookProvider.getInfoTypes(function(error, types) {
+				bookProvider.getInfoTags(function(error, tags) {
+					res.render('index', {
+						title:"Reading",
+						types: types.types,
+						tags: tags.tags.sort(),
+						fields: fields,
+						recentlyEdited:edits,
+						recentlyLogged:logs
+					});
 				});
 			});
 		});
@@ -65,9 +72,9 @@ app.get('/init', function(req, res) {
 app.post('/init', function(req, res) {
     bookProvider.init(
         {
-            "_atts" : [ "quote", "note", "link", "tag" ],
-            "_types" : [ "book", "article", "film/movie", "art", "comix", "game" ],
-            "_fields" : [ "title", "name", "type", "genre", "pubdate", "readdate", "quotes", "notes", "links", "tags", "refs" ]
+            "types" : [ "book", "article", "film/movie", "art", "comix", "game" ],
+           
+            "tags" : []
         },
         function(error, docs) {
             res.redirect('/');
@@ -77,9 +84,10 @@ app.post('/init', function(req, res) {
 //get references browse 
 app.get('/browse', function(req, res) {
     bookProvider.browse(req.query, function(error, books) { 
+    	console.log(req.query);
         res.render('search', {
             books:books,
-            title: "Browse " + req.query["_field"] + ", " + req.query[req.query["_field"]]
+            title: "Browse " + req.query["field"] + ", " + req.query[req.query["field"]]
         });
     });
 });
@@ -91,16 +99,16 @@ app.get('/search', function(req, res) {
         res.render('search', {
             bookId:req.query["_id"],
             books:books,
-            title: "Search " + req.query["_field"] + ": " + req.query["_query"]
+            title: "Search " + req.query["field"] + ": " + req.query["query"]
         });
     });
 });
 
 // create a book
 app.get('/book/new', function(req, res) {
-    bookProvider.getInfo(function(error, info) {
+    bookProvider.getInfoTypes(function(error, types) {
         res.render('new', {
-            info:info,
+            types: types,
             title: 'New Book'
         });
     });
@@ -126,19 +134,25 @@ app.post('/book/new', function(req, res){
 
 // edit a book
 app.get('/book/:id/edit', function(req, res) {
-	bookProvider.findById(req.params.id, function(error, book, info) { 
+	bookProvider.findById(req.params.id, function(error, book) { 
 		if (book == null) {
 			res.redirect('/404');
 		} else {
 			bookProvider.getRefs(req.params.id, function(error, refs) {
 				if (error) console.log(error);
 				else {
-					res.render('edit', {
-						referer: req.get('referer'),
-						book: book,
-						info: info,
-						title: book.title,
-						refs: refs
+					bookProvider.getInfoTypes(function(error, types) {
+						bookProvider.getInfoTags(function(error, tags) {
+							res.render('edit', {
+								referer: req.get('referer'),
+								book: book,
+								types: types.types,
+								fields: fields,
+								tags: tags.tags.sort(),
+								title: book.title,
+								refs: refs
+							});
+						});
 					});
 				}
 			});
@@ -189,14 +203,14 @@ app.post('/addref', function(req, res) {
 	});
 });
 
-//get references query 
+//get references search 
 app.get('/addref/search', function(req, res) {
 	bookProvider.searchRefs(req.query, function(error, books) { 
 		res.render('refs', {
-            referer: req.get('referer'),
-			bookId:req.query["_id"],
-			bookTitle:req.query["_bookTitle"],
-			searchKey: req.query["_field"] + ": " + req.query["_ref"],
+            referer: req.get("referer"),
+			bookId:req.query["id"],
+			bookTitle:req.query["bookTitle"],
+			searchKey: req.query["field"] + ": " + req.query["ref"],
 			books:books
 		});
 	});
@@ -207,15 +221,14 @@ app.get('/addref/browse', function(req, res) {
 	bookProvider.browseRefs(req.query, function(error, books) { 
 		res.render('refs', {
             referer: req.get('referer'),
-			bookId:req.query["_id"],
-			bookTitle:req.query["_bookTitle"],
-			browseField: req.query["_field"],
-			browseKey: req.query[req.query["_field"]],
+			bookId:req.query["id"],
+			bookTitle:req.query["bookTitle"],
+			browseField: req.query["field"],
+			browseKey: req.query[req.query["field"]],
 			books:books
 		});
 	});
 });
-
 
 //delete a book
 app.get('/delete/:id', function(req, res) {
