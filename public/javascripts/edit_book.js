@@ -1,5 +1,6 @@
 function setup() {
 	function editParameter(elem) {
+		console.log(elem);
 		if (elem.value != Updater.data[elem.name]) {
 			Updater.status.innerHTML = "Saving...";
 			Updater.status.className = "fadeIn";
@@ -10,7 +11,8 @@ function setup() {
 		editParameter(this);
 	});
 	$('input.edit').on('keyup', function(ev) {
-		if (ev.keyCode == 13) editParameter(this);
+		if (ev.keyCode == 13) 
+			editParameter(this);
 	});
 
 	/* changes height of textareas for notes and quotes */

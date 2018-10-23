@@ -1,8 +1,7 @@
+<!-- edit -->
 <div class="backhome clickable">
 	<a href="/">Home</a>
 </div>
-
-{{json info}}
 
 {{#if referer}}
 	<div class="clickable">
@@ -25,16 +24,16 @@
 
 	<div class="info">
 		<div class="name">
-			by <input type="text" name="name" placeholder="author" value={{book.name}}>
+			by <input class="edit" type="text" name="name" placeholder="author" value="{{book.name}}">
 		</div>
 		<div class="genre">
-			genre <input type="text" name="genre" placeholder="genre" value={{book.genre}}>
+			genre <input class="edit" type="text" name="genre" placeholder="genre" value="{{book.genre}}">
 		</div>
 		<div class="pubdate">
-			published <input type="text" name="pubdate" placeholder="date published" value={{book.pubdate}}>
+			published <input class="edit" type="text" name="pubdate" placeholder="date published" value="{{book.pubdate}}">
 		</div>
 		<div class="readdate">
-			read <input type="text" name="readdate" placeholder="date read" value={{book.readdate}}>
+			read <input class="edit" type="text" name="readdate" placeholder="date read" value="{{book.readdate}}">
 		</div>
 	</div>
 

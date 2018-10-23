@@ -13,7 +13,6 @@ var app = express();
 // fields for each book, doesn't change
 const fields =  [ "title", "name", "type", "genre", "pubdate", "readdate", "quotes", "notes", "links", "tags", "refs" ];
 
-
 const hbs = handlebars.create({
 	defaultLayout: "main",
 	helpers: {
@@ -47,6 +46,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
+
+	
+
 	bookProvider.findRecentEdits(function(error, edits) {
 		bookProvider.findRecentLogs(function(error, logs) {
 			bookProvider.getInfoTypes(function(error, types) {

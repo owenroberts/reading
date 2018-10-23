@@ -38,13 +38,14 @@
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		margin: 1em 0;
-		input { max-width: 100px; }
 		.name, .pubdate, .genre, .readdate {
-			min-width: 100px;
 			font-size: 12px;
 			color: gray;
-			display: inline-block;
-			input { font-size:14px; }
+			input { 
+				font-size:14px;
+				margin-left: 3px;
+			}
+			display: flex;
 		}
 		input[type="text"] {
 			&.save {  min-width:40px }

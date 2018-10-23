@@ -164,15 +164,13 @@ a.clickable:hover {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   margin: 1em 0; }
-  .book-single .info input {
-    max-width: 100px; }
   .book-single .info .name, .book-single .info .pubdate, .book-single .info .genre, .book-single .info .readdate {
-    min-width: 100px;
     font-size: 12px;
     color: gray;
-    display: inline-block; }
+    display: flex; }
     .book-single .info .name input, .book-single .info .pubdate input, .book-single .info .genre input, .book-single .info .readdate input {
-      font-size: 14px; }
+      font-size: 14px;
+      margin-left: 3px; }
   .book-single .info input[type="text"].save {
     min-width: 40px; }
   .book-single .info input[type="text"]:focus {
