@@ -46,9 +46,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
-
-	
-
 	bookProvider.findRecentEdits(function(error, edits) {
 		bookProvider.findRecentLogs(function(error, logs) {
 			bookProvider.getInfoTypes(function(error, types) {
@@ -72,48 +69,47 @@ app.get('/init', function(req, res) {
 });
 
 app.post('/init', function(req, res) {
-    bookProvider.init(
-        {
-            "types" : [ "book", "article", "film/movie", "art", "comix", "game" ],
-           
-            "tags" : []
-        },
-        function(error, docs) {
-            res.redirect('/');
-        }); 
+	bookProvider.init(
+		{
+			"types" : [ "book", "article", "film/movie", "art", "comix", "game" ],
+			"tags" : []
+		},
+		function(error, docs) {
+			res.redirect('/');
+		}
+	); 
 });
 
 //get references browse 
 app.get('/browse', function(req, res) {
-    bookProvider.browse(req.query, function(error, books) { 
-    	console.log(req.query);
-        res.render('search', {
-            books:books,
-            title: "Browse " + req.query["field"] + ", " + req.query[req.query["field"]]
-        });
-    });
+	bookProvider.browse(req.query, function(error, books) { 
+		res.render('search', {
+			books:books,
+			title: "Browse " + req.query["field"] + ", " + req.query[req.query["field"]]
+		});
+	});
 });
 
 
 // search all of the books
 app.get('/search', function(req, res) {
-    bookProvider.search(req.query, function(error, books) {
-        res.render('search', {
-            bookId:req.query["_id"],
-            books:books,
-            title: "Search " + req.query["field"] + ": " + req.query["query"]
-        });
-    });
+	bookProvider.search(req.query, function(error, books) {
+		res.render('search', {
+			bookId:req.query["_id"],
+			books:books,
+			title: "Search " + req.query["field"] + ": " + req.query["query"]
+		});
+	});
 });
 
 // create a book
 app.get('/book/new', function(req, res) {
-    bookProvider.getInfoTypes(function(error, types) {
-        res.render('new', {
-            types: types,
-            title: 'New Book'
-        });
-    });
+	bookProvider.getInfoTypes(function(error, types) {
+		res.render('new', {
+			types: types,
+			title: 'New Book'
+		});
+	});
 });
 
 // saves created book
