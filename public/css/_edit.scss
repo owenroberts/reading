@@ -1,64 +1,84 @@
 .book-single {
-	.title input {
-		/* background: $wht; */
-		font-size: 36px;
+
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 1em;
+	grid-template-areas: 
+		"title title title"
+		"content content info"
+		"ref ref ref"
+	;
+	#title { grid-area: title; }
+	#info { grid-area: info; }
+	#content { grid-area: content; }
+	#references { grid-area: ref; }
+	
+
+	#title input {
+		font-size: 2em;
 		width: 100%;
 		text-overflow: ellipsis;
-		border-bottom: 1px solid transparent;
-		margin-bottom: 0.25em;
-		/* padding: 0 0.25em; */
 	}
+
 	.created-at {
-		font-size: 12px;
-		margin-right: 1em;
 		display: inline-block;
-		color: gray;
+		color: $four;
 	}
-	.type { display: inline-block; }
+	.type { 
+		display: inline-block; 
+		font-style: italic;
+	}
 	.delete {
-		font-size:0.75em;
-		padding: 0.25em 0.5em;
-		margin-left: 1em;
+		display: inline-block; 
 		color: gray;
-		&:hover { color: palevioletred; }
+		&:hover { background: $five; }
 	}
 	#status {
 		font-style: italic;
 		opacity: 1;
-		display: inline-block;
-		margin: 0 1em;
+		/*display: inline-block;*/
 		transition: opacity 300ms;
-		&.fadeIn { opacity: 1; }
-		&.fadeOut {
+		&.fade-in { opacity: 1; }
+		&.fade-out {
 			opacity: 0;
 			transition-delay: 1000ms;
 		}
 	}
 	.info {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
+		/*display: grid;*/
+		grid-template-columns: repeat(2, 1fr);
 		margin: 1em 0;
-		.name, .pubdate, .genre, .readdate {
-			font-size: 12px;
-			color: gray;
-			input { 
-				font-size:14px;
-				margin-left: 3px;
-			}
-			display: flex;
+		label {
+			flex: 10px;
+			text-align: right;
+			margin-right: 0.5em;
+			font-size: 13px;
 		}
-		input[type="text"] {
-			&.save {  min-width:40px }
-			&:focus { 
-				outline: none;
-				border-bottom: 1px solid primary;
-			}
+		input { flex: 4; }
+		div { 
+			margin-bottom: 0.5em; 
+			display: flex;
 		}
 	}
 	.plus { margin-right:10px }
+	#tags-and-links {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.links, .tags {
+		margin: 1em 0;
+		label {
+			display: block;
+			font-size: 13px;
+		}
+		.link, .tag {
+			display: inline-block;
+		}
+	}
+	
 	.notes, .quotes {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(2, 1fr);
 		grid-gap: 0.5em;
 		h3 { 
 			grid-column: 1 / span 3; 
@@ -66,20 +86,13 @@
 		}
 		.note, .quote {
 			textarea {
-				width: 100%;
-				border: none;
-				padding: 0.25em;
-				font-size: 1em;
-				background: lighten($primary, 10%);
+
 			}
-			span { color: $wht; }
 		}
 	}
-	.links, .tags { margin: 1em 0; }
-	.link, .tag {
-		display: inline-block;
-		margin-right: 3px;
-		padding: 0.125em 0.5em;
+
+	.quotes {
+		margin-top: 1em;
 	}
 
 	.images {
@@ -104,109 +117,63 @@
 	}
 
 	#atts-container {
-		position: relative;
-		background: $wht;
-		margin: 0.25em 0;
-		padding: 0.5em 0.25em;
+		margin-top: 1em;
 		.atts {
-			background: $highlight;
 			display: inline-block;
-			margin: 3px 0 3px 3px;
-			padding: 0.25em;
+			text-decoration: underline;
+			color: $primary;
 			cursor: pointer;
-			transition: color 150ms;
-			&:hover {
-				background: $primary;
-				color: $wht;
-			}
-		}
-		.cancel {
-			background: secondary;
-			border-radius: 0.25em;
-			margin: 0.5em;
-			color: white;
-			padding: 0.25em;
-			cursor: pointer;
-			&:hover { background: primary; }
+			transition: color 300ms ease-in;
+			&:hover { color: $highlight; }
 		}
 	}
 
 	#new-attribute {
-		background: $wht;
-		padding: 0.5em;
 		position: relative;
 		display: none;
-		.newlink { display: none; }
-		.newother {display: none; }
-		input {
-			font-size: 1em;
-			display: block;
-			width: 50%;
-			margin-bottom: 1em;
+		.newlink, .newother  {
+			display: none; 
+			margin-top: 1em;
 		}
+
 		.label {
 			text-transform: capitalize;
 			padding: 6px 0;
 		}
 		textarea {
 			resize: auto;
-			width: 75%;
+			width: 300px;
+		}
+		#cancel-att, #save-att {
+			display: inline;
+			text-decoration: underline;
+			cursor: pointer;
 		}
 		#cancel-att {
-			position: absolute;
-			top: 45px;
-			right: 10px;
 			font-size: 0.75em;
 		}
 		#save-att {
-			position: absolute;
-			top: 10px;
-			right: 10px;
+
 		}
 	}
 
 	#references {
-		margin: 2em 0;
-		input.title { font-size: 14px; }
+		margin-top: 1em;
 		.refs {
 			display: grid;
 			grid-template-columns: repeat(3, 1fr);
 			grid-gap: 0.5em;
-			h3 { 
-				grid-column: 1 / span 3; 
-				margin: 0;
-			}
+			h3 {  grid-column: 1 / span 3;  }
 		}
-		.title {
-			color: $primary;
-			padding: 0;
-		}
-		.query  {
-			font-size: 1.5em;
-			margin: 0.5em;
+		.book {
+			border: 1px solid $four;
+			padding: 0.5em;
 		}
 		.addref {
 			display: none;
 		}
-		.reftitle {
-			color: $primary;
-			font-size: 1.5em;
-			&:hover {
-				color: $wht;
-				background: $primary;
-			}
-		}
-		select {
-			margin: 3px;
-		}
-		.by { 
-			margin: 0.5em 0 ; 
-			input[type="submit"] {
-				width: 100%;
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-			}
+		.search, .browse {
+			margin-top: 1em;
 		}
 	}
 }
@@ -214,5 +181,5 @@
 /*  new reference page */
 .nothing {
 	margin: 12px 0;
-	color: $wht;
+	/*color: $wht;*/
 }

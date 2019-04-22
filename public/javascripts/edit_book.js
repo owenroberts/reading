@@ -1,9 +1,9 @@
 function setup() {
 	function editParameter(elem) {
-		console.log(elem);
 		if (elem.value != Updater.data[elem.name]) {
 			Updater.status.innerHTML = "Saving...";
-			Updater.status.className = "fadeIn";
+			Updater.status.classList.add('fade-in');
+			Updater.status.classList.remove("fade-out");
 			Updater.updateParameter(elem.name.replace("+", ""), elem.value, elem.dataset.num);
 		}
 	}

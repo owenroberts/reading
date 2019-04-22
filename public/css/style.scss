@@ -1,12 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Arimo');
 
-$primary: #8181C7;
-$secondary: #c9aff9;
-$highlight: #fdf;
-$bkg: #373438;
-$bkg: #e7dbf9;
-$obkg: #f5f5f5;
-$wht: #fff;
+$one: #9597E8;
+$two: #E2A3FF;
+$three: #95E8C4;
+$four: #AFE9FF;
+$five: #C1FFB0;
+
+$primary: $one;
+$secondary: $three;
+$highlight: $two;
+
 
 @import "reset.css";
 @import "global";

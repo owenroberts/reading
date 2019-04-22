@@ -7,6 +7,7 @@
 	<form method="post">
 		<input type="text" name="title" placeholder="Title" class="select">
 		<div class="type">
+			<label>Type: </label>
 			<select name="type" id="" class="selecttype">
 				{{#each types.types}}
 					<option value="{{this}}">{{this}}</option>
@@ -18,7 +19,7 @@
 		<input type="text" name="genre" placeholder="Genre" class="select">
 		<input type="text" name="pubdate" placeholder="Pub date: YYYY" class="select">
 		<input type="text" name="readdate" placeholder="Read date: MMYYYY" class="select">
-		<input type="submit" class="clickable" value="Save">
+		<input type="submit" value="Save">
 	</form>
 </div>
 

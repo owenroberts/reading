@@ -1,139 +1,148 @@
 <!-- edit -->
-<div class="backhome clickable">
+<div class="backhome">
 	<a href="/">Home</a>
+	{{#if referer}}
+		<a href="{{referer}}">Back</a>
+	{{/if}}
 </div>
 
-{{#if referer}}
-	<div class="clickable">
-		<a href="{{referer}}">Back</a>
-	</div>
-{{/if}}
-
 <div class="book-single">
-	<div class="title">
+	<div id="title">
 		<input type="text" class="select edit" type="text" name="title" placeholder="Title" value="{{book.title}}">
 	</div>
-	<div class="created-at">
-		<span>logged on {{date book.created_at}}</span>
-	</div>
-	<div class="type">{{book.type}}</div>
-	<div class="delete clickable">
-		<a href="/delete/{{book._id}}" onclick="return confirm('Are you sure you want to delete {{book.title}}?')">Delete</a>
-	</div>
-	<div id="status"></div>
 
-	<div class="info">
-		<div class="name">
-			by <input class="edit" type="text" name="name" placeholder="author" value="{{book.name}}">
+	<div id="info">
+		<div class="type">{{book.type}}</div>
+		<div class="created-at">
+			logged on {{date book.created_at}}
 		</div>
-		<div class="genre">
-			genre <input class="edit" type="text" name="genre" placeholder="genre" value="{{book.genre}}">
+		
+		<div class="delete clickable">
+			<a href="/delete/{{book._id}}" onclick="return confirm('Are you sure you want to delete {{book.title}}?')">Delete</a>
 		</div>
-		<div class="pubdate">
-			published <input class="edit" type="text" name="pubdate" placeholder="date published" value="{{book.pubdate}}">
-		</div>
-		<div class="readdate">
-			read <input class="edit" type="text" name="readdate" placeholder="date read" value="{{book.readdate}}">
-		</div>
-	</div>
+		<div id="status"></div>
 
-	{{#if book.tags}}
-		<div class="tags">
-			Tags
-			{{#each book.tags}}
-				<div class="tag clickable">
-					<a href="/tag/{{this}}">{{this}}</a>
-				</div>
-			{{/each}}
-		</div>
-	{{/if}}
-
-	{{#if book.links}}
-		<div class="links">
-			Links
-			{{#each book.links}}
-				<div class="tag clickable">
-					<a href="{{this.[1]}}" target="blank">{{this.[0]}}</a>
-				</div>
-			{{/each}}
-		</div>
-	{{/if}}
-
-	{{#if book.notes}}
-		<div class="notes">
-			<h3>Notes</h3>
-			{{#each book.notes}}
-				<div class="note">
-					<textarea name="notes" data-num={{@index}} class="edit">{{this}}</textarea>
-				</div>
-			{{/each}}
-		</div>
-	{{/if}}
-
-	{{#if book.quotes}}
-		<div class="notes">
-			<h3>Quotes</h3>
-			{{#each book.quotes}}
-				<div class="quote">
-					<textarea name="quotes" data-num={{@index}} class="edit">{{this}}</textarea>
-				</div>
-			{{/each}}
-		</div>
-	{{/if}}
-
-	{{#if book.images}}
-		<div class="images">
-			{{#each book.images}}
-			<div class="image">
-				<img src="{{this}}" alt="">
+		<div class="info">
+			<div class="name">
+				<label>by</label>
+				<input class="edit" type="text" name="name" placeholder="author" value="{{book.name}}">
 			</div>
-			{{/each}}
-		</div>
-	{{/if}}
-
-	{{#if book.youtubes}}
-		<div class="youtubes">
-			{{#each book.youtubes}}
-			<div class="utube">
-				<iframe src="https://www.youtube.com/embed/{{this}}" frameborder="0" allowfullscreen=""></iframe>
+			<div class="genre">
+				<label>genre</label> 
+				<input class="edit" type="text" name="genre" placeholder="genre" value="{{book.genre}}">
 			</div>
-			{{/each}}
-		</div>
-	{{/if}}
-
-	{{#if book.vimeos}}
-		<div class="vimeos">
-			{{#each book.vimeos}}
-			<div class="utube">
-				<iframe src="https://player.vimeo.com/video/{{this}}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+			<div class="pubdate">
+				<label>published</label> 
+				<input class="edit" type="text" name="pubdate" placeholder="date published" value="{{book.pubdate}}">
 			</div>
-			{{/each}}
+			<div class="readdate">
+				<label>read</label> 
+				<input class="edit" type="text" name="readdate" placeholder="date read" value="{{book.readdate}}">
+			</div>
 		</div>
-	{{/if}}
 
+		<div id="tags-and-links">
+			{{#if book.tags}}
+			<div class="tags">
+				<label>Tags</label>
+				{{#each book.tags}}
+					<div class="tag clickable">
+						<a href="/tag/{{this}}">{{this}}</a>
+					</div>
+				{{/each}}
+			</div>
+			{{/if}}
+
+			{{#if book.links}}
+			<div class="links">
+				<label>Links</label>
+				{{#each book.links}}
+					<div class="tag clickable">
+						<a href="{{this.[1]}}" target="blank">{{this.[0]}}</a>
+					</div>
+				{{/each}}
+			</div>
+			{{/if}}
+		</div>
+
+		<div id="atts-container">
+			<label>Add</label>
+			<div class="atts">note</div>
+			<div class="atts">quote</div>
+			<div class="atts">link</div>
+			<div class="atts">tag</div>
+			<div class="atts">image</div>
+			<div class="atts">youtube</div>
+			<div class="atts">vimeo</div>
+		</div>
+		<div id="new-attribute">
+			<div class="newlink">
+				<input type="text" id="newlinktitle" placeholder="Title">
+				<input type="text" id="newlinkurl" placeholder="URL">
+			</div>
+			<div class="newother">
+				<div class="label"></div>
+				<textarea type="text" id="newother" placeholder="Input"></textarea>
+			</div>
+			<div class="clickable" id="save-att">Save</div>
+			<div class="clickable" id="cancel-att">Cancel</div>
+		</div>
 	
-
-	<div id="atts-container">
-		Add
-		<div class="atts">note</div>
-		<div class="atts">quote</div>
-		<div class="atts">link</div>
-		<div class="atts">tag</div>
-		<div class="atts">image</div>
-		<div class="atts">youtube</div>
-		<div class="atts">vimeo</div>
+		
 	</div>
-	<div id="new-attribute">
-		<div class="newlink">
-			<input type="text" id="newlinktitle" placeholder="Title">
-			<input type="text" id="newlinkurl" placeholder="URL">
-		</div>
-		<div class="newother">
-			<div class="label"></div>
-			<textarea type="text" id="newother" placeholder="Input"></textarea>
-		</div>
-		<span class="clickable" id="save-att">Save</span>
-		<span class="clickable" id="cancel-att">Cancel</span>
+
+	<div id="content">
+		{{#if book.notes}}
+			<div class="notes">
+				<h3>Notes</h3>
+				{{#each book.notes}}
+					<div class="note">
+						<textarea name="notes" data-num={{@index}} class="edit">{{this}}</textarea>
+					</div>
+				{{/each}}
+			</div>
+		{{/if}}
+
+		{{#if book.quotes}}
+			<div class="quotes">
+				<h3>Quotes</h3>
+				{{#each book.quotes}}
+					<div class="quote">
+						<textarea name="quotes" data-num={{@index}} class="edit">{{this}}</textarea>
+					</div>
+				{{/each}}
+			</div>
+		{{/if}}
+
+		{{#if book.images}}
+			<div class="images">
+				{{#each book.images}}
+				<div class="image">
+					<img src="{{this}}" alt="">
+				</div>
+				{{/each}}
+			</div>
+		{{/if}}
+
+		{{#if book.youtubes}}
+			<div class="youtubes">
+				{{#each book.youtubes}}
+				<div class="utube">
+					<iframe src="https://www.youtube.com/embed/{{this}}" frameborder="0" allowfullscreen=""></iframe>
+				</div>
+				{{/each}}
+			</div>
+		{{/if}}
+
+		{{#if book.vimeos}}
+			<div class="vimeos">
+				{{#each book.vimeos}}
+				<div class="utube">
+					<iframe src="https://player.vimeo.com/video/{{this}}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+				</div>
+				{{/each}}
+			</div>
+		{{/if}}
 	</div>
 
 	<div id="references">
@@ -166,18 +175,18 @@
 		<div id="addRef" class="plus clickable">Add Reference</div>
 
 		<div class="addref">
-
 			<div class="search">
 				<form action="/addref/search" method="GET">
 					<input type="hidden" name="id" value="{{idString book._id}}">
 					<input type="hidden" name="bookTitle" value="{{book.title}}">
+					<input type="text" class="select underlined query" name="ref" placeholder="Query">
 					<select name="field">
 						{{#each fields}}
 							<option value="{{this}}">{{this}}</option>
 						{{/each}}
 					</select>
-					<input type="text" class="select underlined query" name="ref" placeholder="Query">
-					<input type="submit" class="clickable" value="Search">
+					
+					<input type="submit" value="Search">
 				</form>
 			</div>
 
@@ -199,7 +208,7 @@
 						<option value="{{this}}">{{this}}</option>
 					{{/each}}
 				</select>
-					<input type="submit" class="clickable" value="Browse">
+					<input type="submit" value="Browse">
 				</form>
 			</div>
 		</div>
@@ -214,7 +223,6 @@
 		Updater.data = {{{json book}}};
 		// -1 index is push, 0 index is standalone, >0 is updated array
 		Updater.updateParameter = function(param, value, index) {
-			console.log(param, value, index);
 			$.ajax({
 				url: '/param/' + Updater.id,
 				type: 'post',
@@ -229,7 +237,7 @@
 					// fuck doing a bunch of testing and adding elements and shit
 					if (index == -1) location.reload();
 					Updater.status.innerHTML = "Saved.";
-					Updater.status.className = "fadeOut";
+					Updater.status.classList.add("fade-out");
 				} 
 			});
 		};

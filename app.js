@@ -20,7 +20,7 @@ const hbs = handlebars.create({
 			return JSON.stringify(content);
 		},
 		date: function(dateString) {
-			return dateString.getMonth() + 1 + " " + dateString.getDate() + " " + dateString.getFullYear();
+			return dateString.toString().split(' ').slice(1, 4).join(' ');
 		},
 		idString: function(id) {
 			return id.toHexString();

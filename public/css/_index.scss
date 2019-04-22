@@ -1,7 +1,8 @@
 #index {
 	#header  {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: 2fr 1fr 1fr;
+		grid-gap: 1em;
 		input, select {
 			margin-bottom: 3px;
 			margin-right: 3px;
@@ -11,8 +12,14 @@
 		display: block;
 	}
 	input[name="query"] {
+		width: 100%;
 		font-size: 18px;
-		background: $wht;
-		padding: 0.25em .5em; 
+		padding: 0.25em 0; 
+		background: transparent;
+		border: none;
+		outline: none;
+		color: white;
+		border-bottom: 1px solid white;
+
 	}
 }
