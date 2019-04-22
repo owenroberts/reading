@@ -49,12 +49,47 @@
 
 }
 
-/* smaller than 800px styles */
-@media only screen and (min-width: 401px) and (max-width : 600px) {
+@media only screen and (max-width : 600px) {
 	.book-single {
-		.notes, .quotes {
-			h3 { grid-column: 1 / span 2; }
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			"title"
+			"info"
+			"content"
+			"ref";
+
+		#content {
+			.notes, .quotes {
+				grid-template-columns: 1fr;
+				.note, .quote {
+					grid-column: 1;
+				}
+			}
+		}
+
+		#references .refs {
+			grid-template-columns: repeat(1, 1fr);
+			h3 {  grid-column: 1;  }
+		}
+	}
+}
+
+@media only screen and (min-width: 601px) and (max-width : 680px) {
+	.book-single {
+		grid-template-columns: 1fr 1fr;
+
+		#content {
+			.notes, .quotes {
+				grid-template-columns: 1fr;
+				.note, .quote {
+					grid-column: 1;
+				}
+			}
+		}
+
+		#references .refs {
 			grid-template-columns: repeat(2, 1fr);
+			h3 {  grid-column: 1 / span 2;  }
 		}
 	}
 }

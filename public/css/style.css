@@ -237,6 +237,11 @@ textarea {
   margin: 12px 0;
   /*color: $wht;*/ }
 
+#search #books {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1em; }
+
 .new-book input[type="text"] {
   display: block;
   margin: 1em 0; }
@@ -280,11 +285,28 @@ textarea {
     grid-template-columns: 1fr; }
     .book-single .notes h3, .book-single .quotes h3 {
       grid-column: 1; } }
-/* smaller than 800px styles */
-@media only screen and (min-width: 401px) and (max-width: 600px) {
-  .book-single .notes, .book-single .quotes {
-    grid-template-columns: repeat(2, 1fr); }
-    .book-single .notes h3, .book-single .quotes h3 {
-      grid-column: 1 / span 2; } }
+@media only screen and (max-width: 600px) {
+  .book-single {
+    grid-template-columns: 1fr;
+    grid-template-areas: "title" "info" "content" "ref"; }
+    .book-single #content .notes, .book-single #content .quotes {
+      grid-template-columns: 1fr; }
+      .book-single #content .notes .note, .book-single #content .notes .quote, .book-single #content .quotes .note, .book-single #content .quotes .quote {
+        grid-column: 1; }
+    .book-single #references .refs {
+      grid-template-columns: repeat(1, 1fr); }
+      .book-single #references .refs h3 {
+        grid-column: 1; } }
+@media only screen and (min-width: 601px) and (max-width: 680px) {
+  .book-single {
+    grid-template-columns: 1fr 1fr; }
+    .book-single #content .notes, .book-single #content .quotes {
+      grid-template-columns: 1fr; }
+      .book-single #content .notes .note, .book-single #content .notes .quote, .book-single #content .quotes .note, .book-single #content .quotes .quote {
+        grid-column: 1; }
+    .book-single #references .refs {
+      grid-template-columns: repeat(2, 1fr); }
+      .book-single #references .refs h3 {
+        grid-column: 1 / span 2; } }
 
 /*# sourceMappingURL=style.css.map */
