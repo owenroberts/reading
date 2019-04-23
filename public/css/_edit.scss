@@ -1,5 +1,6 @@
 .book-single {
 
+	margin-top: 1em;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-gap: 1em;
@@ -161,13 +162,13 @@
 		margin-top: 1em;
 		.refs {
 			display: grid;
-			grid-template-columns: repeat(3, 1fr);
+			grid-template-columns: repeat(4, 1fr);
 			grid-gap: 0.5em;
 			h3 {  grid-column: 1 / span 3;  }
 		}
 		.book {
-			border: 1px solid $four;
-			padding: 0.5em;
+			/*border: 1px solid $four;*/
+			/*padding: 0.5em;*/
 		}
 		.addref {
 			display: none;
@@ -175,6 +176,7 @@
 		.search, .browse {
 			margin-top: 1em;
 		}
+		p { margin: 0; }
 	}
 }
 

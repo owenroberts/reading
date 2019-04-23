@@ -6,8 +6,8 @@ body {
 	background-color: #101010;
 	color: white;
 }
-input, select {
-	font-size: 1rem;
+input, select, input[type=submit] {
+	/*font-size: 1rem;*/
 	font-family: Verdana, Helvetica, Arial, sans-serif;
 }
 *:focus { outline:none }
@@ -18,9 +18,8 @@ a {
 		color: $highlight;
 	}
 }
-input[type="submit"] { 
+input[type=submit] { 
 	cursor: pointer; 
-	font-family: Verdana, Helvetica, Arial, sans-serif; 
 }
 
 h1, h2, h3 {

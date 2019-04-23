@@ -147,8 +147,8 @@
 
 	<div id="references">
 		{{#if refs}}
+		<h3>References</h3>
 			<div class="refs">
-				<h3>References</h3>
 				{{#each refs}}
 					{{#if (refIsBook src_id ../book._id) }}
 						<div class="book">
@@ -159,8 +159,8 @@
 				{{/each}}
 			</div>
 
+		<h3>Referenced by</h3>
 			<div class="refs by">
-				<h3>Referenced by</h3>
 				{{#each refs}}
 					{{#if (refIsBook ref_id ../book._id) }}
 						<div class="book">

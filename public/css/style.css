@@ -9,8 +9,8 @@ body {
   background-color: #101010;
   color: white; }
 
-input, select {
-  font-size: 1rem;
+input, select, input[type=submit] {
+  /*font-size: 1rem;*/
   font-family: Verdana, Helvetica, Arial, sans-serif; }
 
 *:focus {
@@ -22,9 +22,8 @@ a {
   a:hover {
     color: #E2A3FF; }
 
-input[type="submit"] {
-  cursor: pointer;
-  font-family: Verdana, Helvetica, Arial, sans-serif; }
+input[type=submit] {
+  cursor: pointer; }
 
 h1, h2, h3 {
   font-weight: normal; }
@@ -104,6 +103,7 @@ textarea {
   border-bottom: 1px solid white; }
 
 .book-single {
+  margin-top: 1em;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1em;
@@ -220,17 +220,19 @@ textarea {
     margin-top: 1em; }
     .book-single #references .refs {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       grid-gap: 0.5em; }
       .book-single #references .refs h3 {
         grid-column: 1 / span 3; }
     .book-single #references .book {
-      border: 1px solid #AFE9FF;
-      padding: 0.5em; }
+      /*border: 1px solid $four;*/
+      /*padding: 0.5em;*/ }
     .book-single #references .addref {
       display: none; }
     .book-single #references .search, .book-single #references .browse {
       margin-top: 1em; }
+    .book-single #references p {
+      margin: 0; }
 
 /*  new reference page */
 .nothing {
