@@ -53,7 +53,7 @@
 			flex: 10px;
 			text-align: right;
 			margin-right: 0.5em;
-			font-size: 13px;
+			/*font-size: 13px;*/
 		}
 		input { flex: 4; }
 		div { 
@@ -70,7 +70,7 @@
 		margin: 1em 0;
 		label {
 			display: block;
-			font-size: 13px;
+			/*font-size: 13px;*/
 		}
 		.link, .tag {
 			display: inline-block;
@@ -87,7 +87,7 @@
 		}
 		.note, .quote {
 			textarea {
-
+				font-family: serif;
 			}
 		}
 	}
@@ -152,9 +152,6 @@
 		}
 		#cancel-att {
 			font-size: 0.75em;
-		}
-		#save-att {
-
 		}
 	}
 

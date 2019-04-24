@@ -4,14 +4,16 @@
   box-sizing: border-box; }
 
 body {
-  font: 14px/14px Verdana, Helvetica, Arial, sans-serif;
+  /*font: 14px/14px Verdana, Helvetica, Arial, sans-serif;*/
+  font-size: 18px;
+  font-family: verdana, sans-serif;
   line-height: 1.4;
   background-color: #101010;
   color: white; }
 
-input, select, input[type=submit] {
-  /*font-size: 1rem;*/
-  font-family: Verdana, Helvetica, Arial, sans-serif; }
+input, select, input[type=submit], input[type=text] {
+  font-size: 1rem;
+  font-family: verdana, sans-serif; }
 
 *:focus {
   outline: none; }
@@ -149,7 +151,7 @@ textarea {
       flex: 10px;
       text-align: right;
       margin-right: 0.5em;
-      font-size: 13px; }
+      /*font-size: 13px;*/ }
     .book-single .info input {
       flex: 4; }
     .book-single .info div {
@@ -164,7 +166,7 @@ textarea {
     margin: 1em 0; }
     .book-single .links label, .book-single .tags label {
       display: block;
-      font-size: 13px; }
+      /*font-size: 13px;*/ }
     .book-single .links .link, .book-single .links .tag, .book-single .tags .link, .book-single .tags .tag {
       display: inline-block; }
   .book-single .notes, .book-single .quotes {
@@ -174,6 +176,8 @@ textarea {
     .book-single .notes h3, .book-single .quotes h3 {
       grid-column: 1 / span 3;
       margin: 0; }
+    .book-single .notes .note textarea, .book-single .notes .quote textarea, .book-single .quotes .note textarea, .book-single .quotes .quote textarea {
+      font-family: serif; }
   .book-single .quotes {
     margin-top: 1em; }
   .book-single .images .image img {
