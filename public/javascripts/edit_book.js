@@ -7,52 +7,70 @@ function setup() {
 			Updater.updateParameter(elem.name.replace("+", ""), elem.value, elem.dataset.num);
 		}
 	}
-	$('.edit').on('blur', function() {
-		editParameter(this);
-	});
-	$('input.edit').on('keyup', function(ev) {
-		if (ev.keyCode == 13) 
-			editParameter(this);
+
+	function adjustHeight(ev) {
+		ev.target.style.height = ev.target.scrollHeight + 'px';
+	}
+
+	const edits = document.getElementsByClassName('edit');
+	Array.from(edits).forEach(edit => {
+		edit.addEventListener('blur', ev => {
+			editParameter(ev.target);
+		});
+		if (edit.tagName == 'TEXTAREA')
+			edit.addEventListener('keyup', adjustHeight);
+		if (edit.tagName == 'INPUT')
+			edit.addEventListener('keyup', ev => {
+				if (ev.keyCode == 13) editParameter(ev.target);
+			});
 	});
 
-	/* changes height of textareas for notes and quotes */
-	$('.book-single').on( 'change keyup keydown paste cut', 'textarea.edit', function (){
-		$(this).height(0).height(this.scrollHeight);
-	}).find( 'textarea' ).change();
+	
 
-	/* calls addAttributes(), removes atts container after clicking on one of the options */
-	$('.atts').on('click', function(elem){
-		addAttribute(elem.target.innerHTML);
+	const attButtons = document.getElementsByClassName('atts');
+	Array.from(attButtons).forEach(btn => {
+		btn.addEventListener('click', ev => {
+			addAttribute(ev.target.innerHTML);
+		});
 	});
+
+	const newAttributeDiv = document.getElementById('new-attribute');
+	const newLinkDiv = document.getElementById('link');
+	const newOtherDiv = document.getElementById('other');
+	const saveAttribute = document.getElementById('save-att');
+	const cancelAttribute = document.getElementById('cancel-att');
+	const newLinkTitle = document.getElementById('new-link-title');
+	const newLinkUrl = document.getElementById('new-link-url');
+
+	const attributeText = document.getElementById('new-attribute-text');
+	attributeText.addEventListener('keyup', adjustHeight);
 
 	/* adds attribute section -- this sucks ... */
 	function addAttribute(type) {
-		$('#new-attribute').show();
-		if (type == "link") {
-			$('.newlink').show();
+		newAttributeDiv.style.display = 'block';
+		const isLink = type == "link";
+		
+		if (isLink) {
+			newLinkDiv.style.display = 'block';
 		} else {
-			$('.newother').show();
-			$('.newother .label').text(type);
+			newOtherDiv.style.display = 'block';
+			attributeText.placeholder = type;
 		}
-		$('#save-att').on('click', function() {
-			var value = "";
-			if (type == "link") {
-				value = $('#newlinktitle').val() + "," + $('#newlinkurl').val();
-			} else {
-				value = $('#newother').val();
-			}
+
+		saveAttribute.onclick = function() {
+			let value = isLink ?  newLinkTitle.value + ',' + newLinkUrl.value : attributeText.value;
 			type += "s";
 			Updater.updateParameter(type, value, -1);
-			$('#new-attribute').hide();
-			$('.newlink').hide();
-			$('.newother').hide();
-		});
+			newAttributeDiv.style.display = 'none';
+			newLinkDiv.style.display = 'none';
+			newOtherDiv.style.display = 'none';
+		};
 
-		$('#cancel-att').on('click', function() {
-			$('#new-attribute').hide();
-			$('.newlink').hide();
-			$('.newother').hide();
-		});
+		cancelAttribute.onclick = function() {
+			newAttributeDiv.style.display = 'none';
+			newLinkDiv.style.display = 'none';
+			newOtherDiv.style.display = 'none';
+		};
 	}
 
 	/* maybe does some stuff with references */

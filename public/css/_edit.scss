@@ -130,20 +130,27 @@
 	}
 
 	#new-attribute {
-		position: relative;
+		position: fixed;
+		
+		width: 600px;
+		left: 4em;
+		top: 10em;
+
+		padding: 1em;
+		background-color: black;
+		border: 1px solid $highlight;
+		box-shadow: 0 0 1em black;
+
 		display: none;
-		.newlink, .newother  {
+
+		#link, #other  {
 			display: none; 
 			margin-top: 1em;
 		}
 
-		.label {
-			text-transform: capitalize;
-			padding: 6px 0;
-		}
 		textarea {
 			resize: auto;
-			width: 300px;
+			width: 100%;
 		}
 		#cancel-att, #save-att {
 			display: inline;

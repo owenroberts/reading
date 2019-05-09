@@ -203,17 +203,21 @@ textarea {
       .book-single #atts-container .atts:hover {
         color: #E2A3FF; }
   .book-single #new-attribute {
-    position: relative;
+    position: fixed;
+    width: 600px;
+    left: 4em;
+    top: 10em;
+    padding: 1em;
+    background-color: black;
+    border: 1px solid #E2A3FF;
+    box-shadow: 0 0 1em black;
     display: none; }
-    .book-single #new-attribute .newlink, .book-single #new-attribute .newother {
+    .book-single #new-attribute #link, .book-single #new-attribute #other {
       display: none;
       margin-top: 1em; }
-    .book-single #new-attribute .label {
-      text-transform: capitalize;
-      padding: 6px 0; }
     .book-single #new-attribute textarea {
       resize: auto;
-      width: 300px; }
+      width: 100%; }
     .book-single #new-attribute #cancel-att, .book-single #new-attribute #save-att {
       display: inline;
       text-decoration: underline;
