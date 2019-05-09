@@ -45,7 +45,15 @@
 			h3 { grid-column: 1 ; }
 			grid-template-columns: 1fr;
 		}
+		#new-attribute {
+			width: 100%;
+			left: 0;
+			top: 6em;
+			border-left: none;
+			border-right: none;
+		}
 	}
+
 
 }
 
