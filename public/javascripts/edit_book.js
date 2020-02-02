@@ -25,8 +25,6 @@ function setup() {
 			});
 	});
 
-	
-
 	const attButtons = document.getElementsByClassName('atts');
 	Array.from(attButtons).forEach(btn => {
 		btn.addEventListener('click', ev => {
@@ -36,6 +34,7 @@ function setup() {
 
 	const newAttributeDiv = document.getElementById('new-attribute');
 	const newLinkDiv = document.getElementById('link');
+	const newInputDiv = document.getElementById('input');
 	const newOtherDiv = document.getElementById('other');
 	const saveAttribute = document.getElementById('save-att');
 	const cancelAttribute = document.getElementById('cancel-att');
@@ -45,32 +44,86 @@ function setup() {
 	const attributeText = document.getElementById('new-attribute-text');
 	attributeText.addEventListener('keyup', adjustHeight);
 
+	const inputText = document.getElementById('new-input-text');
+
+	function reset() {
+		newAttributeDiv.style.display = 'none';
+		newLinkDiv.style.display = 'none';
+		newOtherDiv.style.display = 'none';
+		newInputDiv.style.display = 'none';
+		saveAttribute.onclick = undefined;
+	};
+
+	cancelAttribute.onclick = reset;
+
+
 	/* adds attribute section -- this sucks ... */
 	function addAttribute(type) {
+		reset();
 		newAttributeDiv.style.display = 'block';
-		const isLink = type == "link";
-		
-		if (isLink) {
-			newLinkDiv.style.display = 'block';
-		} else {
-			newOtherDiv.style.display = 'block';
-			attributeText.placeholder = type;
+
+		switch (type) {
+			case 'link':
+				newLinkDiv.style.display = 'block';
+				newLinkTitle.focus();
+				newLinkTitle.addEventListener('keydown', ev => {
+					if (ev.which == 13 && ev.metaKey) saveValue();
+				});
+				newLinkUrl.addEventListener('keydown', ev => {
+					if (ev.which == 13 && ev.metaKey) saveValue();
+				});
+			break;
+			case 'tag':
+			case 'vimeo':
+			case 'youtube':
+			case 'image':
+				newInputDiv.style.display = 'block';
+				inputText.placeholder = type;
+				inputText.addEventListener('keydown', ev => {
+					if (ev.which == 13) saveValue();
+				});
+				inputText.focus();
+			break;
+			default:
+				newOtherDiv.style.display = 'block';
+				attributeText.placeholder = type;
+				attributeText.addEventListener('keydown', ev => {
+					console.log(ev);
+					if (ev.which == 13 && ev.metaKey) saveValue();
+				});
+				attributeText.focus();
+			break;
 		}
+		
+		function saveValue() {
+			
+			let value;
+			switch (type) {
+				case 'link':
+					value = newLinkTitle.value + ',' + newLinkUrl.value;
+				break;
+				case 'tag':
+				case 'vimeo':
+				case 'youtube':
+				case 'image':
+					value = inputText.value;
+				break;
+				default:
+					value = attributeText.value;
+				break;
+			}
 
-		saveAttribute.onclick = function() {
-			let value = isLink ?  newLinkTitle.value + ',' + newLinkUrl.value : attributeText.value;
-			type += "s";
-			Updater.updateParameter(type, value, -1);
+			Updater.updateParameter(`${type}s`, value, -1);
+			
 			newAttributeDiv.style.display = 'none';
 			newLinkDiv.style.display = 'none';
 			newOtherDiv.style.display = 'none';
+			newInputDiv.style.display = 'none';
 		};
 
-		cancelAttribute.onclick = function() {
-			newAttributeDiv.style.display = 'none';
-			newLinkDiv.style.display = 'none';
-			newOtherDiv.style.display = 'none';
-		};
+		saveAttribute.onclick = saveValue;
+
+		
 	}
 
 	/* maybe does some stuff with references */

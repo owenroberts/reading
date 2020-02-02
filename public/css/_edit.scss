@@ -5,9 +5,9 @@
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-gap: 1em;
 	grid-template-areas: 
-		"title title title"
+		"title title info"
 		"content content info"
-		"ref ref ref"
+		"ref ref new"
 	;
 	#title { grid-area: title; }
 	#info { grid-area: info; }
@@ -22,18 +22,21 @@
 	}
 
 	.created-at {
-		display: inline-block;
 		color: $four;
+		text-align: right;
 	}
+
 	.type { 
-		display: inline-block; 
 		font-style: italic;
+		text-align: right;
 	}
+
 	.delete {
-		display: inline-block; 
 		color: gray;
+		text-align: right;
 		&:hover { background: $five; }
 	}
+
 	#status {
 		font-style: italic;
 		opacity: 1;
@@ -45,6 +48,7 @@
 			transition-delay: 1000ms;
 		}
 	}
+
 	.info {
 		/*display: grid;*/
 		grid-template-columns: repeat(2, 1fr);
@@ -55,13 +59,15 @@
 			margin-right: 0.5em;
 			/*font-size: 13px;*/
 		}
-		input { flex: 4; }
+		input { flex: 1; }
 		div { 
 			margin-bottom: 0.5em; 
 			display: flex;
 		}
 	}
+
 	.plus { margin-right:10px }
+	
 	#tags-and-links {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
@@ -130,22 +136,17 @@
 	}
 
 	#new-attribute {
-		position: fixed;
 		
-		width: 600px;
-		left: 4em;
-		top: 10em;
+		grid-area: new;
 
 		padding: 1em;
-		background-color: black;
+		
 		border: 1px solid $highlight;
-		box-shadow: 0 0 1em 0.5em $one;
 
 		display: none;
 
-		#link, #other  {
+		#link, #other, #input  {
 			display: none; 
-			margin-top: 1em;
 		}
 
 		textarea {
